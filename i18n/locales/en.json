@@ -1,0 +1,428 @@
+{
+  "header": {
+    "home": "Home",
+    "transfers": "Transfers",
+    "tours": "Tours",
+    "about": "About Us",
+    "contact": "Contact",
+    "bookingStatus": "Booking Status",
+    "bookNow": "Book Now"
+  },
+  "home": {
+    "hero": {
+      "title": " Welcome to ",
+      "subtitle": "Discover the ancient wonders, pristine forests, and vibrant culture of Armenia through curated local experiences.",
+      "searchPlaceholder": "Where do you want to go?",
+      "search": "Search",
+      "searching": "Searching...",
+      "destinations": "Destinations",
+      "travelers": "Travelers",
+      "exploreArmenia": "Explore Armenia",
+      "noResults": "No results found for your search"
+    },
+    "popularDestinations": {
+      "titlePart1": "Popular",
+      "titlePart2": "Destinations",
+      "badge": "Most Loved Destinations",
+      "description": "Most loved destinations by travelers. Discover ancient heritage, mountain majesty, and breathtaking pristine ecosystems nestled in the Armenian highlands."
+    },
+    "whyChooseUs": {
+      "badge": "Why Choose ArTours",
+      "titlePart1": "Adventures crafted with",
+      "titlePart2": "heart & purpose.",
+      "description": "Every journey is rooted in respect — for the land, the culture, and the people who call Armenia home.",
+      "warmHospitality": "Warm Hospitality",
+      "culturalImmersion": "Cultural Immersion",
+      "sustainableTravel": "Sustainable Travel",
+      "safeGuidedAdventures": "Safe Guided Adventures",
+      "natureExploration": "Nature Exploration",
+      "smallGroupFocus": "Small Group Focus",
+      "descriptionWarmHospitality": "Our guides treat every traveler like family, creating genuine bonds that last beyond the journey.",
+      "descriptionCulturalImmersion": "Dive into centuries-old traditions — from lavash baking with village families to sacred monastery ceremonies.",
+      "descriptionSustainableTravel": "Carbon-offset journeys, eco-lodges, and partnerships with local conservation programs.",
+      "descriptionSafeGuidedAdventures": "Certified local experts lead every expedition with professional gear and full preparedness.",
+      "descriptionNatureExploration": "Trek volcanic highlands, swim in alpine lakes, and camp under the clearest night skies.",
+      "descriptionSmallGroupFocus": "Intimate groups of 6–12 travelers ensure personalized attention and authentic connections.",
+      "discoverStory": "Discover Our Story"
+    },
+    "comments": {
+      "badge": "Traveler Voices",
+      "titlePart1": "What Our",
+      "titlePart2": "Travelers Say",
+      "description": "These are real stories from real travelers who have explored Armenia with us. Their words reflect the heart of our journeys.",
+      "comment1": {
+        "name": "",
+        "role": "",
+        "comment": ""
+      }
+    }
+  },
+  "transfers": {
+    "badge": "Transfer Services",
+    "titlePart1": "Explore",
+    "titlePart2": "Destinations",
+    "description": "Discover stunning destinations with seamless transfer services. Browse curated locations and book comfortable rides to your next adventure.",
+    "searchPlaceholder": "Search destinations by name...",
+    "backToTransfers": "Back to Transfers",
+    "departure": "DEPARTURE",
+    "destination": "DESTINATION",
+    "cost": "Transfer Cost",
+    "for3People": "for 3 people",
+    "transferDetail": "Transfer Details",
+    "distance": "Distance from Yerevan",
+    "routeMap": "Route Map",
+    "routeMapDescription": "View a visualization of the trip route from the departure origin to the destination on the interactive map.",
+    "mapButton": "See route on map",
+    "entranceFees": "Entrance Fees (optional)",
+    "perk1": "Custom meetup location",
+    "perk2": "Proffesianl local driver",
+    "perk3": "Comfortable AC vehicle",
+    "bookRideNow": "Book Ride Now",
+    "loading": "Loading transfer details...",
+    "transferNotFound": "Transfer not found",
+    "returnToTransfers": "Return to Transfers",
+    "details": "More Details",
+    "showingCount": "Showing {current} of {total} destinations",
+    "kmFromYerevan": " km from Yerevan",
+    "pricingFrom": "Pricing From"
+  },
+  "tours": {
+    "headerBadge": "Our Catalog",
+    "headerTitlePart1": "Curated",
+    "headerTitlePart2": "Excursions",
+    "headerDescription": "Handcrafted itineraries designed by destination experts to provide genuine cultural connections and unforgettable travel experiences.",
+    "searchPlaceholder": "Search tours by name...",
+    "pricingFrom": "Pricing From",
+    "for3People": "3 pax",
+    "exploreTour": "Explore Tour",
+    "location": "Location",
+    "locations": "Locations",
+    "noToursFound": "No tours found",
+    "noToursDescription": "We couldn't find any tours matching your criteria. Try adjusting your search or filters.",
+    "showing": "Showing",
+    "of": "of",
+    "toursCount": "tours",
+    "loadMore": "Load More Tours",
+    "backToTours": "Back to Tours",
+    "tourDetail": "Tour Details",
+    "duration": "Duration",
+    "routeMap": "Route Map",
+    "routeMapDescription": "View a visualization of the tour route on the interactive map.",
+    "perk1": "Expert local guide/driver",
+    "perk2": "Comfortable transportation",
+    "perk3": "Handcrafted custom itinerary",
+    "bookTourNow": "Book Tour Now",
+    "loading": "Loading tour details...",
+    "tourNotFound": "Tour not found",
+    "returnToTours": "Return to Tours",
+    "tourItinerary": "Tour Itinerary"
+  },
+  "km": "km",
+  "all": "All",
+  "tour": {
+    "hotel": "Hotel Details",
+    "starRating": "Star Rating",
+    "mealOptions": "Meals Included",
+    "breakfast": "Breakfast",
+    "breakfastDesc": "Morning fuel included",
+    "lunch": "Lunch",
+    "lunchDesc": "Midday feast included",
+    "dinner": "Dinner",
+    "dinnerDesc": "Evening delight included",
+    "overnight": "Overnight"
+  },
+  "booking": {
+    "badge": "Reservation Portal",
+    "title1": "Check",
+    "title2": "Booking Status",
+    "description": "Verify your travel schedule, confirm itinerary status, and retrieve travel vouchers. Enter your 10-character ArTours booking code (e.g., ART-98F42R) below",
+    "exploreButton": "Explore More Journeys",
+    "placeholder": "Enter Booking Reference (e.g. ART-98F42R)",
+    "checkStatus": "Check Status",
+    "checkEmail": "Check Email Confirmation",
+    "checkEmailDesc": "Your 10-character booking code is printed on the header of the voucher email sent right after booking.",
+    "needImmediateHelp": "Need Immediate Help?",
+    "needImmediateHelpDesc": "Contact us directly for urgent inquiries or changes — we’re here to assist.",
+    "bookingConfirmed": "Booking Confirmed!",
+    "sendEmail": "We'll email the details to",
+    "enableTelegramNotifications": "Enable Telegram Notifications",
+    "statusStr": "Status",
+    "freeCancelInfo1": "Free Cancellation",
+    "freeCancelInfo2": "is available until 48 hours before the tour start time.",
+    "cancelBooking": "Cancel Booking",
+    "ticketTitle": "Curated Experience Ticket",
+    "reference": "Booking Reference",
+    "bookingNotFound": "Booking Number not found. Please check your booking number.",
+    "destination": "Destination",
+    "validation": {
+      "fullName": "Full name is required",
+      "emailAddress": "Email address is required",
+      "emailAddress2": "Please enter a valid email address",
+      "phoneNumber": "Phone number is required",
+      "phoneNumber2": "Please enter a valid phone number",
+      "peopleCount": "At least 1 person is required.",
+      "travelDate": "Please select a travel date",
+      "bookingNotFound": "Invalid booking details. Please check your booking number and email."
+    },
+    "cancelModal": {
+      "subtitle": "Cancellation Request",
+      "title": "Cancel Your Booking",
+      "desc1": "This action cannot be undone. ",
+      "desc2": "Once cancelled, your reservation will be permanently voided.",
+      "reference": "Booking Reference",
+      "readOnly": "Read only",
+      "keep": "Keep My Booking",
+      "cancelling": "Cancelling…",
+      "confirmCancellation": "Confirm Cancellation",
+      "emailLabel": "Confirm Your Email Address",
+      "emailDesc": "Must match the email used when this booking was created.",
+      "cancelationSuccessed": "Your booking has been successfully cancelled."
+    },
+    "status": {
+      "CONFIRMED": "Confirmed",
+      "PENDING": "Pending",
+      "CANCELLED": "Cancelled",
+      "COMPLETED": "Completed"
+    },
+    "form": {
+      "fullName": "Full Name",
+      "emailAddress": "Email Address",
+      "phoneNumber": "Phone Number",
+      "peopleCount": "Number of People",
+      "specialRequests": "Special Requests",
+      "optional": "optional",
+      "processing": "Processing your booking…",
+      "confirmBooking": "Confirm Booking",
+      "paymentMethodDesc": "No payment now — pay in cash on the day of your experience.",
+      "specialRequestsPlaceholder": "Write your concerns here...",
+      "travelDate": "Travel Date",
+      "selectDate": "Select date",
+      "days": [
+        "Su",
+        "Mo",
+        "Tu",
+        "We",
+        "Th",
+        "Fr",
+        "Sa"
+      ],
+      "months": [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+      ],
+      "summary": {
+        "tourTitle": "🗺 Tour Booking",
+        "transferTitle": "🚐 Transfer Booking",
+        "type": "Type",
+        "payment": "Payment",
+        "total": "Total",
+        "subtotal": "Subtotal",
+        "travelers": "Travelers",
+        "tour": "Tour",
+        "transfer": "Transfer",
+        "cash": "Cash",
+        "travelDate": "Travel Date",
+        "cancellationStr": "Free cancellation up to 24h before departure. No upfront payment required.",
+        "pax": "pax",
+        "discount": "Discount",
+        "discountStr": "Discounted rate applied (4+ people)",
+        "totalAmount": "Total Amount",
+        "duration": "Duration"
+      }
+    },
+    "milestone": "Traking Milestones",
+    "steps": {
+      "booking_received": "Booking Received",
+      "reservation_entered": "Reservation entered",
+      "cancelled": "Cancelled",
+      "booking_voided": "Booking was voided",
+      "received": "Received",
+      "booking_submitted": "Booking submitted",
+      "confirmation": "Confirmation",
+      "awaiting_guide": "Awaiting guide review",
+      "travelDay": "Travel Day",
+      "readyCheckin": "Ready for check-in",
+      "completed": "Completed",
+      "seeYouNext": "See you next time!",
+      "confirmed": "Confirmed",
+      "reservationLocked": "Reservation locked",
+      "readyDeparture": "Ready for departure",
+      "confirmedStr": "Your reservation is fully confirmed. Pack your bags and get ready for an unforgettable journey!",
+      "pendingStr": "We are verifying your deposit details and coordinator schedules. You will receive a final receipt within a few hours.",
+      "cancellationStr": "This booking has been cancelled. Please check your email for cancellation details or reach out to client assistance."
+    }
+  },
+  "contactUs": {
+    "badge": "Get in Touch",
+    "titlePart1": "Contact",
+    "titlePart2": "Us",
+    "description": "Have questions about an itinerary, private group tours, or travel coordination? Our travel specialists are here to help you plan the perfect journey.",
+    "form": {
+      "fullName": "Full Name",
+      "emailAddress": "Email Address",
+      "phoneNumber": "Phone Number",
+      "message": "Your Message",
+      "messagePlaceholder": "Tell us about your travel plans, questions or how we can help...",
+      "processing": "Sending message…",
+      "submit": "Send Message",
+      "error": "Something went wrong. Please try again later.",
+      "errorTitle": "Failed to send message"
+    },
+    "phone": "Phone",
+    "whatsapp": "WhatsApp",
+    "email": "Email",
+    "address": "Address",
+    "phoneDesc": "Mon–Sun, 24/7",
+    "telegramDesc": "Live chat for instant support and booking",
+    "whatsappDesc": "Quick replies within minutes",
+    "emailDesc": "Replies within 24 hours",
+    "validation": {
+      "fullName": "Please enter your name",
+      "emailAddress": "Please enter your email",
+      "emailAddress2": "Please enter a valid email address",
+      "message": "Please enter a message",
+      "message2": "Message must be at least 10 characters"
+    },
+    "success": "Message Received!",
+    "successDesc": "Thank you for contacting ArTours. A travel coordinator will email you shortly.",
+    "sendAnother": "Send another message"
+  },
+  "footer": {
+    "description": "ArTours crafts individual driving itineraries for those who want to experience a real, vibrant country. Every journey with us is a safe, comfortable, and heartfelt adventure, opening up the rich history, ancient culture, and breathtaking nature of Armenia to our guests.",
+    "links": {
+      "home": "Home",
+      "about": "About Us",
+      "booking": "Booking Status",
+      "tours": "Tours",
+      "transfers": "Transfers",
+      "contact": "Contact Us"
+    },
+    "contact": {
+      "directLine": "Direct Line",
+      "email": "Email",
+      "location": "Location",
+      "address": "Yerevan, Armenia"
+    },
+    "copyright": "© 2026 ArTours Travel Agency. All rights reserved.",
+    "navigation": "Navigation",
+    "social": "Social Links",
+    "contactDetails": "Contact Details"
+  },
+  "about": {
+    "hero": {
+      "badge": "About ArTours",
+      "title1": "Our Story &",
+      "title2": "Mission",
+      "happyTravelers": "Happy Travelers",
+      "happyDesc": "Smiles in the highlands",
+      "toursCompleted": "Tours Completed",
+      "toursDesc": "Meticulous local routes",
+      "locationsExplored": "Locations Explored",
+      "locationsDesc": "Monasteries & peaks",
+      "yearsExperience": "Years Experience",
+      "yearsDesc": "Established in 2017",
+      "description": "We are ArTours, a local travel coordinate team passionate about sharing the living history and soul of Armenia with the world. Our mission is to bridge cultures by providing deeply authentic, safe, and friendly travel experiences that directly support native host communities. Through carefully crafted itineraries, certified mountain coordinates, and warm local guides, we connect curious explorers with the ancient monasteries, spectacular volcanic highlands, and legendary hospitality of our home."
+    },
+    "director": {
+      "badge": "Founder & Driver-Guide",
+      "title1": "A Message from",
+      "title2": "Our Director",
+      "story": "Barev dzez and welcome! My name is Artur. I am a certified driver-guide, originally from Gyumri, and I have been living in Yerevan for many years. I truly love connecting with people, which is why I dedicated my life to tourism back in 2017. For me, every tour is not just a drive, but an opportunity to introduce my guests to the authentic Armenia—its rich history, ancient culture, picturesque nature, and genuine hospitality. My main goal is to make every traveler feel comfortable and safe, and to ensure they take home the warmest memories. I strive to create an atmosphere where each excursion is not only informative but also lighthearted, soulful, and filled with bright emotions. The greatest reward for me is when guests say, \"We will definitely come back to Armenia again.\" It is for the sake of these unforgettable impressions that I gladly welcome every traveler."
+    },
+    "land": {
+      "badge": "Armenian Heritage",
+      "title1": "A Land Carved by",
+      "title2": "History & Stone",
+      "description": "More than a travel destination, Armenia is an emotional journey back in time. Nestled in the high-altitude crossroads of the South Caucasus, this sacred landscape unfolds a living tapestry of ancient traditions, dramatic natural wonders, and legendary hospitality.",
+      "tags": {
+        "history": {
+          "title": "Ancient History & Culture",
+          "subtitle": "Cradle of Civilization",
+          "desc": "Armenia is one of the world's oldest civilizations, home to the Areni-1 winery dating back 6,100 years. Explore ancient stone carvings and living history written in volcanic stone.",
+          "badge": "6,100+ Years of History"
+        },
+        "mountains": {
+          "title": "Caucasus Mountains & Landscapes",
+          "subtitle": "Monoliths of Stone",
+          "desc": "Gaze upon the majestic silhouette of Mount Ararat, traverse the dramatic volcanic cliffs of Garni Gorge, and admire the basalt columns of the Symphony of Stones. Armenia's rugged highlands are an alpine masterpiece carved by geological time.",
+          "badge": "High-Altitude Peaks"
+        },
+        "sevan": {
+          "title": "Lake Sevan & Blue Waters",
+          "subtitle": "The Blue Eye of Armenia",
+          "desc": "Suspended at 1,900 meters above sea level, Lake Sevan is a breathtaking high-altitude freshwater gem. Ringed by wind-swept mountains, its changing sapphire waters create a stunning alpine retreat.",
+          "badge": "1,900m Alpine Gem"
+        },
+        "hiking": {
+          "title": "Forests & Monastic Trails",
+          "subtitle": "Pathways of the Soul",
+          "desc": "Hike through the lush, misty woods of Dilijan National Park—Armenia's Switzerland. Follow scenic trails along rushing rivers and hidden forest waterfalls.",
+          "badge": "Dilijan & Wilderness"
+        },
+        "hospitality": {
+          "title": "Hospitality & Gastronomy",
+          "subtitle": "Warmth in Every Home",
+          "desc": "Experience legendary hospitality where guests are welcomed like family. Taste flatbread (lavash) baked in clay tandoors (tonir), organic cheeses, mountain herbs, and premium wines aged in ancient Areni caves.",
+          "badge": "Authentic Local Soul"
+        }
+      }
+    },
+    "explore": {
+      "badge": "Start Your Journey Today",
+      "title1": "Ready to Explore",
+      "title2": "Armenia?",
+      "description": "Let our expert local guides craft a journey tailored just for you — private tours, custom itineraries, or handpicked excursions through Armenia's most breathtaking landscapes.",
+      "planeTrip": "Plan My Trip",
+      "browseAllTours": "Browse All Tours",
+      "safeSecureTravel": "Safe & Secure Travel",
+      "localExpertGuides": "Local Expert Guides",
+      "fiveStarExperiences": "5-Star Experiences",
+      "personalizedService": "Personalized Service"
+    }
+  },
+  "exploreOurTours": "Explore Our Tours",
+  "seo": {
+    "home": {
+      "title": "ArTours — Armenia Tours, Private Tours Armenia & Yerevan Excursions",
+      "description": "Discover Armenia with ArTours. We offer curated private tours of Armenia, Yerevan day trips, professional airport transfers, and customizable travel packages. Book your authentic Armenian adventure today!",
+      "keywords": "Armenia Tours, Private Armenia Tours, Yerevan Tours, Armenia Travel, Armenia Travel Agency, Armenia Sightseeing Tours, Armenia Day Trips, Guided Tours Armenia, Custom Armenia Tours, Cultural Tours Armenia, Historical Tours Armenia, Armenia Vacation Packages, Things to Do in Armenia, Places to Visit in Armenia, Garni Temple Tour, Geghard Monastery Tour, Lake Sevan Tour, Dilijan Tour, Yerevan Airport Transfer, Armenia Private Transfer",
+      "ogTitle": "ArTours — Authentic Private Tours & Transfers in Armenia",
+      "ogDescription": "Experience the beauty, history, and warm hospitality of Armenia. Guided tours, custom itineraries, and comfortable transfers with local travel experts.",
+      "siteName": "ArTours Armenia"
+    },
+    "about": {
+      "title": "About Us — ArTours | Story & Mission of an Armenian Travel Agency",
+      "description": "Meet the ArTours team: certified local driver-guides sharing authentic Armenia since 2017. 12,000+ happy travelers, 350+ completed tours, 150+ locations explored across the Armenian highlands.",
+      "keywords": "about ArTours, Armenia travel agency, certified guide Yerevan, Artur guide, ArTours story, Armenian driver-guide",
+      "ogTitle": "About Us — ArTours | Story & Mission",
+      "ogDescription": "A local team of travel coordinators sharing the soul of Armenia since 2017. Discover our story, meet our director, and feel the legendary Armenian hospitality.",
+      "siteName": "ArTours Armenia"
+    },
+    "contact": {
+      "title": "Contact Us — ArTours | Get in Touch for Armenia Tours & Transfers",
+      "description": "Get in touch with ArTours travel agency in Yerevan, Armenia. Reach us via phone, WhatsApp, Telegram, or email. Our travel specialists are available 24/7 to plan your perfect trip.",
+      "keywords": "contact ArTours, contact Armenia guide, ArTours phone number, WhatsApp tour Armenia, Telegram ArTours, book Armenia travel",
+      "ogTitle": "Contact Us — ArTours | Get in Touch",
+      "ogDescription": "Have questions about custom itineraries, private tours, or transfers in Armenia? Contact our travel specialists 24/7 via phone, WhatsApp, Telegram, or email.",
+      "siteName": "ArTours Armenia"
+    },
+    "booking": {
+      "title": "Booking Status — ArTours | Check Reservation & Travel Voucher",
+      "description": "Track your ArTours travel reservation. Enter your 10-character reference code to view itinerary details, confirmation status, and voucher information.",
+      "keywords": "ArTours booking status, check Armenia reservation, Armenia travel voucher, ArTours booking reference",
+      "ogTitle": "Check Booking Status — ArTours",
+      "ogDescription": "Enter your booking code to track your itinerary, guide confirmation, and travel details for your upcoming Armenia trip.",
+      "siteName": "ArTours Armenia"
+    }
+  }
+}
