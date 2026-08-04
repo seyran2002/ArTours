@@ -7,6 +7,7 @@ const tag = useTag()
 
 const newTagRuName = ref('')
 const newTagEnName = ref('')
+const newTagHyName = ref('')
 const errorMessage = ref('')
 const successMessage = ref('')
 
@@ -14,6 +15,7 @@ const successMessage = ref('')
 const editingTagId = ref<string | null>(null)
 const editingTagRuName = ref('')
 const editingTagEnName = ref('')
+const editingTagHyName = ref('')
 
 // Expose store tags directly
 const tags = computed(() => tag.tags.value)
@@ -41,18 +43,20 @@ async function handleAddTag() {
 
   const ru = newTagRuName.value.trim()
   const en = newTagEnName.value.trim()
-  if (!ru || !en) {
-    showError('Both Russian and English names are required.')
+  const hy = newTagHyName.value.trim()
+  if (!ru || !en || !hy) {
+    showError('Both Russian and English and Armenian names are required.')
     return
   }
 
-  const err = await tag.createTag(ru, en)
+  const err = await tag.createTag(ru, en, hy)
   if (err) {
     showError(err)
   } else {
-    showSuccess(`Tag "${ru}" / "${en}" created successfully!`)
+    showSuccess(`Tag "${ru}" / "${en}" / "${hy}" created successfully!`)
     newTagRuName.value = ''
     newTagEnName.value = ''
+    newTagHyName.value = ''
   }
 }
 
@@ -70,10 +74,11 @@ async function handleDeleteTag(tagId: string, tagName: string) {
 }
 
 // --- Inline Edit ---
-function startEditing(tagId: string, ruName: string, enName: string) {
+function startEditing(tagId: string, ruName: string, enName: string, hyName: string) {
   editingTagId.value = tagId
   editingTagRuName.value = ruName
   editingTagEnName.value = enName
+  editingTagHyName.value = hyName
   errorMessage.value = ''
   successMessage.value = ''
 }
@@ -83,18 +88,20 @@ function cancelEditing() {
   editingTagId.value = null
   editingTagRuName.value = ''
   editingTagEnName.value = ''
+  editingTagHyName.value = ''
 }
 
 // Update tag with backend
 async function handleUpdateTag(tagId: string) {
   const ru = editingTagRuName.value.trim()
   const en = editingTagEnName.value.trim()
-  if (!ru || !en) {
-    showError('Both Russian and English names are required.')
+  const hy = editingTagHyName.value.trim()
+  if (!ru || !en || !hy) {
+    showError('Both Russian and English and Armenian names are required.')
     return
   }
 
-  const err = await tag.updateTag(tagId, ru, en)
+  const err = await tag.updateTag(tagId, ru, en, hy)
   if (err) {
     showError(err)
   } else {
@@ -128,6 +135,16 @@ async function handleUpdateTag(tagId: string) {
             v-model="newTagEnName"
             type="text"
             placeholder="օրինակ՝ Mountains"
+            class="w-full px-5 py-3 text-sm bg-white border border-zinc-200 rounded-2xl outline-none focus:border-primary/30 focus:shadow-[0_0_0_3px_rgba(18,83,78,0.06)] transition-all duration-300 font-medium text-zinc-800 placeholder-zinc-400"
+          />
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-zinc-500 uppercase tracking-wider mb-2">Հայերեն Անվանումը</label>
+          <input
+            v-model="newTagHyName"
+            type="text"
+            placeholder="օրինակ՝ Լեռներ"
             class="w-full px-5 py-3 text-sm bg-white border border-zinc-200 rounded-2xl outline-none focus:border-primary/30 focus:shadow-[0_0_0_3px_rgba(18,83,78,0.06)] transition-all duration-300 font-medium text-zinc-800 placeholder-zinc-400"
           />
         </div>

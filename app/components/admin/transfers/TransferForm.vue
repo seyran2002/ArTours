@@ -39,14 +39,17 @@ const toCity = ref<string | null>(null);
 
 const enTitle = ref('');
 const ruTitle = ref('');
+const hyTitle = ref('');
 const enDescription = ref('');
 const ruDescription = ref('');
+const hyDescription = ref('');
 const enLongDescription = ref('');
 const ruLongDescription = ref('');
+const hyLongDescription = ref('');
 const distanceFromYerevan = ref<number | ''>('');
 const price = ref<number | ''>('');
 const selectedTags = ref<string[]>([]);
-const entranceFees = ref<{ enName: string; ruName: string; fee: number }[]>([]);
+const entranceFees = ref<{ enName: string; ruName: string; hyName: string; fee: number }[]>([]);
 const images = ref<string[]>([]);
 const mainImage = ref('');
 
@@ -81,7 +84,7 @@ const toggleTag = (tagId: string) => {
 
 // Entrance fees logic
 const addEntranceFee = () => {
-  entranceFees.value.push({ enName: '', ruName: '', fee: 0 })
+  entranceFees.value.push({ enName: '', ruName: '', hyName: '', fee: 0 })
 }
 
 const removeEntranceFee = (index: number) => {
@@ -104,12 +107,18 @@ const validate = (): boolean => {
   if (!ruTitle.value.trim()) {
     errors.value.ruTitle = 'Russian Title is required.'
   }
+  if (!hyTitle.value.trim()) {
+    errors.value.hyTitle = 'Armenian Title is required.'
+  }
 
   if (!enDescription.value.trim()) {
     errors.value.enDescription = 'English short description is required.'
   }
   if (!ruDescription.value.trim()) {
     errors.value.ruDescription = 'Russian short description is required.'
+  }
+  if (!hyDescription.value.trim()) {
+    errors.value.hyDescription = 'Armenian short description is required.'
   }
 
   // Strip HTML tags to check if RichTextEditor has actual content
@@ -119,6 +128,9 @@ const validate = (): boolean => {
   }
   if (!stripHtml(ruLongDescription.value)) {
     errors.value.ruLongDescription = 'Russian detailed description is required.'
+  }
+  if (!stripHtml(hyLongDescription.value)) {
+    errors.value.hyLongDescription = 'Armenian detailed description is required.'
   }
 
   if (!images.value || images.value.length === 0) {
@@ -192,10 +204,13 @@ const buildFormData = (routePolyline: string | null): FormData => {
   // Titles & descriptions
   formData.append('enTitle',           enTitle.value.trim())
   formData.append('ruTitle',           ruTitle.value.trim())
+  formData.append('hyTitle',           hyTitle.value.trim())
   formData.append('enDescription',     enDescription.value.trim())
   formData.append('ruDescription',     ruDescription.value.trim())
+  formData.append('hyDescription',     hyDescription.value.trim())
   formData.append('enLongDescription', enLongDescription.value)
   formData.append('ruLongDescription', ruLongDescription.value)
+  formData.append('hyLongDescription', hyLongDescription.value)
 
   // Numeric fields
   if (distanceFromYerevan.value !== '') {
@@ -238,7 +253,7 @@ const buildFormData = (routePolyline: string | null): FormData => {
 
   // Entrance fees — only rows that have at least one name filled in
   const activeEntranceFees = entranceFees.value.filter(
-    fee => fee.enName.trim() !== '' || fee.ruName.trim() !== ''
+    fee => fee.enName.trim() !== '' || fee.ruName.trim() !== '' || fee.hyName.trim() !== ''
   )
   if (activeEntranceFees.length > 0) {
     formData.append('entranceFees', JSON.stringify(activeEntranceFees))
@@ -308,10 +323,13 @@ onMounted(async () => {
       toLng.value = existing.toLng !== undefined ? existing.toLng : null;
       enTitle.value = existing.enTitle || '';
       ruTitle.value = existing.ruTitle || '';
+      hyTitle.value = existing.hyTitle || '';
       enDescription.value = existing.enDescription || '';
       ruDescription.value = existing.ruDescription || '';
+      hyDescription.value = existing.hyDescription || '';
       enLongDescription.value = existing.enLongDescription || '';
       ruLongDescription.value = existing.ruLongDescription || '';
+      hyLongDescription.value = existing.hyLongDescription || '';
       distanceFromYerevan.value = existing.distanceFromYerevan ?? '';
       price.value = existing.minimumPrice ?? '';
       
@@ -393,8 +411,8 @@ onMounted(async () => {
         </div>
       </div>
 
-      <!-- TITLES ROW (EN & RU) -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- TITLES ROW (EN, RU & HY) -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <!-- EN TITLE -->
         <div id="field-enTitle" class="space-y-2">
           <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Անգլերեն Վերնագիր (Title EN) *</label>
@@ -437,6 +455,28 @@ onMounted(async () => {
             />
           </div>
           <p v-if="errors.ruTitle" class="text-xs text-red-500 font-medium">{{ errors.ruTitle }}</p>
+        </div>
+
+        <!-- HY TITLE -->
+        <div id="field-hyTitle" class="space-y-2">
+          <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Հայերեն Վերնագիր (Title HY) *</label>
+          <div
+            :class="[
+              'flex items-center bg-white border rounded-2xl transition-all duration-300 focus-within:shadow-[0_0_0_3px_rgba(18,83,78,0.06)]',
+              errors.hyTitle
+                ? 'border-red-500 focus-within:border-red-500'
+                : 'border-zinc-200 focus-within:border-primary/30'
+            ]"
+          >
+            <BaseInput
+              v-model="hyTitle"
+              type="text"
+              placeholder="օրինակ՝ Ծաղկաձոր Դահուկային Հանգստավայր"
+              size="md"
+              class="text-zinc-800 placeholder-zinc-400"
+            />
+          </div>
+          <p v-if="errors.hyTitle" class="text-xs text-red-500 font-medium">{{ errors.hyTitle }}</p>
         </div>
       </div>
 
@@ -494,7 +534,7 @@ onMounted(async () => {
       </div>
 
       <!-- SHORT DESCRIPTIONS ROW -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <!-- EN SHORT DESC -->
         <div id="field-enDescription" class="space-y-2">
           <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Անգլերեն Հակիրճ նկարագրություն *</label>
@@ -519,6 +559,19 @@ onMounted(async () => {
             :class="{ 'border-red-500 focus:border-red-500': errors.ruDescription }"
           />
           <p v-if="errors.ruDescription" class="text-xs text-red-500 font-medium">{{ errors.ruDescription }}</p>
+        </div>
+
+        <!-- HY SHORT DESC -->
+        <div id="field-hyDescription" class="space-y-2">
+          <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Հայերեն Հակիրճ նկարագրություն *</label>
+          <textarea
+            v-model="hyDescription"
+            rows="3"
+            placeholder="Հակիրճ նկարագրություն հայերեն..."
+            class="w-full px-5 py-3 text-sm bg-white border border-zinc-200 rounded-2xl outline-none focus:border-primary/30 focus:shadow-[0_0_0_3px_rgba(18,83,78,0.06)] transition-all duration-300 font-medium text-zinc-800 placeholder-zinc-400 resize-none"
+            :class="{ 'border-red-500 focus:border-red-500': errors.hyDescription }"
+          />
+          <p v-if="errors.hyDescription" class="text-xs text-red-500 font-medium">{{ errors.hyDescription }}</p>
         </div>
       </div>
 
@@ -587,6 +640,21 @@ onMounted(async () => {
           </div>
           <p v-if="errors.ruLongDescription" class="text-xs text-red-500 font-medium">{{ errors.ruLongDescription }}</p>
         </div>
+
+        <!-- HY FULL DESC -->
+        <div id="field-hyLongDescription" class="space-y-2">
+          <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Մանրամասն Նկարագրություն (Հայերեն) *</label>
+          <div
+            class="rounded-2xl transition-all duration-200"
+            :class="{ 'ring-2 ring-red-400 ring-offset-2': errors.hyLongDescription }"
+          >
+            <RichTextEditor
+              v-model="hyLongDescription"
+              placeholder="Մանրամասն նկարագրություն հայերեն..."
+            />
+          </div>
+          <p v-if="errors.hyLongDescription" class="text-xs text-red-500 font-medium">{{ errors.hyLongDescription }}</p>
+        </div>
       </div>
 
       <!-- DYNAMIC ENTRANCE FEES -->
@@ -631,6 +699,17 @@ onMounted(async () => {
                 v-model="fee.ruName"
                 type="text"
                 placeholder="e.g. Храм Гарни Вход (RU)"
+                size="sm"
+                class="text-zinc-800 placeholder-zinc-400"
+              />
+            </div>
+
+            <!-- Armenian Fee Name -->
+            <div class="flex-grow flex items-center bg-white border border-zinc-200 rounded-xl transition-all duration-300 focus-within:border-primary/30">
+              <BaseInput
+                v-model="fee.hyName"
+                type="text"
+                placeholder="օրինակ՝ Գառնի Տաճարի Մուտք (HY)"
                 size="sm"
                 class="text-zinc-800 placeholder-zinc-400"
               />

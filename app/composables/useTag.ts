@@ -49,11 +49,11 @@ export function useTag() {
     }
   }
 
-  async function createTag(ruName: string, enName: string): Promise<string | null> {
+  async function createTag(ruName: string, enName: string, hyName: string): Promise<string | null> {
     loading.value = true
     error.value = null
     try {
-      await tagService.createTag({ ruName, enName } as CreateTagPayload)
+      await tagService.createTag({ ruName, enName, hyName } as CreateTagPayload)
       await fetchTags()
       return null
     } catch (err) {
@@ -65,11 +65,11 @@ export function useTag() {
     }
   }
 
-  async function updateTag(id: string, ruName: string, enName: string): Promise<string | null> {
+  async function updateTag(id: string, ruName: string, enName: string, hyName: string): Promise<string | null> {
     loading.value = true
     error.value = null
     try {
-      const updatedTag = await tagService.updateTag(id, { ruName, enName } as UpdateTagPayload)
+      const updatedTag = await tagService.updateTag(id, { ruName, enName, hyName } as UpdateTagPayload)
       tags.value = tags.value.map((tag) => (tag.id === id ? updatedTag : tag))
 
       return null

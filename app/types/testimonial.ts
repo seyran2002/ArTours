@@ -2,6 +2,7 @@
 interface Localized {
     en: string;
     ru: string;
+    hy: string;
 }
 
 export interface Testimonial {

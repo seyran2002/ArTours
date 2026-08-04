@@ -26,6 +26,13 @@
       "badge": "Most Loved Destinations",
       "description": "Most loved destinations by travelers. Discover ancient heritage, mountain majesty, and breathtaking pristine ecosystems nestled in the Armenian highlands."
     },
+    "topTours": {
+      "title1": "Discover Our",
+      "title2": "Premium Excursions",
+      "description": "Handcrafted luxury itineraries designed by destination experts to combine historic heritage, private access, and breathtaking mountain vistas.",
+      "badge": "Exclusive Offerings",
+      "exploreAllJourneys": "Explore All Journeys"
+    },
     "whyChooseUs": {
       "badge": "Why Choose ArTours",
       "titlePart1": "Adventures crafted with",
@@ -49,12 +56,7 @@
       "badge": "Traveler Voices",
       "titlePart1": "What Our",
       "titlePart2": "Travelers Say",
-      "description": "These are real stories from real travelers who have explored Armenia with us. Their words reflect the heart of our journeys.",
-      "comment1": {
-        "name": "",
-        "role": "",
-        "comment": ""
-      }
+      "description": "These are real stories from real travelers who have explored Armenia with us. Their words reflect the heart of our journeys."
     }
   },
   "transfers": {

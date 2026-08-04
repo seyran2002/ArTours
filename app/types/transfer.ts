@@ -3,6 +3,7 @@ import type { Tag } from './tag';
 export interface EntranceFee {
     enName: string;
     ruName: string;
+    hyName: string;
     fee: number;
 }
 
@@ -11,10 +12,13 @@ export interface Transfer {
     slug?: string;
     enTitle: string;
     ruTitle: string;
+    hyTitle?: string;
     enDescription?: string;
     ruDescription?: string;
+    hyDescription?: string;
     enLongDescription?: string;
     ruLongDescription?: string;
+    hyLongDescription?: string;
     mainImage?: string;
     images: string[];
     distanceFromYerevan?: number;

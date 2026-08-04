@@ -30,15 +30,15 @@ const localePath = useLocalePath()
           pulse-color="secondary" 
           class="tracking-[0.2em] text-primary uppercase font-bold"
         >
-          Exclusive Offerings
+          {{ $t('home.topTours.badge') }}
         </BaseBadge>
         
         <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-zinc-900 tracking-tight font-serif leading-tight">
-          Discover Our <span class="text-primary">Premium Excursions</span>
+          {{ $t('home.topTours.title1') }} <span class="text-primary">{{ $t('home.topTours.title2') }}</span>
         </h2>
         
         <p class="text-sm sm:text-base text-zinc-500 leading-relaxed">
-          Handcrafted luxury itineraries designed by destination experts to combine historic heritage, private access, and breathtaking mountain vistas.
+          {{ $t('home.topTours.description') }}
         </p>
       </div>
 
@@ -49,7 +49,7 @@ const localePath = useLocalePath()
           variant="text" 
           class="font-bold group flex items-center transition-colors"
         >
-          <span class="mr-2">Explore All Journeys</span>
+          <span class="mr-2">{{ $t('home.topTours.exploreAllJourneys') }}</span>
           <BaseIcon 
             name="arrow-right" 
             size="sm" 
@@ -89,7 +89,7 @@ const localePath = useLocalePath()
         size="md" 
         class="group w-full sm:w-auto"
       >
-        <span class="mr-2">Explore All Journeys</span>
+        <span class="mr-2">{{ $t('home.exploreAllJourneys') }}</span>
         <BaseIcon 
           name="arrow-right" 
           size="sm" 

@@ -78,7 +78,34 @@ const availableLocales = [
   </g>
 
 </svg>`
-  }
+  },
+  { 
+    code: 'hy', 
+    name: 'Հայերեն', 
+    short: 'Հայ', 
+    flag: `<svg viewBox="0 0 32 32" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+
+  <defs>
+    <clipPath id="circleClip">
+      <circle cx="16" cy="16" r="16"/>
+    </clipPath>
+  </defs>
+
+  <g clip-path="url(#circleClip)">
+
+    <!-- Red -->
+    <rect width="32" height="10.67" y="0" fill="#D80027"/>
+
+    <!-- Blue -->
+    <rect width="32" height="10.67" y="10.67" fill="#0052B4"/>
+
+    <!-- Orange -->
+    <rect width="32" height="10.66" y="21.34" fill="#F08E00"/>
+
+  </g>
+
+</svg>`
+  },
 ] as const
 
 const currentLocaleData = computed(() => 
@@ -90,7 +117,7 @@ const toggleLang = () => {
 }
 
 const changeLanguage = (code: string) => {
-  setLocale(code as 'ru' | 'en')
+  setLocale(code as 'ru' | 'en' | 'hy')
   isLangOpen.value = false
 }
 
