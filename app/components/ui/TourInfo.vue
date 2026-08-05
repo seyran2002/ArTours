@@ -119,7 +119,7 @@ const hasMeals = computed(() => {
     <!-- Hotel & Meals Details Section (Only if overnight) -->
     <div v-if="tour.isOvernight" class="border-t border-zinc-100 pt-6 space-y-4">
       <h2 class="text-sm font-bold text-zinc-800 uppercase tracking-wider">
-        {{ $t('tour.hotel') }}
+        {{ $t('tour.hotelDetails') }}
       </h2>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 border border-zinc-200/60 rounded-3xl bg-zinc-50/20">
         <!-- Hotel rating -->

@@ -50,6 +50,29 @@ function format(command: string, value: string = '') {
   editorRef.value?.focus()
 }
 
+function setNormal() {
+  document.execCommand('formatBlock', false, '<p>')
+
+  // Apply 14px font size to the selected text
+  const selection = window.getSelection()
+  if (selection && selection.rangeCount > 0) {
+    const range = selection.getRangeAt(0)
+    const span = document.createElement('span')
+    span.style.fontSize = '14px'
+    try {
+      range.surroundContents(span)
+    } catch {
+      // Partial cross-element selection — fall back silently
+    }
+  }
+
+  if (editorRef.value) {
+    emit('update:modelValue', editorRef.value.innerHTML)
+  }
+  updateActiveStates()
+  editorRef.value?.focus()
+}
+
 function updateActiveStates() {
   isActiveState.value = {
     bold: document.queryCommandState('bold'),
@@ -113,9 +136,9 @@ function updateActiveStates() {
       </button>
       <button
         type="button"
-        @click="format('formatBlock', '<p>')"
+        @click="setNormal()"
         class="px-2 py-1 rounded-lg text-xs font-bold text-zinc-500 hover:text-zinc-900 hover:bg-zinc-200 transition-colors"
-        title="Paragraph text"
+        title="Paragraph text (Normal)"
       >
         Normal
       </button>
@@ -195,8 +218,8 @@ function updateActiveStates() {
 }
 
 :deep(p) {
-  margin-bottom: 0.75rem;
-  line-height: 1.6;
+  margin-bottom: 0;
+  line-height: 1;
 }
 
 :deep(ul) {

@@ -3,8 +3,9 @@ import type { Tour } from '~/types/tour'
 import BaseButton from '~/components/ui/BaseButton.vue'
 import BaseIcon from '~/components/ui/BaseIcon.vue'
 import BaseBadge from '~/components/ui/BaseBadge.vue'
-import { useI18n } from '#imports'
+import { useI18n, useLocalePath } from '#imports'
 
+const localePath = useLocalePath()
 const { locale } = useI18n()
 
 const props = withDefaults(defineProps<{
@@ -136,7 +137,7 @@ function getHourWordRu(n: number): string {
   <!-- Real Card -->
   <NuxtLink
     v-else-if="tour"
-    :to="`/tour/${tour.id}/${tour.slug}`"
+    :to="localePath(`/tour/${tour.id}/${tour.slug}`)"
     class="bg-white rounded-3xl overflow-hidden  shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_24px_48px_-12px_rgba(18,83,78,0.12)] hover:-translate-y-1 transition-all duration-500 flex flex-col justify-between group h-full relative"
   >
     <!-- Card Image Section -->
@@ -144,7 +145,7 @@ function getHourWordRu(n: number): string {
       <NuxtImg
         :provider="isCloudinary ? 'cloudinary' : undefined"
         :src="cleanedImage"
-        :alt="tour[`${locale}Title`]"
+        :alt="tour[`${locale}Title` as keyof typeof tour] || ''"
         class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
         width="400"
         height="250"
@@ -169,19 +170,19 @@ function getHourWordRu(n: number): string {
       <div class="space-y-4 flex-1">
         <!-- Tour Title -->
         <h2 class="text-lg xs:text-xl md:text-2xl lg:text-lg xl:text-xl font-bold text-zinc-900 font-serif leading-snug group-hover:text-primary transition-colors duration-300 line-clamp-2">
-          {{ tour[`${locale}Title`] }}
+          {{ tour[`${locale}Title` as keyof typeof tour] || '' }}
         </h2>
 
         <!-- Tour Description -->
         <p class="text-xs sm:text-[13px] text-zinc-500 leading-relaxed line-clamp-2">
-          {{ tour[`${locale}Description`] }}
+          {{ tour[`${locale}Description` as keyof typeof tour] || '' }}
         </p>
 
         <!-- Hotel & Meals Indicator Row (only for overnight) -->
         <div v-if="tour.isOvernight" class="space-y-2 pt-3 border-t border-dashed border-zinc-100 mt-2">
           <!-- Star Rating display -->
           <div v-if="tour.starRating" class="flex items-center gap-1">
-            <span class="text-[11px] font-bold text-zinc-500 mr-1 uppercase tracking-wider">Hotel:</span>
+            <span class="text-[11px] font-bold text-zinc-500 mr-1 uppercase tracking-wider">{{ $t('tour.hotel') }}:</span>
             <BaseIcon
               v-for="star in 5"
               :key="star"
@@ -193,7 +194,7 @@ function getHourWordRu(n: number): string {
 
           <!-- Meal indicators — full readable labels -->
           <div v-if="hasMeals" class="flex flex-wrap items-center gap-1.5">
-            <span class="text-[11px] font-bold text-zinc-500 uppercase tracking-wider mr-0.5">Meals:</span>
+            <span class="text-[11px] font-bold text-zinc-500 uppercase tracking-wider mr-0.5">{{ $t('tour.meals') }}:</span>
             <div
               v-if="parsedMealOptions.breakfast"
               class="inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-bold rounded-full bg-emerald-50 text-emerald-700 border-emerald-100/60"

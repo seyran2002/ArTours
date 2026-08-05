@@ -31,12 +31,14 @@ const { buildTourRoutePolyline } = useBuildRoutePolyline()
 // ─── Form reactive state ─────────────────────────────────────────────────────
 const enTitle = ref('')
 const ruTitle = ref('')
+const hyTitle = ref('')
 const enDescription = ref('')
 const ruDescription = ref('')
+const hyDescription = ref('')
 const price = ref<number | ''>('')
 const selectedTags = ref<string[]>([])
 const selectedTransferIds = ref<string[]>([])
-const entranceFees = ref<{ enName: string; ruName: string; fee: number }[]>([])
+const entranceFees = ref<{ enName: string; ruName: string; hyName: string; fee: number }[]>([])
 const images = ref<string[]>([])
 const mainImage = ref('')
 const duration = ref<TourDuration>({ days: 0, hours: 0 })
@@ -81,8 +83,10 @@ onMounted(async () => {
     if (existing) {
       enTitle.value = existing.enTitle || ''
       ruTitle.value = existing.ruTitle || ''
+      hyTitle.value = existing.hyTitle || ''
       enDescription.value = existing.enDescription || ''
       ruDescription.value = existing.ruDescription || ''
+      hyDescription.value = existing.hyDescription || ''
       price.value = existing.minimumPrice ?? ''
 
       selectedTags.value = existing.tags?.map((tag: any) => tag.id) || []
@@ -161,7 +165,7 @@ function toggleTag(tagId: string) {
 
 // ─── Entrance Fees ───────────────────────────────────────────────────────────
 function addEntranceFee() {
-  entranceFees.value.push({ enName: '', ruName: '', fee: 0 })
+  entranceFees.value.push({ enName: '', ruName: '', hyName: '', fee: 0 })
 }
 
 function removeEntranceFee(index: number) {
@@ -173,29 +177,35 @@ function validate(): boolean {
   errors.value = {}
 
   if (!enTitle.value.trim()) {
-    errors.value.enTitle = 'English Title is required.'
+    errors.value.enTitle = 'Տուրի անգլերեն անվանումը պարտադիր է'
   }
   if (!ruTitle.value.trim()) {
-    errors.value.ruTitle = 'Russian Title is required.'
+    errors.value.ruTitle = 'Տուրի ռուսերեն անվանումը պարտադիր է'
+  }
+  if (!hyTitle.value.trim()) {
+    errors.value.hyTitle = 'Տուրի հայերեն անվանումը պարտադիր է'
   }
   if (!enDescription.value.trim()) {
-    errors.value.enDescription = 'English short description is required.'
+    errors.value.enDescription = 'Տուրի անգլերեն համառոտ նկարագրությունը պարտադիր է'
   }
   if (!ruDescription.value.trim()) {
-    errors.value.ruDescription = 'Russian short description is required.'
+    errors.value.ruDescription = 'Տուրի ռուսերեն համառոտ նկարագրությունը պարտադիր է'
+  }
+  if (!hyDescription.value.trim()) {
+    errors.value.hyDescription = 'Տուրի հայերեն համառոտ նկարագրությունը պարտադիր է'
   }
 
   if (!images.value || images.value.length === 0) {
-    errors.value.images = 'At least one gallery image is required.'
+    errors.value.images = 'Գոնե մեկ պատկերը պարտադիր է'
   }
   if (!mainImage.value) {
-    errors.value.mainImage = 'A main (cover) image is required.'
+    errors.value.mainImage = 'Գլխավոր պատկերը պարտադիր է'
   }
 
   if (price.value === '' || price.value === null) {
-    errors.value.price = 'Minimum price is required.'
+    errors.value.price = 'Գինը պարտադիր է'
   } else if (Number(price.value) <= 0) {
-    errors.value.price = 'Minimum price must be greater than 0.'
+    errors.value.price = 'Գինը պետք է լինի 0-ից մեծ'
   }
 
   return Object.keys(errors.value).length === 0
@@ -219,8 +229,10 @@ const handleSave = async () => {
 
     formData.append('enTitle', enTitle.value.trim())
     formData.append('ruTitle', ruTitle.value.trim())
+    formData.append('hyTitle', hyTitle.value.trim())
     formData.append('enDescription', enDescription.value.trim())
     formData.append('ruDescription', ruDescription.value.trim())
+    formData.append('hyDescription', hyDescription.value.trim())
     formData.append('minimumPrice', String(price.value))
 
     // Main cover image
@@ -299,9 +311,8 @@ const handleSave = async () => {
     } else {
       emit('save')
     }
-  } catch (e) {
-    console.error('Error saving tour', e)
-    errors.value.submit = 'Failed to save tour. Please check the network.'
+  } catch (_) {
+    errors.value.submit = 'Տուրը պահպանելիս խնդիր առաջացավ: Խնդրում ենք նորից փորձել:'
   } finally {
     isSubmitting.value = false
   }
@@ -335,31 +346,10 @@ const handleSave = async () => {
 
       <!-- ── TITLES ROW (EN & RU) ── -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- EN TITLE -->
-        <div id="tour-field-enTitle" class="space-y-2">
-          <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Անգլերեն Վերնագիր (Title EN) *</label>
-          <div
-            :class="[
-              'flex items-center bg-white border rounded-2xl transition-all duration-300 focus-within:shadow-[0_0_0_3px_rgba(18,83,78,0.06)]',
-              errors.enTitle
-                ? 'border-red-500 focus-within:border-red-500'
-                : 'border-zinc-200 focus-within:border-primary/30'
-            ]"
-          >
-            <BaseInput
-              v-model="enTitle"
-              type="text"
-              placeholder="e.g. Garni Temple & Geghard Monastery"
-              size="md"
-              class="text-zinc-800 placeholder-zinc-400"
-            />
-          </div>
-          <p v-if="errors.enTitle" class="text-xs text-red-500 font-medium">{{ errors.enTitle }}</p>
-        </div>
-
+        
         <!-- RU TITLE -->
         <div id="tour-field-ruTitle" class="space-y-2">
-          <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Ռուսերեն Վերնագիր (Title RU) *</label>
+          <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Ռուսերեն Վերնագիր (Title RU) <span class="text-red-500">*</span></label>
           <div
             :class="[
               'flex items-center bg-white border rounded-2xl transition-all duration-300 focus-within:shadow-[0_0_0_3px_rgba(18,83,78,0.06)]',
@@ -378,13 +368,56 @@ const handleSave = async () => {
           </div>
           <p v-if="errors.ruTitle" class="text-xs text-red-500 font-medium">{{ errors.ruTitle }}</p>
         </div>
+        <!-- EN TITLE -->
+        <div id="tour-field-enTitle" class="space-y-2">
+          <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Անգլերեն Վերնագիր (Title EN) <span class="text-red-500">*</span></label>
+          <div
+            :class="[
+              'flex items-center bg-white border rounded-2xl transition-all duration-300 focus-within:shadow-[0_0_0_3px_rgba(18,83,78,0.06)]',
+              errors.enTitle
+                ? 'border-red-500 focus-within:border-red-500'
+                : 'border-zinc-200 focus-within:border-primary/30'
+            ]"
+          >
+            <BaseInput
+              v-model="enTitle"
+              type="text"
+              placeholder="e.g. Garni Temple & Geghard Monastery"
+              size="md"
+              class="text-zinc-800 placeholder-zinc-400"
+            />
+          </div>
+          <p v-if="errors.enTitle" class="text-xs text-red-500 font-medium">{{ errors.enTitle }}</p>
+        </div>
+        
+        <!-- HY TITLE -->
+        <div id="tour-field-hyTitle" class="space-y-2">
+          <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Հայերեն Վերնագիր (Title HY) <span class="text-red-500">*</span></label>
+          <div
+            :class="[
+              'flex items-center bg-white border rounded-2xl transition-all duration-300 focus-within:shadow-[0_0_0_3px_rgba(18,83,78,0.06)]',
+              errors.hyTitle
+                ? 'border-red-500 focus-within:border-red-500'
+                : 'border-zinc-200 focus-within:border-primary/30'
+            ]"
+          >
+            <BaseInput
+              v-model="hyTitle"
+              type="text"
+              placeholder="e.g. Գառնու տաճար և Գեղարդի վանք"
+              size="md"
+              class="text-zinc-800 placeholder-zinc-400"
+            />
+          </div>
+          <p v-if="errors.hyTitle" class="text-xs text-red-500 font-medium">{{ errors.hyTitle }}</p>
+        </div>
       </div>
 
       <!-- ── PRICE + DURATION ROW ── -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <!-- MINIMUM PRICE -->
         <div id="tour-field-price" class="flex flex-col space-y-2 md:space-y-2.5">
-          <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Մինիմալ գինը ($) *</label>
+          <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Մինիմալ գինը ($) <span class="text-red-500">*</span></label>
           <p class="text-[10px] text-zinc-400 mt-0.5">Նշեք տուրի նվազագույն գինը նախատեսված 3 հոգու համար</p>
           <div class="space-y-1.5">
             <div
@@ -504,9 +537,22 @@ const handleSave = async () => {
 
       <!-- ── SHORT DESCRIPTIONS ROW ── -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- RU SHORT DESC -->
+        <div id="tour-field-ruDescription" class="space-y-2">
+          <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Ռուսերեն Հակիրճ նկարագրություն <span class="text-red-500">*</span></label>
+          <textarea
+            v-model="ruDescription"
+            rows="3"
+            placeholder="Краткое описание на русском..."
+            class="w-full px-5 py-3 text-sm bg-white border border-zinc-200 rounded-2xl outline-none focus:border-primary/30 focus:shadow-[0_0_0_3px_rgba(18,83,78,0.06)] transition-all duration-300 font-medium text-zinc-800 placeholder-zinc-400 resize-none"
+            :class="{ 'border-red-500 focus:border-red-500': errors.ruDescription }"
+          />
+          <p v-if="errors.ruDescription" class="text-xs text-red-500 font-medium">{{ errors.ruDescription }}</p>
+        </div>
+
         <!-- EN SHORT DESC -->
         <div id="tour-field-enDescription" class="space-y-2">
-          <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Անգլերեն Հակիրճ նկարագրություն *</label>
+          <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Անգլերեն Հակիրճ նկարագրություն <span class="text-red-500">*</span></label>
           <textarea
             v-model="enDescription"
             rows="3"
@@ -516,18 +562,18 @@ const handleSave = async () => {
           />
           <p v-if="errors.enDescription" class="text-xs text-red-500 font-medium">{{ errors.enDescription }}</p>
         </div>
-
-        <!-- RU SHORT DESC -->
-        <div id="tour-field-ruDescription" class="space-y-2">
-          <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Ռուսերեն Հակիրճ նկարագրություն *</label>
+        
+        <!-- HY SHORT DESC -->
+        <div id="tour-field-hyDescription" class="space-y-2">
+          <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Հայերեն Հակիրճ նկարագրություն <span class="text-red-500">*</span></label>
           <textarea
-            v-model="ruDescription"
+            v-model="hyDescription"
             rows="3"
-            placeholder="Краткое описание на русском..."
+            placeholder="Հակիրճ նկարագրություն հայերենով..."
             class="w-full px-5 py-3 text-sm bg-white border border-zinc-200 rounded-2xl outline-none focus:border-primary/30 focus:shadow-[0_0_0_3px_rgba(18,83,78,0.06)] transition-all duration-300 font-medium text-zinc-800 placeholder-zinc-400 resize-none"
-            :class="{ 'border-red-500 focus:border-red-500': errors.ruDescription }"
+            :class="{ 'border-red-500 focus:border-red-500': errors.hyDescription }"
           />
-          <p v-if="errors.ruDescription" class="text-xs text-red-500 font-medium">{{ errors.ruDescription }}</p>
+          <p v-if="errors.hyDescription" class="text-xs text-red-500 font-medium">{{ errors.hyDescription }}</p>
         </div>
       </div>
 
@@ -563,7 +609,7 @@ const handleSave = async () => {
 
       <!-- ── IMAGES GALLERY MANAGER ── -->
       <div id="tour-field-images" class="space-y-2">
-        <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Բեռնել Լուսանկարները *</label>
+        <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Բեռնել Լուսանկարները <span class="text-red-500">*</span></label>
         <div
           class="rounded-2xl transition-all duration-200"
           :class="{ 'ring-2 ring-red-400 ring-offset-2': errors.images || errors.mainImage }"
@@ -576,9 +622,6 @@ const handleSave = async () => {
         <p v-if="errors.images" class="text-xs text-red-500 font-medium">{{ errors.images }}</p>
         <p v-if="errors.mainImage" class="text-xs text-red-500 font-medium">{{ errors.mainImage }}</p>
       </div>
-
-
-
 
       <!-- ── DYNAMIC ENTRANCE FEES ── -->
       <div class="space-y-3">
@@ -627,9 +670,20 @@ const handleSave = async () => {
               />
             </div>
 
+            <!-- Armenian Fee Name -->
+            <div class="flex-grow flex items-center bg-white border border-zinc-200 rounded-xl transition-all duration-300 focus-within:border-primary/30">
+              <BaseInput
+                v-model="fee.hyName"
+                type="text"
+                placeholder="e.g. Գառնու տաճար մուտք (HY)"
+                size="sm"
+                class="text-zinc-800 placeholder-zinc-400"
+              />
+            </div>
+
             <!-- Fee (Price) -->
             <div class="w-28 shrink-0 flex items-center bg-white border border-zinc-200 rounded-xl transition-all duration-300 focus-within:border-primary/30">
-              <span class="pl-4 text-xs font-bold text-zinc-600 shrink-0">$</span>
+              <span class="pl-4 text-xs font-bold text-zinc-600 shrink-0">֏</span>
               <BaseInput
                 :model-value="String(fee.fee)"
                 @update:model-value="val => fee.fee = val === '' ? 0 : Number(val)"
@@ -656,7 +710,7 @@ const handleSave = async () => {
         </div>
 
         <div v-else class="text-center py-6 border border-zinc-100 rounded-2xl bg-zinc-50/20 text-zinc-400 text-xs font-medium">
-          No optional entrance fees added yet. Click "Add Row" to attach fees.
+          Այս պահին մուտքավճարներ չեն ավելացվել։ Ավելացնելու համար սեղմեք «Ավելացնել տող» կոճակը։
         </div>
       </div>
 
@@ -664,7 +718,7 @@ const handleSave = async () => {
       <div class="border-t border-zinc-100 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
         <p v-if="errors.submit" class="text-xs font-semibold text-red-500">{{ errors.submit }}</p>
         <div v-else class="text-xs text-zinc-600">
-          Fields marked in * are required. Output matches requirements.
+          Այն դաշտերը, որոնք նշված են <span class="text-red-500">*</span> նշանով, պարտադիր են։
         </div>
 
         <div class="flex gap-3 w-full sm:w-auto">

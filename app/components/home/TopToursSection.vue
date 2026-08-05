@@ -49,7 +49,7 @@ const localePath = useLocalePath()
           variant="text" 
           class="font-bold group flex items-center transition-colors"
         >
-          <span class="mr-2">{{ $t('home.topTours.exploreAllJourneys') }}</span>
+          <span class="mr-2">{{ $t('home.exploreAllJourneys') }}</span>
           <BaseIcon 
             name="arrow-right" 
             size="sm" 

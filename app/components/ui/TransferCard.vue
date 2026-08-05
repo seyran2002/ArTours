@@ -3,8 +3,9 @@ import type { Transfer } from '~/types/transfer'
 import BaseIcon from '~/components/ui/BaseIcon.vue'
 import BaseButton from '~/components/ui/BaseButton.vue'
 import BaseBadge from '~/components/ui/BaseBadge.vue'
-import { useI18n } from '#imports'
+import { useI18n, useLocalePath } from '#imports'
 
+const localePath = useLocalePath()
 const { locale } = useI18n()
 
 const props = withDefaults(
@@ -95,7 +96,7 @@ const badge = computed(() => {
   <!-- Real Card -->
   <NuxtLink
     v-else-if="transfer"
-    :to="`/transfer/${transfer.id}/${transfer.slug}`"
+    :to="localePath(`/transfer/${transfer.id}/${transfer.slug}`)"
     class="bg-white rounded-3xl overflow-hidden  shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:shadow-[0_24px_48px_-12px_rgba(18,83,78,0.08)] hover:-translate-y-1 transition-all duration-500 flex flex-col justify-between group h-full relative"
   >
     <!-- Card Image Section -->

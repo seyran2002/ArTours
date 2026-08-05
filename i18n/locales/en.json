@@ -9,6 +9,7 @@
     "bookNow": "Book Now"
   },
   "home": {
+    "exploreAllJourneys": "Explore All Journeys",
     "hero": {
       "title": " Welcome to ",
       "subtitle": "Discover the ancient wonders, pristine forests, and vibrant culture of Armenia through curated local experiences.",
@@ -30,8 +31,7 @@
       "title1": "Discover Our",
       "title2": "Premium Excursions",
       "description": "Handcrafted luxury itineraries designed by destination experts to combine historic heritage, private access, and breathtaking mountain vistas.",
-      "badge": "Exclusive Offerings",
-      "exploreAllJourneys": "Explore All Journeys"
+      "badge": "Exclusive Offerings"
     },
     "whyChooseUs": {
       "badge": "Why Choose ArTours",
@@ -122,7 +122,9 @@
   "km": "km",
   "all": "All",
   "tour": {
-    "hotel": "Hotel Details",
+    "hotelDetails": "Hotel Details",
+    "hotel": "Hotel",
+    "meals": "Meals",
     "starRating": "Star Rating",
     "mealOptions": "Meals Included",
     "breakfast": "Breakfast",
@@ -290,8 +292,8 @@
     "emailDesc": "Replies within 24 hours",
     "validation": {
       "fullName": "Please enter your name",
-      "emailAddress": "Please enter your email",
-      "emailAddress2": "Please enter a valid email address",
+      "phoneNumber": "Please enter your phone number",
+      "phoneNumber2": "Please enter a valid phone number",
       "message": "Please enter a message",
       "message2": "Message must be at least 10 characters"
     },

@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import BaseBadge from '~/components/ui/BaseBadge.vue'
 import BaseIcon from '~/components/ui/BaseIcon.vue'
-import { useI18n } from 'vue-i18n';
+import { useI18n, useLocalePath } from '#imports';
 
 const { t } = useI18n();
+const localePath = useLocalePath();
 
 const culturalHighlights = computed(() => [
   {
@@ -113,10 +114,10 @@ const culturalHighlights = computed(() => [
 
       <!-- Bento Grid (Asymmetric Layout) -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 lg:gap-8 pt-4">
-        <router-link 
+        <nuxt-link 
           v-for="item in culturalHighlights" 
           :key="item.id"
-          :to="item.to"
+          :to="localePath(item.to)"
           :class="[
             'group relative overflow-hidden rounded-[32px] border p-6 sm:p-8 flex flex-col justify-between transition-all duration-500 ease-out hover:-translate-y-2 bg-gradient-to-br text-white',
             item.gradient,
@@ -168,7 +169,7 @@ const culturalHighlights = computed(() => [
             </span>
           </div>
 
-        </router-link>
+        </nuxt-link>
       </div>
 
     </div>

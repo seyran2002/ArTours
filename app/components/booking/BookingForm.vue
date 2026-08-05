@@ -380,12 +380,13 @@ const telegramLink = computed(() => {
   </div>
 </template>
 
-<style scoped>
-@import 'vue-tel-input/vue-tel-input.css';
+<style>
+@import '~/assets/css/vue-tel-input.css';
 
 .animate-fade-in {
   animation: fadeIn 0.45s ease-out forwards;
 }
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -429,7 +430,7 @@ const telegramLink = computed(() => {
 }
 
 /* Custom design integration styles for vue-tel-input */
-:deep(.vue-tel-input) {
+.vue-tel-input {
   border: 1px solid #e4e4e7 !important; /* border-zinc-200 */
   background-color: #fafafa !important; /* bg-zinc-50 */
   border-radius: 1rem !important; /* rounded-2xl */
@@ -440,13 +441,13 @@ const telegramLink = computed(() => {
   width: 100% !important;
 }
 
-:deep(.vue-tel-input:focus-within) {
+.vue-tel-input:focus-within {
   border-color: #12534e !important; /* border-primary */
   background-color: #ffffff !important;
   box-shadow: 0 0 0 2px rgba(18, 83, 78, 0.2) !important; /* ring-primary/20 */
 }
 
-:deep(.vti__input) {
+.vti__input {
   background-color: transparent !important;
   color: #27272a !important; /* text-zinc-800 */
   font-size: 0.875rem !important; /* text-sm */
@@ -457,18 +458,18 @@ const telegramLink = computed(() => {
   outline: none !important;
 }
 
-:deep(.vti__dropdown) {
+.vti__dropdown {
   border-radius: 1rem 0 0 1rem !important;
   padding: 0 10px !important;
   outline: none !important;
 }
 
-:deep(.vti__dropdown:hover),
-:deep(.vti__dropdown.open) {
+.vti__dropdown:hover,
+.vti__dropdown.open {
   background-color: #f4f4f5 !important; /* hover:bg-zinc-100 */
 }
 
-:deep(.vti__dropdown-list) {
+.vti__dropdown-list {
   border-radius: 1rem !important;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12) !important;
   border: 1px solid #e4e4e7 !important;
@@ -477,14 +478,14 @@ const telegramLink = computed(() => {
   padding: 4px 0 !important;
 }
 
-:deep(.vti__dropdown-item) {
+.vti__dropdown-item {
   padding: 8px 16px !important;
   font-size: 0.75rem !important;
   font-weight: 600 !important;
   color: #27272a !important;
 }
 
-:deep(.vti__dropdown-item.highlighted) {
+.vti__dropdown-item.highlighted {
   background-color: rgba(18, 83, 78, 0.05) !important;
   color: #12534e !important;
 }

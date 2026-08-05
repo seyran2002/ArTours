@@ -59,6 +59,11 @@ const emit = defineEmits<{
           <span class="mt-0.5 shrink-0 px-1.5 py-0.5 text-[8px] font-extrabold tracking-widest uppercase rounded bg-zinc-100 text-zinc-500 border border-zinc-200">EN</span>
           <span>{{ transfer.enTitle || '—' }}</span>
         </p>
+        <!-- HY Title — Secondary -->
+        <p class="text-sm font-semibold text-zinc-500 leading-snug line-clamp-1 flex items-start gap-2">
+          <span class="mt-0.5 shrink-0 px-1.5 py-0.5 text-[8px] font-extrabold tracking-widest uppercase rounded bg-zinc-100 text-zinc-500 border border-zinc-200">HY</span>
+          <span>{{ transfer.hyTitle || '—' }}</span>
+        </p>
       </div>
 
       <!-- Divider -->
@@ -76,8 +81,15 @@ const emit = defineEmits<{
         <!-- EN Description — Secondary -->
         <div class="flex gap-2">
           <span class="mt-0.5 shrink-0 px-1.5 py-0.5 text-[8px] font-extrabold tracking-widest uppercase rounded bg-zinc-100 text-zinc-500 border border-zinc-200 h-fit">EN</span>
-          <p class="text-xs text-zinc-400 leading-relaxed line-clamp-2">
+          <p class="text-xs text-zinc-500 leading-relaxed line-clamp-2">
             {{ transfer.enDescription || '—' }}
+          </p>
+        </div>
+        <!-- HY Description — Secondary -->
+        <div class="flex gap-2">
+          <span class="mt-0.5 shrink-0 px-1.5 py-0.5 text-[8px] font-extrabold tracking-widest uppercase rounded bg-zinc-100 text-zinc-500 border border-zinc-200 h-fit">HY</span>
+          <p class="text-xs text-zinc-500 leading-relaxed line-clamp-2">
+            {{ transfer.hyDescription || '—' }}
           </p>
         </div>
       </div>
@@ -86,15 +98,15 @@ const emit = defineEmits<{
       <div class="pt-4 border-t border-zinc-100 flex items-center justify-between gap-3 mt-auto">
         <!-- Minimum Price -->
         <div v-if="transfer.minimumPrice" class="shrink-0">
-          <span class="text-[9px] text-zinc-400 block uppercase font-bold tracking-widest leading-none mb-1">Pricing From</span>
+          <span class="text-[10px] text-zinc-500 block uppercase font-bold tracking-widest leading-none mb-1">Արժեքը սկսած</span>
           <span class="text-lg font-extrabold text-zinc-950 font-sans tracking-tight">
             ${{ transfer.minimumPrice }}
-            <span class="text-[10px] font-semibold text-zinc-400">/ pax</span>
+            <span class="text-xs font-semibold text-zinc-500">/ 3 հոգու համար</span>
           </span>
         </div>
         <div v-else class="shrink-0">
-          <span class="text-[9px] text-zinc-400 block uppercase font-bold tracking-widest leading-none mb-1">Pricing</span>
-          <span class="text-sm font-semibold text-zinc-400 italic">On request</span>
+          <span class="text-[9px] text-zinc-500 block uppercase font-bold tracking-widest leading-none mb-1">Pricing</span>
+          <span class="text-sm font-semibold text-zinc-500 italic">On request</span>
         </div>
 
         <BaseButton

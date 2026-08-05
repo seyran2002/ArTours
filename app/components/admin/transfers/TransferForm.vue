@@ -376,7 +376,7 @@ onMounted(async () => {
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <!-- FROM -->
         <div id="field-from" class="space-y-2">
-          <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Մեկնման վայր (Անգլերեն) *</label>
+          <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Մեկնման վայր (Անգլերեն) <span class="text-red-500">*</span></label>
           <GooglePlacesInput
             v-model="fromAddressText"
             placeholder="e.g. Yerevan"
@@ -394,7 +394,7 @@ onMounted(async () => {
 
         <!-- TO -->
         <div id="field-to" class="space-y-2">
-          <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Ժամանման վայր (Անգլերեն) *</label>
+          <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Ժամանման վայր (Անգլերեն) <span class="text-red-500">*</span></label>
           <GooglePlacesInput
             v-model="toAddressText"
             placeholder="e.g. Dilijan"
@@ -415,7 +415,7 @@ onMounted(async () => {
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <!-- EN TITLE -->
         <div id="field-enTitle" class="space-y-2">
-          <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Անգլերեն Վերնագիր (Title EN) *</label>
+          <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Անգլերեն Վերնագիր (Title EN) <span class="text-red-500">*</span></label>
           <div
             :class="[
               'flex items-center bg-white border rounded-2xl transition-all duration-300 focus-within:shadow-[0_0_0_3px_rgba(18,83,78,0.06)]',
@@ -437,7 +437,7 @@ onMounted(async () => {
 
         <!-- RU TITLE -->
         <div id="field-ruTitle" class="space-y-2">
-          <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Ռուսերեն Վերնագիր (Title RU) *</label>
+          <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Ռուսերեն Վերնագիր (Title RU) <span class="text-red-500">*</span></label>
           <div
             :class="[
               'flex items-center bg-white border rounded-2xl transition-all duration-300 focus-within:shadow-[0_0_0_3px_rgba(18,83,78,0.06)]',
@@ -459,7 +459,7 @@ onMounted(async () => {
 
         <!-- HY TITLE -->
         <div id="field-hyTitle" class="space-y-2">
-          <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Հայերեն Վերնագիր (Title HY) *</label>
+          <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Հայերեն Վերնագիր (Title HY) <span class="text-red-500">*</span></label>
           <div
             :class="[
               'flex items-center bg-white border rounded-2xl transition-all duration-300 focus-within:shadow-[0_0_0_3px_rgba(18,83,78,0.06)]',
@@ -509,7 +509,7 @@ onMounted(async () => {
 
         <!-- MINIMUM PRICE -->
         <div id="field-price" class="space-y-2">
-          <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Մինիմալ գինը ($) *</label>
+          <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Մինիմալ գինը ($) <span class="text-red-500">*</span></label>
           <div
             :class="[
               'flex items-center bg-white border rounded-2xl transition-all duration-300 focus-within:shadow-[0_0_0_3px_rgba(18,83,78,0.06)]',
@@ -537,7 +537,7 @@ onMounted(async () => {
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <!-- EN SHORT DESC -->
         <div id="field-enDescription" class="space-y-2">
-          <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Անգլերեն Հակիրճ նկարագրություն *</label>
+          <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Անգլերեն Հակիրճ նկարագրություն <span class="text-red-500">*</span></label>
           <textarea
             v-model="enDescription"
             rows="3"
@@ -550,7 +550,7 @@ onMounted(async () => {
 
         <!-- RU SHORT DESC -->
         <div id="field-ruDescription" class="space-y-2">
-          <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Ռուսերեն Հակիրճ նկարագրություն *</label>
+          <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Ռուսերեն Հակիրճ նկարագրություն <span class="text-red-500">*</span></label>
           <textarea
             v-model="ruDescription"
             rows="3"
@@ -563,7 +563,7 @@ onMounted(async () => {
 
         <!-- HY SHORT DESC -->
         <div id="field-hyDescription" class="space-y-2">
-          <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Հայերեն Հակիրճ նկարագրություն *</label>
+          <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Հայերեն Հակիրճ նկարագրություն <span class="text-red-500">*</span></label>
           <textarea
             v-model="hyDescription"
             rows="3"
@@ -595,7 +595,7 @@ onMounted(async () => {
 
       <!-- IMAGES GALLERY MANAGER -->
       <div id="field-images" class="space-y-2">
-        <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Բեռնել Լուսանկարները *</label>
+        <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Բեռնել Լուսանկարները <span class="text-red-500">*</span></label>
         <div
           class="rounded-2xl transition-all duration-200"
           :class="{ 'ring-2 ring-red-400 ring-offset-2': errors.images || errors.mainImage }"
@@ -613,7 +613,7 @@ onMounted(async () => {
       <div class="space-y-6">
         <!-- EN FULL DESC -->
         <div id="field-enLongDescription" class="space-y-2">
-          <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Մանրամասն Նկարագրություն (Անգլերեն) *</label>
+          <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Մանրամասն Նկարագրություն (Անգլերեն) <span class="text-red-500">*</span></label>
           <div
             class="rounded-2xl transition-all duration-200"
             :class="{ 'ring-2 ring-red-400 ring-offset-2': errors.enLongDescription }"
@@ -628,7 +628,7 @@ onMounted(async () => {
 
         <!-- RU FULL DESC -->
         <div id="field-ruLongDescription" class="space-y-2">
-          <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Մանրամասն Նկարագրություն (Ռուսերեն) *</label>
+          <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Մանրամասն Նկարագրություն (Ռուսերեն) <span class="text-red-500">*</span></label>
           <div
             class="rounded-2xl transition-all duration-200"
             :class="{ 'ring-2 ring-red-400 ring-offset-2': errors.ruLongDescription }"
@@ -643,7 +643,7 @@ onMounted(async () => {
 
         <!-- HY FULL DESC -->
         <div id="field-hyLongDescription" class="space-y-2">
-          <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Մանրամասն Նկարագրություն (Հայերեն) *</label>
+          <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Մանրամասն Նկարագրություն (Հայերեն) <span class="text-red-500">*</span></label>
           <div
             class="rounded-2xl transition-all duration-200"
             :class="{ 'ring-2 ring-red-400 ring-offset-2': errors.hyLongDescription }"
@@ -717,7 +717,7 @@ onMounted(async () => {
 
             <!-- Fee (Price) -->
             <div class="w-28 shrink-0 flex items-center bg-white border border-zinc-200 rounded-xl transition-all duration-300 focus-within:border-primary/30">
-              <span class="pl-4 text-xs font-bold text-zinc-600 shrink-0">$</span>
+              <span class="pl-4 text-xs font-bold text-zinc-600 shrink-0">֏</span>
               <BaseInput
                 :model-value="String(fee.fee)"
                 @update:model-value="val => fee.fee = val === '' ? 0 : Number(val)"
@@ -744,7 +744,7 @@ onMounted(async () => {
         </div>
 
         <div v-else class="text-center py-6 border border-zinc-100 rounded-2xl bg-zinc-50/20 text-zinc-400 text-xs font-medium">
-          No optional entrance fees added yet. Click "Add Row" to attach fees.
+          Այս պահին մուտքավճարներ չեն ավելացվել։ Ավելացնելու համար սեղմեք «Ավելացնել տող» կոճակը։
         </div>
       </div>
 
@@ -752,7 +752,7 @@ onMounted(async () => {
       <div class="border-t border-zinc-100 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
         <p v-if="errors.submit" class="text-xs font-semibold text-red-500">{{ errors.submit }}</p>
         <div v-else class="text-xs text-zinc-600">
-          Fields marked in * are required. Output matches requirements.
+          Այն դաշտերը, որոնք նշված են <span class="text-red-500">*</span> նշանով, պարտադիր են։
         </div>
 
         <div class="flex gap-3 w-full sm:w-auto">

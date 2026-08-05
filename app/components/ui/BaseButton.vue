@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { NuxtLink } from '#components'
 
 const props = withDefaults(
   defineProps<{
@@ -60,7 +61,7 @@ const sizeClasses = computed(() => {
 
 <template>
   <component
-    :is="tag || (to && !disabled ? 'NuxtLink' : 'button')"
+    :is="tag || (to && !disabled ? NuxtLink : 'button')"
     :to="tag ? undefined : (to && !disabled ? to : undefined)"
     :type="tag || to ? undefined : type"
     :disabled="tag ? undefined : (disabled || loading ? true : undefined)"

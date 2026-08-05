@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import BaseButton from '~/components/ui/BaseButton.vue'
 import BaseIcon from '~/components/ui/BaseIcon.vue'
 
 interface FormData {
   name: string
-  email: string
+  phone: string
   message: string
 }
 
 interface FormErrors {
   name: string
-  email: string
+  phone: string
   message: string
 }
 
@@ -19,13 +19,13 @@ const { t } = useI18n();
 
 const form = ref<FormData>({
   name: '',
-  email: '',
+  phone: '',
   message: ''
 })
 
 const errors = ref<FormErrors>({
   name: '',
-  email: '',
+  phone: '',
   message: ''
 })
 
@@ -34,34 +34,30 @@ const isSuccess = ref(false)
 const isError = ref(false)
 const errorMessage = ref('')
 
-const isValidEmail = (email: string): boolean => {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-}
-
 const validate = (): boolean => {
   let valid = true
 
   // Reset errors
-  errors.value = { name: '', email: '', message: '' }
+  errors.value = { name: '', phone: '', message: '' }
 
   if (!form.value.name.trim()) {
-    errors.value.name = t('contactUs.form.validation.fullName')
+    errors.value.name = t('contactUs.validation.fullName')
     valid = false
   }
 
-  if (!form.value.email.trim()) {
-    errors.value.email = t('contactUs.form.validation.emailAddress')
+  if (!form.value.phone.trim()) {
+    errors.value.phone = t('contactUs.validation.phoneNumber') || 'Please enter your phone number'
     valid = false
-  } else if (!isValidEmail(form.value.email)) {
-    errors.value.email = t('contactUs.form.validation.emailAddress2')
+  } else if (form.value.phone.trim().length < 6) {
+    errors.value.phone = t('contactUs.validation.phoneNumber2') || 'Please enter a valid phone number'
     valid = false
   }
 
   if (!form.value.message.trim()) {
-    errors.value.message = t('contactUs.form.validation.message')
+    errors.value.message = t('contactUs.validation.message')
     valid = false
   } else if (form.value.message.trim().length < 10) {
-    errors.value.message = t('contactUs.form.validation.message2')
+    errors.value.message = t('contactUs.validation.message2')
     valid = false
   }
 
@@ -76,16 +72,17 @@ const handleSubmit = async () => {
   errorMessage.value = ''
 
   try {
-    // Simulated API call
-    await new Promise<void>((resolve, reject) => {
-      setTimeout(() => {
-        // Simulate success (use reject() to test error state)
-        resolve()
-      }, 1500)
+    await $fetch('/api/contact', {
+      method: 'POST',
+      body: {
+        name: form.value.name.trim(),
+        phone: form.value.phone.trim(),
+        message: form.value.message.trim()
+      }
     })
 
     isSuccess.value = true
-    form.value = { name: '', email: '', message: '' }
+    form.value = { name: '', phone: '', message: '' }
 
     // Auto-reset success state after 6 seconds
     setTimeout(() => {
@@ -93,7 +90,7 @@ const handleSubmit = async () => {
     }, 6000)
   } catch (err: any) {
     isError.value = true
-    errorMessage.value = err?.message || t('contactUs.form.error')
+    errorMessage.value = err?.data?.statusMessage || err?.message || t('contactUs.form.error')
   } finally {
     isLoading.value = false
   }
@@ -103,7 +100,7 @@ const resetForm = () => {
   isSuccess.value = false
   isError.value = false
   errorMessage.value = ''
-  errors.value = { name: '', email: '', message: '' }
+  errors.value = { name: '', phone: '', message: '' }
 }
 </script>
 
@@ -162,25 +159,30 @@ const resetForm = () => {
         <p v-if="errors.name" class="mt-1.5 text-xs text-red-500 font-medium">{{ errors.name }}</p>
       </div>
 
-      <!-- Email Field -->
+      <!-- Phone Field -->
       <div>
-        <label for="contact-email" class="block text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-2">
-          {{ $t('contactUs.form.emailAddress') }}
+        <label for="contact-phone" class="block text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-2">
+          {{ $t('contactUs.form.phoneNumber') }}
         </label>
-        <input 
-          id="contact-email"
-          name="email"
-          autocomplete="email"
-          v-model="form.email"
-          type="email"
-          placeholder="john@example.com"
-          :class="[
-            'w-full px-5 py-3.5 rounded-2xl border bg-zinc-50/30 text-zinc-800 placeholder-zinc-400 outline-none transition-all duration-300 focus:bg-white focus:ring-4 focus:ring-primary/5 focus:border-primary text-sm font-semibold',
-            errors.email ? 'border-red-300 bg-red-50/30' : 'border-zinc-200'
-          ]"
-          @input="errors.email = ''"
-        />
-        <p v-if="errors.email" class="mt-1.5 text-xs text-red-500 font-medium">{{ errors.email }}</p>
+        <ClientOnly>
+          <vue-tel-input
+            v-model="form.phone"
+            class="custom-tel-input"
+            :input-options="{
+              id: 'contact-phone',
+              placeholder: '91 234567',
+              styleClasses: 'custom-tel-input-field'
+            }"
+            @input="errors.phone = ''"
+          />
+          <template #fallback>
+            <div class="flex items-center gap-3 bg-zinc-50 border border-zinc-200 rounded-2xl px-4 py-3.5 h-[50px] animate-pulse">
+              <span class="w-5 h-5 bg-zinc-200 rounded-full"></span>
+              <span class="w-24 h-4 bg-zinc-200 rounded"></span>
+            </div>
+          </template>
+        </ClientOnly>
+        <p v-if="errors.phone" class="mt-1.5 text-xs text-red-500 font-medium">{{ errors.phone }}</p>
       </div>
 
       <!-- Message Field -->
@@ -217,7 +219,9 @@ const resetForm = () => {
   </div>
 </template>
 
-<style scoped>
+<style>
+@import "~/assets/css/vue-tel-input.css";
+
 .animate-fade-in {
   animation: fadeIn 0.4s ease-out forwards;
 }
@@ -225,5 +229,30 @@ const resetForm = () => {
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+.vue-tel-input {
+  border: 1px solid #e4e4e7 !important;
+  background-color: rgba(250, 250, 250, 0.3) !important;
+  border-radius: 1rem !important;
+  padding: 4px 6px !important;
+  font-family: inherit !important;
+  transition: all 0.3s ease !important;
+  box-shadow: none !important;
+  width: 100% !important;
+}
+
+.vue-tel-input:focus-within {
+  border-color: #12534e !important;
+  background-color: #ffffff !important;
+  box-shadow: 0 0 0 4px rgba(18, 83, 78, 0.05) !important;
+}
+
+.vti__input {
+  background: unset !important;
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  color: #27272a !important;
+  padding: 8px 12px !important;
 }
 </style>

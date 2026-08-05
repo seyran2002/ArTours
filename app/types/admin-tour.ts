@@ -6,8 +6,10 @@ export interface AdminTour {
   slug?: string;
   enTitle: string;
   ruTitle: string;
+  hyTitle: string;
   enDescription?: string;
   ruDescription?: string;
+  hyDescription?: string;
   mainImage?: string;
   images: string[];
   minimumPrice?: number;
@@ -27,6 +29,7 @@ export interface AdminTour {
 export interface AdminTourEntranceFee {
   enName: string
   ruName: string
+  hyName: string
   fee: number
 }
 
