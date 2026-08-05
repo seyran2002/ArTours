@@ -24,6 +24,7 @@ export default defineNuxtConfig({
       meta: [
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         { name: 'format-detection', content: 'telephone=no' },
+        { name: 'apple-mobile-web-app-title', content: 'ArTours' },
         { property: 'og:site_name', content: 'ArTours' },
         { property: 'og:type', content: 'website' },
         { property: 'og:image', content: 'https://artours.am/logo.webp' },
@@ -31,7 +32,9 @@ export default defineNuxtConfig({
         { name: 'twitter:image', content: 'https://artours.am/logo.webp' },
       ],
       link: [
-        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+        { rel: 'icon', type: 'image/png', href: '/favicon-96x96.png', sizes: '96x96' },
+        { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
+        { rel: 'shortcut icon', href: '/favicon.ico' },
         { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
         { rel: 'manifest', href: '/site.webmanifest' },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
