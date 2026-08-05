@@ -1,15 +1,22 @@
 import { useHead, useSeoMeta, useI18n, useSwitchLocalePath } from '#imports'
-import { computed } from 'vue'
+import { computed, unref, type Ref, type ComputedRef } from 'vue'
 
 export interface SeoOptions {
-  titleKey: string
-  descriptionKey: string
-  keywordsKey: string
-  ogTitleKey: string
-  ogDescriptionKey: string
-  siteNameKey: string
-  imagePath?: string
-  schemas?: ('Organization' | 'WebSite' | 'TouristBusiness' | 'TravelAgency' | 'AboutPage' | 'ContactPage' | 'ReservationPage')[]
+  titleKey?: string
+  descriptionKey?: string
+  keywordsKey?: string
+  ogTitleKey?: string
+  ogDescriptionKey?: string
+  siteNameKey?: string
+  title?: string | Ref<string> | ComputedRef<string>
+  description?: string | Ref<string> | ComputedRef<string>
+  keywords?: string | Ref<string> | ComputedRef<string>
+  ogTitle?: string | Ref<string> | ComputedRef<string>
+  ogDescription?: string | Ref<string> | ComputedRef<string>
+  siteName?: string | Ref<string> | ComputedRef<string>
+  imagePath?: string | Ref<string> | ComputedRef<string>
+  schemas?: ('Organization' | 'WebSite' | 'TouristBusiness' | 'TravelAgency' | 'AboutPage' | 'ContactPage' | 'ReservationPage' | 'TouristTrip')[]
+  customSchema?: Record<string, any> | Ref<Record<string, any> | null> | ComputedRef<Record<string, any> | null>
 }
 
 export function usePageSeo(options: SeoOptions) {
@@ -18,30 +25,57 @@ export function usePageSeo(options: SeoOptions) {
 
   const siteUrl = 'https://artours.am'
 
-  // Localized metadata computed properties
-  const title = computed(() => t(options.titleKey))
-  const description = computed(() => t(options.descriptionKey))
-  const keywords = computed(() => t(options.keywordsKey))
-  const ogTitle = computed(() => t(options.ogTitleKey))
-  const ogDescription = computed(() => t(options.ogDescriptionKey))
-  const siteName = computed(() => t(options.siteNameKey))
+  // Localized metadata computed properties (supports direct reactive refs or i18n translation keys)
+  const title = computed(() => {
+    if (options.title) return unref(options.title)
+    if (options.titleKey) return t(options.titleKey)
+    return 'ArTours'
+  })
+
+  const description = computed(() => {
+    if (options.description) return unref(options.description)
+    if (options.descriptionKey) return t(options.descriptionKey)
+    return ''
+  })
+
+  const keywords = computed(() => {
+    if (options.keywords) return unref(options.keywords)
+    if (options.keywordsKey) return t(options.keywordsKey)
+    return ''
+  })
+
+  const ogTitle = computed(() => {
+    if (options.ogTitle) return unref(options.ogTitle)
+    if (options.ogTitleKey) return t(options.ogTitleKey)
+    return title.value
+  })
+
+  const ogDescription = computed(() => {
+    if (options.ogDescription) return unref(options.ogDescription)
+    if (options.ogDescriptionKey) return t(options.ogDescriptionKey)
+    return description.value
+  })
+
+  const siteName = computed(() => {
+    if (options.siteName) return unref(options.siteName)
+    if (options.siteNameKey) return t(options.siteNameKey)
+    return 'ArTours'
+  })
 
   const image = computed(() => {
-    const path = options.imagePath || '/logo.webp'
+    const path = unref(options.imagePath) || '/logo.webp'
     return path.startsWith('http') ? path : `${siteUrl}${path}`
   })
 
   // Dynamic canonical URL based on the active language path
   const canonicalUrl = computed(() => {
     const path = switchLocalePath(locale.value)
-    // switchLocalePath returns '' for the default locale root; normalise to '/'
     const cleanedPath = (path || '/').replace(/\/{2,}/g, '/')
-    // Ensure a single trailing slash (canonical format)
     const withSlash = cleanedPath.endsWith('/') ? cleanedPath : `${cleanedPath}/`
     return `${siteUrl}${withSlash === '/' ? '' : withSlash}`
   })
 
-  // Alternate hreflangs computed property
+  // Alternate hreflangs computed property (handles ru, en, hy and x-default)
   const hreflangs = computed(() => {
     const links = locales.value.map((loc: any) => {
       const code = typeof loc === 'string' ? loc : loc.code
@@ -70,7 +104,6 @@ export function usePageSeo(options: SeoOptions) {
 
     return links
   })
-
 
   // Inject main head tags (canonical, alternate hreflangs, meta keywords, robots)
   useHead({
@@ -101,9 +134,19 @@ export function usePageSeo(options: SeoOptions) {
   })
 
   // Schema.org Structured Data
-  if (options.schemas && options.schemas.length > 0) {
+  if ((options.schemas && options.schemas.length > 0) || options.customSchema) {
     const scriptTags = computed(() => {
       const tags: any[] = []
+
+      if (options.customSchema) {
+        const custom = unref(options.customSchema)
+        if (custom) {
+          tags.push({
+            type: 'application/ld+json',
+            children: JSON.stringify(custom, null, 2)
+          })
+        }
+      }
 
       if (options.schemas?.includes('Organization')) {
         tags.push({
@@ -118,13 +161,13 @@ export function usePageSeo(options: SeoOptions) {
             'sameAs': [
               'https://www.facebook.com/artours.am',
               'https://t.me/artours_am',
-              'https://wa.me/37493000000'
+              'https://wa.me/37455425595'
             ],
             'contactPoint': {
               '@type': 'ContactPoint',
-              'telephone': '+374-93-000000',
+              'telephone': '+374-55-42-55-95',
               'contactType': 'customer service',
-              'availableLanguage': ['English', 'Russian']
+              'availableLanguage': ['English', 'Russian', 'Armenian']
             }
           }, null, 2)
         })
@@ -165,7 +208,7 @@ export function usePageSeo(options: SeoOptions) {
             'url': siteUrl,
             'logo': `${siteUrl}/logo.webp`,
             'image': `${siteUrl}/logo.webp`,
-            'description': t(options.descriptionKey),
+            'description': description.value,
             'priceRange': '$$',
             'address': {
               '@type': 'PostalAddress',
@@ -195,7 +238,7 @@ export function usePageSeo(options: SeoOptions) {
             'url': siteUrl,
             'logo': `${siteUrl}/logo.webp`,
             'image': 'https://res.cloudinary.com/dl8iqp69h/image/upload/f_auto,q_auto:good,w_1280,c_fill,g_auto/v1780488823/about_rynoi2.webp',
-            'description': t(options.descriptionKey),
+            'description': description.value,
             'foundingDate': '2017',
             'founder': {
               '@type': 'Person',
@@ -219,7 +262,7 @@ export function usePageSeo(options: SeoOptions) {
             'sameAs': [
               'https://www.facebook.com/artours',
               'https://t.me/artours',
-              'https://wa.me/37410555555',
+              'https://wa.me/37455425595',
               'https://www.instagram.com/artours'
             ],
             'aggregateRating': {
@@ -240,8 +283,8 @@ export function usePageSeo(options: SeoOptions) {
             '@type': 'AboutPage',
             '@id': `${siteUrl}/about/#webpage`,
             'url': `${siteUrl}/about/`,
-            'name': t(options.titleKey),
-            'description': t(options.descriptionKey),
+            'name': title.value,
+            'description': description.value,
             'inLanguage': locale.value,
             'isPartOf': {
               '@id': `${siteUrl}/#website`
@@ -267,8 +310,8 @@ export function usePageSeo(options: SeoOptions) {
             '@type': 'ContactPage',
             '@id': `${siteUrl}/contact/#webpage`,
             'url': `${siteUrl}/contact/`,
-            'name': t(options.titleKey),
-            'description': t(options.descriptionKey),
+            'name': title.value,
+            'description': description.value,
             'inLanguage': locale.value,
             'isPartOf': {
               '@id': `${siteUrl}/#website`
@@ -319,44 +362,45 @@ export function usePageSeo(options: SeoOptions) {
             }
           }, null, 2)
         })
-        if (options.schemas?.includes('ReservationPage')) {
-          tags.push({
-            type: 'application/ld+json',
-            children: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': 'WebPage',
-              '@id': `${siteUrl}/booking-status/#webpage`,
-              'url': `${siteUrl}/booking-status/`,
-              'name': t(options.titleKey),
-              'description': t(options.descriptionKey),
-              'inLanguage': locale.value,
-              'isPartOf': {
-                '@id': `${siteUrl}/#website`
-              },
-              'about': {
-                '@id': `${siteUrl}/#travelagency`
-              },
-              'mainEntity': {
-                '@type': 'TravelAgency',
-                '@id': `${siteUrl}/#travelagency`,
-                'name': 'ArTours',
-                'url': siteUrl,
-                'logo': `${siteUrl}/logo.webp`
-              },
-              'potentialAction': {
-                '@type': 'SearchAction',
-                'target': {
-                  '@type': 'EntryPoint',
-                  'urlTemplate': `${siteUrl}/booking-status?code={booking_code}`
-                },
-                'query-input': 'required name=booking_code'
-              }
-            }, null, 2)
-          })
-        }
-
-        return tags
       }
+
+      if (options.schemas?.includes('ReservationPage')) {
+        tags.push({
+          type: 'application/ld+json',
+          children: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'WebPage',
+            '@id': `${siteUrl}/booking-status/#webpage`,
+            'url': `${siteUrl}/booking-status/`,
+            'name': title.value,
+            'description': description.value,
+            'inLanguage': locale.value,
+            'isPartOf': {
+              '@id': `${siteUrl}/#website`
+            },
+            'about': {
+              '@id': `${siteUrl}/#travelagency`
+            },
+            'mainEntity': {
+              '@type': 'TravelAgency',
+              '@id': `${siteUrl}/#travelagency`,
+              'name': 'ArTours',
+              'url': siteUrl,
+              'logo': `${siteUrl}/logo.webp`
+            },
+            'potentialAction': {
+              '@type': 'SearchAction',
+              'target': {
+                '@type': 'EntryPoint',
+                'urlTemplate': `${siteUrl}/booking-status?code={booking_code}`
+              },
+              'query-input': 'required name=booking_code'
+            }
+          }, null, 2)
+        })
+      }
+
+      return tags
     })
 
     useHead({

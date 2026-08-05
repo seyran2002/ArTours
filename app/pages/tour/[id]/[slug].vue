@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { useRoute, useHead, useSeoMeta, useI18n, useLocalePath, useRequestURL } from '#imports'
+import { useRoute, useI18n, useLocalePath } from '#imports'
 import { useTour } from '~/composables/useTour'
+import { usePageSeo } from '~/composables/usePageSeo'
 import TransferImageGallery from '~/components/transfers/TransferImageGallery.vue'
 import BaseIcon from '~/components/ui/BaseIcon.vue'
 import BaseButton from '~/components/ui/BaseButton.vue'
@@ -17,88 +18,53 @@ const { tour, loading, error } = useTour(id)
 
 const showBookingModal = ref(false)
 
-// ─── Localized fields ────────────────────────────────────────
-const localizedTitle = computed(() => locale.value === 'ru' ? (tour.value?.ruTitle ?? '') : (tour.value?.enTitle ?? ''))
-const localizedDesc = computed(() => locale.value === 'ru' ? (tour.value?.ruDescription ?? '') : (tour.value?.enDescription ?? ''))
-
-// ─── URLs ──────────────────────────────────────────────────
-const requestUrl = useRequestURL()
-const origin = computed(() => requestUrl.origin)
-// i18n prefix: default (ru) no prefix, en has /en
-const canonicalUrl = computed(() => {
-  if (!tour.value) return origin.value
-  const slug = tour.value.slug ?? ''
-  const prefix = locale.value === 'en' ? '/en' : ''
-  return `${origin.value}${prefix}/tour/${tour.value.id}/${slug}`
-})
-const hreflangRu = computed(() => {
-  if (!tour.value) return origin.value
-  return `${origin.value}/tour/${tour.value.id}/${tour.value.slug ?? ''}`
-})
-const hreflangEn = computed(() => {
-  if (!tour.value) return origin.value
-  return `${origin.value}/en/tour/${tour.value.id}/${tour.value.slug ?? ''}`
+// ─── Localized fields (ru, en, hy) ───────────────────────────
+const localizedTitle = computed(() => {
+  if (!tour.value) return ''
+  if (locale.value === 'hy') return tour.value.hyTitle || tour.value.enTitle || ''
+  if (locale.value === 'ru') return tour.value.ruTitle || tour.value.enTitle || ''
+  return tour.value.enTitle || ''
 })
 
-// ─── OG image ───────────────────────────────────────────────
-const ogImage = computed(() => tour.value?.mainImage ?? `${origin.value}/og-default.jpg`)
+const localizedDesc = computed(() => {
+  if (!tour.value) return ''
+  if (locale.value === 'hy') return tour.value.hyDescription || tour.value.enDescription || ''
+  if (locale.value === 'ru') return tour.value.ruDescription || tour.value.enDescription || ''
+  return tour.value.enDescription || ''
+})
 
-// ─── Page title ─────────────────────────────────────────────
 const pageTitle = computed(() => {
   return localizedTitle.value
     ? `${localizedTitle.value} — ArTours`
-    : locale.value === 'ru' ? 'Тур | ArTours' : 'Tour | ArTours'
+    : locale.value === 'hy' ? 'Տուր | ArTours' : locale.value === 'ru' ? 'Тур | ArTours' : 'Tour | ArTours'
 })
 
-// ─── SEO meta (standard + OG + Twitter) ─────────────────────
-useSeoMeta({
-  title: () => pageTitle.value,
-  description: () => localizedDesc.value || (locale.value === 'ru'
-    ? 'Забронируйте комфортный тур по Армении с ArTours.'
-    : 'Book a comfortable tour across Armenia with ArTours.'),
-  // Open Graph
-  ogTitle: () => pageTitle.value,
-  ogDescription: () => localizedDesc.value || (locale.value === 'ru'
-    ? 'Забронируйте комфортный тур по Армении с ArTours.'
-    : 'Book a comfortable tour across Armenia with ArTours.'),
-  ogImage: () => ogImage.value,
-  ogImageAlt: () => localizedTitle.value,
-  ogType: 'website',
-  ogUrl: () => canonicalUrl.value,
-  ogSiteName: 'ArTours',
-  ogLocale: () => locale.value === 'ru' ? 'ru_RU' : 'en_US',
-  ogLocaleAlternate: () => locale.value === 'ru' ? ['en_US'] : ['ru_RU'],
-  // Twitter Card
-  twitterCard: 'summary_large_image',
-  twitterTitle: () => pageTitle.value,
-  twitterDescription: () => localizedDesc.value || (locale.value === 'ru'
-    ? 'Забронируйте комфортный тур по Армении с ArTours.'
-    : 'Book a comfortable tour across Armenia with ArTours.'),
-  twitterImage: () => ogImage.value,
-  twitterImageAlt: () => localizedTitle.value,
-  robots: 'index, follow',
-})
+const featureImage = computed(() => tour.value?.mainImage || '/logo.webp')
 
-// ─── Canonical, hreflang, JSON‑LD ─────────────────────────────
-useHead(() => {
+// ─── TouristTrip Schema JSON-LD ─────────────────────────────
+const tourSchema = computed(() => {
+  if (!tour.value) return null
   const t = tour.value
-  const jsonLd = t ? {
+  return {
     '@context': 'https://schema.org',
     '@type': 'TouristTrip',
+    '@id': `https://artours.am/tour/${t.id}/${t.slug || ''}#trip`,
     name: [
       { '@language': 'ru', '@value': t.ruTitle },
       { '@language': 'en', '@value': t.enTitle },
+      { '@language': 'hy', '@value': t.hyTitle || t.enTitle }
     ],
     description: [
-      { '@language': 'ru', '@value': t.ruDescription ?? t.ruTitle },
-      { '@language': 'en', '@value': t.enDescription ?? t.enTitle },
+      { '@language': 'ru', '@value': t.ruDescription || t.ruTitle },
+      { '@language': 'en', '@value': t.enDescription || t.enTitle },
+      { '@language': 'hy', '@value': t.hyDescription || t.hyTitle || t.enTitle }
     ],
     image: t.mainImage ? [t.mainImage] : [],
-    url: canonicalUrl.value,
+    url: `https://artours.am/tour/${t.id}/${t.slug || ''}`,
     provider: {
       '@type': 'TravelAgency',
       name: 'ArTours',
-      url: origin.value,
+      url: 'https://artours.am'
     },
     ...(t.minimumPrice != null && {
       offers: {
@@ -106,21 +72,18 @@ useHead(() => {
         priceCurrency: 'USD',
         price: t.minimumPrice,
         availability: 'https://schema.org/InStock',
-        url: canonicalUrl.value,
-      },
-    }),
-  } : null
-
-  return {
-    htmlAttrs: { lang: locale.value },
-    link: [
-      { rel: 'canonical', href: canonicalUrl.value },
-      { rel: 'alternate', hreflang: 'ru', href: hreflangRu.value },
-      { rel: 'alternate', hreflang: 'en', href: hreflangEn.value },
-      { rel: 'alternate', hreflang: 'x-default', href: hreflangRu.value },
-    ],
-    script: jsonLd ? [{ type: 'application/ld+json', innerHTML: JSON.stringify(jsonLd) }] : [],
+        url: `https://artours.am/tour/${t.id}/${t.slug || ''}`
+      }
+    })
   }
+})
+
+// Combined reactive usePageSeo metadata
+usePageSeo({
+  title: pageTitle,
+  description: localizedDesc,
+  imagePath: featureImage,
+  customSchema: tourSchema
 })
 </script>
 

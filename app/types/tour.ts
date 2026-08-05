@@ -6,8 +6,10 @@ export interface Tour {
   slug?: string;
   enTitle: string;
   ruTitle: string;
+  hyTitle?: string;
   enDescription: string;
   ruDescription: string;
+  hyDescription?: string;
   mainImage: string;
   images: string[];
   minimumPrice?: number;
