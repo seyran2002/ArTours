@@ -4,14 +4,14 @@ const localePath = useLocalePath()
 </script>
 
 <template>
-  <footer class="bg-zinc-50 border-t border-zinc-200/50 pt-6 sm:pt-8 pb-16 sm:pb-20 md:mb-0 select-none">
+  <footer class="bg-zinc-50 border-t border-zinc-200/50 pt-6 sm:pt-8 pb-16 sm:pb-20 min-[870px]:mb-0 select-none">
     <div class="max-w-[1440px] mx-auto px-6 lg:px-8">
       
       <!-- Main Footer Grid (4-Column Layout on Desktop) -->
-      <div class="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 pb-6 border-b border-zinc-200/40">
+      <div class="grid grid-cols-1 min-[870px]:grid-cols-12 gap-8 lg:gap-12 pb-6 border-b border-zinc-200/40">
         
         <!-- Column 1: Brand Info (Col 4) -->
-        <div class="md:col-span-4 space-y-3.5">
+        <div class="min-[870px]:col-span-4 space-y-3.5">
           <NuxtLink :to="localePath('/')" class="inline-block group outline-none select-none" aria-label="ArTours home">
             <NuxtImg 
               src="/logo.webp" 
@@ -21,7 +21,7 @@ const localePath = useLocalePath()
               format="webp"
               quality="60"
               loading="lazy"
-              class="h-16 md:h-24 w-auto object-contain transition-transform duration-500 ease-out group-hover:scale-[1.02]" 
+              class="h-16 min-[870px]:h-24 w-auto object-contain transition-transform duration-500 ease-out group-hover:scale-[1.02]" 
             />
           </NuxtLink>
           
@@ -31,7 +31,7 @@ const localePath = useLocalePath()
         </div>
 
         <!-- Column 2: Navigation (ONLY visible on desktop & large tablets) (Col 2) -->
-        <div class="hidden md:block md:col-span-2 space-y-3.5">
+        <div class="hidden min-[870px]:block min-[870px]:col-span-2 space-y-3.5">
           <h3 class="text-[11px] font-bold uppercase tracking-[0.15em] text-zinc-900 font-sans">
             {{ $t('footer.navigation') }}
           </h3>
@@ -57,10 +57,10 @@ const localePath = useLocalePath()
         </div>
 
         <!-- Wrapper for Columns 3 & 4 (Displays side-by-side on mobile, aligns inline on desktop) -->
-        <div class="grid grid-cols-2 md:grid-cols-6 gap-8 md:col-span-6">
+        <div class="grid grid-cols-2 min-[870px]:grid-cols-6 gap-8 min-[870px]:col-span-6">
           
           <!-- Column 3: Visually Structured Contact Details (Col 3 on desktop) -->
-          <div class="md:col-span-3 space-y-3.5">
+          <div class="min-[870px]:col-span-3 space-y-3.5">
             <h3 class="text-[11px] font-bold uppercase tracking-[0.15em] text-zinc-900 font-sans">
               {{ $t('footer.contactDetails') }}
             </h3>
@@ -115,7 +115,7 @@ const localePath = useLocalePath()
           </div>
 
           <!-- Column 4: Isolated Social Links with Permanent Brand Colors (Col 3 on desktop) -->
-          <div class="md:col-span-3 space-y-3.5">
+          <div class="min-[870px]:col-span-3 space-y-3.5 w-[100px] ml-auto min-[440px]:w-auto min-[440px]:ml-0">
             <h3 class="text-[11px] font-bold uppercase tracking-[0.15em] text-zinc-900 font-sans">
               {{ $t('footer.social') }}
             </h3>

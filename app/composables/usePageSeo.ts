@@ -71,8 +71,8 @@ export function usePageSeo(options: SeoOptions) {
   const canonicalUrl = computed(() => {
     const path = switchLocalePath(locale.value)
     const cleanedPath = (path || '/').replace(/\/{2,}/g, '/')
-    const withSlash = cleanedPath.endsWith('/') ? cleanedPath : `${cleanedPath}/`
-    return `${siteUrl}${withSlash === '/' ? '' : withSlash}`
+    const trimmedPath = cleanedPath === '/' ? '' : cleanedPath.replace(/\/$/, '')
+    return `${siteUrl}${trimmedPath}`
   })
 
   // Alternate hreflangs computed property (handles ru, en, hy and x-default)
@@ -81,8 +81,8 @@ export function usePageSeo(options: SeoOptions) {
       const code = typeof loc === 'string' ? loc : loc.code
       const path = switchLocalePath(code)
       const cleanedPath = (path || '/').replace(/\/{2,}/g, '/')
-      const withSlash = cleanedPath.endsWith('/') ? cleanedPath : `${cleanedPath}/`
-      const href = `${siteUrl}${withSlash === '/' ? '' : withSlash}`
+      const trimmedPath = cleanedPath === '/' ? '' : cleanedPath.replace(/\/$/, '')
+      const href = `${siteUrl}${trimmedPath}`
 
       return {
         rel: 'alternate',
@@ -94,12 +94,12 @@ export function usePageSeo(options: SeoOptions) {
     // x-default points to the root URL (Russian / default locale)
     const defaultPath = switchLocalePath('ru')
     const defaultCleaned = (defaultPath || '/').replace(/\/{2,}/g, '/')
-    const defaultWithSlash = defaultCleaned.endsWith('/') ? defaultCleaned : `${defaultCleaned}/`
+    const defaultTrimmed = defaultCleaned === '/' ? '' : defaultCleaned.replace(/\/$/, '')
 
     links.push({
       rel: 'alternate',
       hreflang: 'x-default',
-      href: `${siteUrl}${defaultWithSlash === '/' ? '' : defaultWithSlash}`
+      href: `${siteUrl}${defaultTrimmed}`
     })
 
     return links
@@ -133,6 +133,40 @@ export function usePageSeo(options: SeoOptions) {
     twitterImage: image
   })
 
+  // Common Brand Entity Details for Schema.org
+  const brandEntity = {
+    '@type': 'Brand',
+    'name': 'ArTours',
+    'alternateName': ['ArTours Armenia', 'artours.am', 'ArTours — Tours & Transfers in Armenia'],
+    'url': siteUrl,
+    'logo': `${siteUrl}/logo.webp`
+  }
+
+  const socialSameAs = [
+    siteUrl,
+    'https://www.facebook.com/artours.am',
+    'https://www.facebook.com/artours',
+    'https://t.me/artours',
+    'https://t.me/artours_am',
+    'https://wa.me/37455425595',
+    'https://www.instagram.com/artours'
+  ]
+
+  const brandKnowsAbout = [
+    'Tours in Armenia',
+    'Armenia Travel',
+    'Yerevan Excursions',
+    'Armenia Transfers',
+    'Private Tours Armenia',
+    'Yerevan Airport Transfer',
+    'Day Trips in Armenia',
+    'Туры по Армении',
+    'Экскурсии из Еревана',
+    'Трансфер в Армении',
+    'Տուրեր Հայաստանում',
+    'Զբոսաշրջություն Հայաստանում'
+  ]
+
   // Schema.org Structured Data
   if ((options.schemas && options.schemas.length > 0) || options.customSchema) {
     const scriptTags = computed(() => {
@@ -156,13 +190,15 @@ export function usePageSeo(options: SeoOptions) {
             '@type': 'Organization',
             '@id': `${siteUrl}/#organization`,
             'name': 'ArTours',
+            'legalName': 'ArTours',
+            'alternateName': ['ArTours Armenia', 'ArTours AM', 'artours.am', 'ArTours — Tours & Transfers in Armenia'],
             'url': siteUrl,
             'logo': `${siteUrl}/logo.webp`,
-            'sameAs': [
-              'https://www.facebook.com/artours.am',
-              'https://t.me/artours_am',
-              'https://wa.me/37455425595'
-            ],
+            'image': `${siteUrl}/logo.webp`,
+            'brand': brandEntity,
+            'disambiguatingDescription': 'ArTours (artours.am) is the official tourism brand, travel agency, and tour operator in Armenia providing private tours from Yerevan, day trips, and airport transfers.',
+            'knowsAbout': brandKnowsAbout,
+            'sameAs': socialSameAs,
             'contactPoint': {
               '@type': 'ContactPoint',
               'telephone': '+374-55-42-55-95',
@@ -182,6 +218,7 @@ export function usePageSeo(options: SeoOptions) {
             '@id': `${siteUrl}/#website`,
             'url': siteUrl,
             'name': 'ArTours',
+            'alternateName': ['ArTours Armenia', 'artours.am', 'ArTours — Official Website'],
             'publisher': {
               '@id': `${siteUrl}/#organization`
             },
@@ -205,16 +242,22 @@ export function usePageSeo(options: SeoOptions) {
             '@type': 'TouristBusiness',
             '@id': `${siteUrl}/#touristbusiness`,
             'name': 'ArTours',
+            'legalName': 'ArTours',
+            'alternateName': ['ArTours Armenia', 'artours.am'],
             'url': siteUrl,
             'logo': `${siteUrl}/logo.webp`,
             'image': `${siteUrl}/logo.webp`,
-            'description': description.value,
+            'brand': brandEntity,
+            'description': description.value || 'Official tours and travel transfers in Armenia with ArTours (artours.am).',
+            'disambiguatingDescription': 'ArTours (artours.am) is the official tour operator for private excursions and travel transfers in Armenia.',
+            'knowsAbout': brandKnowsAbout,
             'priceRange': '$$',
             'address': {
               '@type': 'PostalAddress',
               'addressLocality': 'Yerevan',
               'addressCountry': 'AM'
             },
+            'sameAs': socialSameAs,
             'offers': {
               '@type': 'AggregateOffer',
               'priceCurrency': 'USD',
@@ -234,11 +277,15 @@ export function usePageSeo(options: SeoOptions) {
             '@type': 'TravelAgency',
             '@id': `${siteUrl}/#travelagency`,
             'name': 'ArTours',
-            'alternateName': 'ArTours Armenia',
+            'legalName': 'ArTours',
+            'alternateName': ['ArTours Armenia', 'artours.am', 'ArTours — Armenia Tours & Transfers'],
             'url': siteUrl,
             'logo': `${siteUrl}/logo.webp`,
             'image': 'https://res.cloudinary.com/dl8iqp69h/image/upload/f_auto,q_auto:good,w_1280,c_fill,g_auto/v1780488823/about_rynoi2.webp',
-            'description': description.value,
+            'brand': brandEntity,
+            'description': description.value || 'Official private tours, excursions, and airport transfers in Armenia by ArTours.',
+            'disambiguatingDescription': 'ArTours (artours.am) is an official tourism brand in Yerevan, Armenia offering custom tours and chauffeured travel transfers.',
+            'knowsAbout': brandKnowsAbout,
             'foundingDate': '2017',
             'founder': {
               '@type': 'Person',
@@ -259,12 +306,7 @@ export function usePageSeo(options: SeoOptions) {
               'availableLanguage': ['English', 'Russian', 'Armenian']
             },
             'email': 'artoursarmenia@gmail.com',
-            'sameAs': [
-              'https://www.facebook.com/artours',
-              'https://t.me/artours',
-              'https://wa.me/37455425595',
-              'https://www.instagram.com/artours'
-            ],
+            'sameAs': socialSameAs,
             'aggregateRating': {
               '@type': 'AggregateRating',
               'ratingValue': '4.9',
@@ -282,7 +324,7 @@ export function usePageSeo(options: SeoOptions) {
             '@context': 'https://schema.org',
             '@type': 'AboutPage',
             '@id': `${siteUrl}/about/#webpage`,
-            'url': `${siteUrl}/about/`,
+            'url': `${siteUrl}/about`,
             'name': title.value,
             'description': description.value,
             'inLanguage': locale.value,
@@ -309,7 +351,7 @@ export function usePageSeo(options: SeoOptions) {
             '@context': 'https://schema.org',
             '@type': 'ContactPage',
             '@id': `${siteUrl}/contact/#webpage`,
-            'url': `${siteUrl}/contact/`,
+            'url': `${siteUrl}/contact`,
             'name': title.value,
             'description': description.value,
             'inLanguage': locale.value,
@@ -332,33 +374,7 @@ export function usePageSeo(options: SeoOptions) {
                 'addressLocality': 'Yerevan',
                 'addressCountry': 'AM'
               },
-              'contactPoint': [
-                {
-                  '@type': 'ContactPoint',
-                  'telephone': '+374-55-42-55-95',
-                  'contactType': 'customer service',
-                  'availableLanguage': ['English', 'Russian', 'Armenian'],
-                  'contactOption': 'TollFree',
-                  'hoursAvailable': {
-                    '@type': 'OpeningHoursSpecification',
-                    'dayOfWeek': ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-                    'opens': '00:00',
-                    'closes': '23:59'
-                  }
-                },
-                {
-                  '@type': 'ContactPoint',
-                  'email': 'artoursarmenia@gmail.com',
-                  'contactType': 'customer service',
-                  'availableLanguage': ['English', 'Russian', 'Armenian']
-                }
-              ],
-              'sameAs': [
-                'https://t.me/ArToursTravel',
-                'https://wa.me/37455425595',
-                'https://www.facebook.com/artours',
-                'https://www.instagram.com/artours'
-              ]
+              'sameAs': socialSameAs
             }
           }, null, 2)
         })
@@ -371,7 +387,7 @@ export function usePageSeo(options: SeoOptions) {
             '@context': 'https://schema.org',
             '@type': 'WebPage',
             '@id': `${siteUrl}/booking-status/#webpage`,
-            'url': `${siteUrl}/booking-status/`,
+            'url': `${siteUrl}/booking-status`,
             'name': title.value,
             'description': description.value,
             'inLanguage': locale.value,
@@ -387,14 +403,6 @@ export function usePageSeo(options: SeoOptions) {
               'name': 'ArTours',
               'url': siteUrl,
               'logo': `${siteUrl}/logo.webp`
-            },
-            'potentialAction': {
-              '@type': 'SearchAction',
-              'target': {
-                '@type': 'EntryPoint',
-                'urlTemplate': `${siteUrl}/booking-status?code={booking_code}`
-              },
-              'query-input': 'required name=booking_code'
             }
           }, null, 2)
         })
@@ -408,3 +416,4 @@ export function usePageSeo(options: SeoOptions) {
     })
   }
 }
+

@@ -13,17 +13,16 @@ import TransfersLoadMore from '~/components/transfers/TransfersLoadMore.vue'
 import type { Transfer } from '~/types/transfer'
 
 const { locale } = useI18n()
+import { usePageSeo } from '~/composables/usePageSeo'
 
-useHead({
-  title: locale.value === 'ru' ? 'Трансферы — ArTours | Услуги трансфера' : 'Transfers — ArTours | Destination Transfer Services',
-  meta: [
-    {
-      name: 'description',
-      content: locale.value === 'ru' 
-        ? 'Просмотрите потрясающие направления и забронируйте удобные услуги трансфера. От древних монастырей до альпийских курортов.'
-        : 'Browse stunning destinations and book seamless transfer services. From ancient monasteries to alpine retreats — find comfortable rides to your next adventure.'
-    }
-  ]
+usePageSeo({
+  titleKey: 'seo.transfers.title',
+  descriptionKey: 'seo.transfers.description',
+  keywordsKey: 'seo.transfers.keywords',
+  ogTitleKey: 'seo.transfers.ogTitle',
+  ogDescriptionKey: 'seo.transfers.ogDescription',
+  siteNameKey: 'seo.transfers.siteName',
+  schemas: ['Organization', 'WebSite']
 })
 
 // Data Fetching

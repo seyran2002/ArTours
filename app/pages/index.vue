@@ -3,7 +3,11 @@ import { useRuntimeConfig, useLazyFetch } from '#imports'
 import type { Transfer } from '~/types/transfer';
 import type { Tour } from '~/types/tour';
 import HeroSection from '~/components/home/HeroSection.vue';
+import FaqSection from '~/components/common/FaqSection.vue';
 import { usePageSeo } from '~/composables/usePageSeo';
+import { useI18n } from '#imports'
+
+const { t, tm } = useI18n()
 
 const { public: { apiUrl } } = useRuntimeConfig()
 const popularTransfersUrl = `${apiUrl.endsWith('/') ? apiUrl : apiUrl + '/'}transfers/popular`
@@ -11,6 +15,25 @@ const { data: popularTransfers, status: transfersStatus } = useLazyFetch<Transfe
 
 const popularToursUrl = `${apiUrl.endsWith('/') ? apiUrl : apiUrl + '/'}tours/popular`
 const { data: popularTours, status: toursStatus } = useLazyFetch<Tour[]>(popularToursUrl, { key: 'popular-tours' })
+
+// Build FAQPage schema from i18n FAQ items
+const faqSchema = computed(() => {
+  let items: { q: string; a: string }[] = []
+  try { items = tm('faq.items') as { q: string; a: string }[] } catch { /* noop */ }
+  if (!items.length) return null
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    'mainEntity': items.map(item => ({
+      '@type': 'Question',
+      'name': item.q,
+      'acceptedAnswer': {
+        '@type': 'Answer',
+        'text': item.a
+      }
+    }))
+  }
+})
 
 // Apply localized SEO metadata and JSON-LD structured data
 usePageSeo({
@@ -20,7 +43,8 @@ usePageSeo({
   ogTitleKey: 'seo.home.ogTitle',
   ogDescriptionKey: 'seo.home.ogDescription',
   siteNameKey: 'seo.home.siteName',
-  schemas: ['Organization', 'WebSite', 'TouristBusiness']
+  schemas: ['Organization', 'WebSite', 'TouristBusiness'],
+  customSchema: faqSchema
 })
 </script>
 
@@ -38,5 +62,6 @@ usePageSeo({
     />
     <LazyHomeAdventuresSection />
     <LazyHomeComentsSection />
+    <FaqSection />
   </div>
 </template>

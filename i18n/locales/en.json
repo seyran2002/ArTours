@@ -395,35 +395,75 @@
     }
   },
   "exploreOurTours": "Explore Our Tours",
+  "faq": {
+    "badge": "Help & Questions",
+    "title1": "Frequently Asked",
+    "title2": "Questions (FAQ)",
+    "description": "Everything you need to know about traveling in Armenia with ArTours (artours.am).",
+    "items": [
+      {
+        "q": "What are the best tours in Armenia and day trips from Yerevan?",
+        "a": "Top day tours from Yerevan include Garni Pagan Temple & Geghard Monastery, Lake Sevan & Dilijan National Park, Khor Virap Monastery with Mount Ararat views, and private tours to Tatev Cable Car."
+      },
+      {
+        "q": "How to book a private transfer from Yerevan Airport (Zvartnots)?",
+        "a": "You can easily book your Yerevan airport transfer online at ArTours (artours.am). Our professional driver meets you at arrival with a custom name sign and provides direct transfer to any destination in Armenia."
+      },
+      {
+        "q": "Why choose ArTours for tours and transfers in Armenia?",
+        "a": "ArTours is an official tour brand in Armenia. We provide certified local driver-guides, comfortable AC vehicles, transparent pricing, and customizable private tour packages."
+      },
+      {
+        "q": "What are the top things to do and places to visit in Armenia?",
+        "a": "Must-see highlights include Yerevan city sights, Garni, Geghard, Lake Sevan, Noravank Monastery, Wings of Tatev, Dilijan, Jermuk waterfalls, and Echmiadzin Mother Cathedral."
+      }
+    ]
+  },
   "seo": {
     "home": {
-      "title": "ArTours — Armenia Tours, Private Tours Armenia & Yerevan Excursions",
-      "description": "Discover Armenia with ArTours. We offer curated private tours of Armenia, Yerevan day trips, professional airport transfers, and customizable travel packages. Book your authentic Armenian adventure today!",
-      "keywords": "Armenia Tours, Private Armenia Tours, Yerevan Tours, Armenia Travel, Armenia Travel Agency, Armenia Sightseeing Tours, Armenia Day Trips, Guided Tours Armenia, Custom Armenia Tours, Cultural Tours Armenia, Historical Tours Armenia, Armenia Vacation Packages, Things to Do in Armenia, Places to Visit in Armenia, Garni Temple Tour, Geghard Monastery Tour, Lake Sevan Tour, Dilijan Tour, Yerevan Airport Transfer, Armenia Private Transfer",
-      "ogTitle": "ArTours — Authentic Private Tours & Transfers in Armenia",
-      "ogDescription": "Experience the beauty, history, and warm hospitality of Armenia. Guided tours, custom itineraries, and comfortable transfers with local travel experts.",
+      "title": "ArTours — Tours in Armenia, Yerevan Tours & Airport Transfers",
+      "description": "Discover Armenia with ArTours. Book official Armenia tours, Yerevan day trips, private tours in Armenia, tour packages, and Yerevan airport transfers with ArTours (artours.am).",
+      "keywords": "Tours in Armenia, Armenia Tours, Armenia Travel, Yerevan Tours, Private Tours in Armenia, Day Tours in Armenia, Armenia Tour Packages, Armenia Private Transfers, Yerevan Airport Transfer, Things to Do in Armenia, ArTours, ArTours Armenia, artours.am, Private Armenia Tours, Armenia Travel Agency, Armenia Sightseeing Tours, Armenia Day Trips, Guided Tours Armenia, Custom Armenia Tours, Cultural Tours Armenia, Historical Tours Armenia, Armenia Vacation Packages, Places to Visit in Armenia, Garni Temple Tour, Geghard Monastery Tour, Lake Sevan Tour, Dilijan Tour",
+      "ogTitle": "ArTours — Official Tours & Private Transfers in Armenia",
+      "ogDescription": "Discover Armenia with ArTours (artours.am). Expert-guided private tours, day trips from Yerevan, and premium travel transfers across Armenia.",
+      "siteName": "ArTours Armenia"
+    },
+    "tours": {
+      "title": "Tours in Armenia & Day Trips from Yerevan — ArTours",
+      "description": "Explore handcrafted private tours in Armenia, tour packages, and day excursions from Yerevan with ArTours (artours.am). Book your Armenian journey today!",
+      "keywords": "Tours in Armenia, Armenia Tours, Yerevan Tours, Private Tours in Armenia, Day Tours in Armenia, Armenia Tour Packages, Things to Do in Armenia, ArTours, artours.am",
+      "ogTitle": "Tours in Armenia & Yerevan Excursions — ArTours",
+      "ogDescription": "Exclusive custom tour packages and day excursions from Yerevan with certified local guides from ArTours.",
+      "siteName": "ArTours Armenia"
+    },
+    "transfers": {
+      "title": "Armenia Private Transfers & Yerevan Airport Transfer — ArTours",
+      "description": "Book reliable Yerevan airport transfers and private transfers in Armenia with ArTours (artours.am). Professional drivers, comfortable vehicles, 24/7 service.",
+      "keywords": "Armenia Private Transfers, Yerevan Airport Transfer, Transfer in Armenia, Yerevan transfer service, ArTours transfer, artours.am",
+      "ogTitle": "Private Transfers in Armenia & Airport Transfer — ArTours",
+      "ogDescription": "Seamless chauffeured transfers from Yerevan Airport (Zvartnots) and all travel destinations across Armenia.",
       "siteName": "ArTours Armenia"
     },
     "about": {
-      "title": "About Us — ArTours | Story & Mission of an Armenian Travel Agency",
-      "description": "Meet the ArTours team: certified local driver-guides sharing authentic Armenia since 2017. 12,000+ happy travelers, 350+ completed tours, 150+ locations explored across the Armenian highlands.",
-      "keywords": "about ArTours, Armenia travel agency, certified guide Yerevan, Artur guide, ArTours story, Armenian driver-guide",
-      "ogTitle": "About Us — ArTours | Story & Mission",
-      "ogDescription": "A local team of travel coordinators sharing the soul of Armenia since 2017. Discover our story, meet our director, and feel the legendary Armenian hospitality.",
+      "title": "About Us — ArTours | Official Armenia Travel Agency (artours.am)",
+      "description": "Meet ArTours (artours.am): certified local driver-guides sharing authentic Armenia since 2017. 12,000+ happy travelers, 350+ completed tours, 150+ destinations.",
+      "keywords": "about ArTours, ArTours Armenia, artours.am, Armenia travel agency, certified guide Yerevan, Artur guide, ArTours story, Armenian driver-guide",
+      "ogTitle": "About Us — ArTours | Official Brand Story & Mission",
+      "ogDescription": "A local team of travel coordinators sharing the soul of Armenia since 2017. Discover our story, meet our director, and feel legendary Armenian hospitality.",
       "siteName": "ArTours Armenia"
     },
     "contact": {
-      "title": "Contact Us — ArTours | Get in Touch for Armenia Tours & Transfers",
-      "description": "Get in touch with ArTours travel agency in Yerevan, Armenia. Reach us via phone, WhatsApp, Telegram, or email. Our travel specialists are available 24/7 to plan your perfect trip.",
-      "keywords": "contact ArTours, contact Armenia guide, ArTours phone number, WhatsApp tour Armenia, Telegram ArTours, book Armenia travel",
-      "ogTitle": "Contact Us — ArTours | Get in Touch",
+      "title": "Contact Us — ArTours | Book Armenia Tours & Transfers",
+      "description": "Contact official tour operator ArTours (artours.am) in Yerevan. Phone, WhatsApp, Telegram, or email. Get 24/7 support for custom Armenia tours and transfers.",
+      "keywords": "contact ArTours, artours.am, contact Armenia guide, ArTours phone number, WhatsApp tour Armenia, Telegram ArTours, book Armenia travel, Yerevan transfer",
+      "ogTitle": "Contact Us — ArTours | Get in Touch 24/7",
       "ogDescription": "Have questions about custom itineraries, private tours, or transfers in Armenia? Contact our travel specialists 24/7 via phone, WhatsApp, Telegram, or email.",
       "siteName": "ArTours Armenia"
     },
     "booking": {
       "title": "Booking Status — ArTours | Check Reservation & Travel Voucher",
-      "description": "Track your ArTours travel reservation. Enter your 10-character reference code to view itinerary details, confirmation status, and voucher information.",
-      "keywords": "ArTours booking status, check Armenia reservation, Armenia travel voucher, ArTours booking reference",
+      "description": "Track your ArTours (artours.am) travel reservation. Enter your 10-character reference code to view itinerary details, confirmation status, and voucher information.",
+      "keywords": "ArTours booking status, artours.am, check Armenia reservation, Armenia travel voucher, ArTours booking reference",
       "ogTitle": "Check Booking Status — ArTours",
       "ogDescription": "Enter your booking code to track your itinerary, guide confirmation, and travel details for your upcoming Armenia trip.",
       "siteName": "ArTours Armenia"

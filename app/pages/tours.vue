@@ -11,17 +11,16 @@ import ToursSearch from '~/components/tours/ToursSearch.vue'
 import ToursFilters from '~/components/tours/ToursFilters.vue'
 import ToursGrid from '~/components/tours/ToursGrid.vue'
 const { locale, t } = useI18n()
+import { usePageSeo } from '~/composables/usePageSeo'
 
-useHead({
-  title: locale.value === 'ru' ? 'Туры — ArTours | Экскурсии и приключения' : 'Tours — ArTours | Curated Excursions & Adventures',
-  meta: [
-    {
-      name: 'description',
-      content: locale.value === 'ru'
-        ? 'Авторские маршруты, разработанные экспертами. От осенних туров до адреналиновых приключений — найдите идеальную экскурсию.'
-        : 'Explore handcrafted tour itineraries designed by destination experts. From autumn specials to adrenaline-fueled adventures — find your perfect excursion.'
-    }
-  ]
+usePageSeo({
+  titleKey: 'seo.tours.title',
+  descriptionKey: 'seo.tours.description',
+  keywordsKey: 'seo.tours.keywords',
+  ogTitleKey: 'seo.tours.ogTitle',
+  ogDescriptionKey: 'seo.tours.ogDescription',
+  siteNameKey: 'seo.tours.siteName',
+  schemas: ['Organization', 'WebSite']
 })
 
 // Data Fetching
