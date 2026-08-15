@@ -5,11 +5,10 @@ import { useI18n } from '#imports'
 const { tm } = useI18n()
 
 const items = computed(() => {
-  try {
-    return tm('faq.items') as { q: { loc: { source: string } }; a: { loc: { source: string } } }[]
-  } catch {
-    return []
-  }
+  return tm('faq.items') as {
+    q: string
+    a: string
+  }[]
 })
 
 const openIndex = ref<number | null>(null)
@@ -65,7 +64,7 @@ function toggle(i: number) {
             @click="toggle(i)"
           >
             <span class="text-sm sm:text-base font-semibold text-zinc-900 leading-snug">
-              {{ item.q?.loc?.source }}
+              {{ item.q }}
             </span>
             <span
               class="shrink-0 w-8 h-8 rounded-full border border-zinc-200 flex items-center justify-center text-primary transition-all duration-300 group-hover:border-primary/40"
@@ -88,7 +87,7 @@ function toggle(i: number) {
             <div class="px-6 pb-5">
               <div class="h-px bg-zinc-100 mb-4" />
               <p class="text-sm text-zinc-600 leading-relaxed">
-                {{ item.a?.loc?.source }}
+                {{ item.a }}
               </p>
             </div>
           </div>
