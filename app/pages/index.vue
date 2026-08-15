@@ -3,7 +3,6 @@ import { useRuntimeConfig, useLazyFetch } from '#imports'
 import type { Transfer } from '~/types/transfer';
 import type { Tour } from '~/types/tour';
 import HeroSection from '~/components/home/HeroSection.vue';
-import FaqSection from '~/components/common/FaqSection.vue';
 import { usePageSeo } from '~/composables/usePageSeo';
 import { useI18n } from '#imports'
 
@@ -62,6 +61,6 @@ usePageSeo({
     />
     <LazyHomeAdventuresSection />
     <LazyHomeComentsSection />
-    <FaqSection />
+    <LazyCommonFaqSection />
   </div>
 </template>
