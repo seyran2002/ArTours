@@ -125,7 +125,7 @@ async function handleSubmit() {
 // ─── Telegram deep link ────────────────────────────────────────────────────────
 const telegramLink = computed(() => {
   if (!bookingDisplayData.value) return '#'
-  return `https://t.me/artours_booking_bot?start=${bookingDisplayData.value.ref}`
+  return `https://t.me/artours_armenia_bot?start=${bookingDisplayData.value.ref}`
 })
 </script>
 
@@ -160,18 +160,7 @@ const telegramLink = computed(() => {
     />
 
     <!-- Telegram notification CTA -->
-    <a
-      :href="telegramLink"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="telegram-cta"
-    >
-      <!-- Telegram plane icon -->
-      <svg viewBox="0 0 24 24" class="telegram-icon" fill="currentColor">
-        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.448 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L8.32 13.617l-2.96-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.828.942z"/>
-      </svg>
-      <span>{{ $t('booking.enableTelegramNotifications') }}</span>
-    </a>
+    <TelegramCta :href="telegramLink" />
 
     <LazyBookingTicket :booking="bookingDisplayData" />
   </div>
@@ -392,42 +381,6 @@ const telegramLink = computed(() => {
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ── Telegram CTA button ────────────────────────────────────────── */
-.telegram-cta {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.6rem;
-  width: 100%;
-  padding: 0.75rem 1.25rem;
-  border-radius: 1rem;
-  background: linear-gradient(135deg, #2AABEE 0%, #229ED9 100%);
-  color: #fff;
-  font-size: 0.9rem;
-  font-weight: 600;
-  letter-spacing: 0.01em;
-  text-decoration: none;
-  box-shadow: 0 2px 12px rgba(42, 171, 238, 0.30);
-  transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
-  cursor: pointer;
-}
-
-.telegram-cta:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(42, 171, 238, 0.40);
-  filter: brightness(1.05);
-}
-
-.telegram-cta:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 8px rgba(42, 171, 238, 0.25);
-}
-
-.telegram-icon {
-  width: 1.2rem;
-  height: 1.2rem;
-  flex-shrink: 0;
-}
 
 /* Custom design integration styles for vue-tel-input */
 .vue-tel-input {

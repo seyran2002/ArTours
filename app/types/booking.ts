@@ -31,6 +31,7 @@ export interface Booking {
   date: string;
   enTravelDate: string;
   ruTravelDate: string;
+  customerTelegramId?: string | null;
   status: BookingStatus;
   travellers: number;
   amount: number;

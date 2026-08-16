@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted, watch, computed } from 'vue'
 import { useRoute, useRouter, useLocalePath } from '#imports'
 import BaseButton from '~/components/ui/BaseButton.vue'
 import BaseIcon from '~/components/ui/BaseIcon.vue'
 import BookingHeader from '~/components/booking/BookingHeader.vue'
 import BookingSearch from '~/components/booking/BookingSearch.vue'
+import TelegramCta from '~/components/ui/TelegramCta.vue'
 import { useBookingService } from '~/services/booking.service'
 import { useCancelBooking } from '~/composables/useCancelBooking'
 import { BookingStatus, type Booking } from '~/types/booking'
@@ -114,6 +115,7 @@ function adaptApiResponse(data: any): Booking {
     amount: data.totalPrice ?? 0,
     email: data.customerEmail || '',
     paymentMethod: 'cash',
+    customerTelegramId: data.customerTelegramId,
     ...(duration && { duration: duration  }),
     ...(data.transfer?.toAddressText && { location: data.transfer.toAddressText }),
   }
@@ -197,6 +199,12 @@ watch(
     }
   }
 )
+
+// ─── Telegram deep link ────────────────────────────────────────────────────────
+const telegramLink = computed(() => {
+  if (!selectedBooking.value?.ref) return '#'
+  return `https://t.me/artours_armenia_bot?start=${selectedBooking.value.ref}`
+})
 </script>
 
 <template>
@@ -254,6 +262,9 @@ watch(
             :status="selectedBooking.status"
             :email="selectedBooking.email"
           />
+
+          <!-- Telegram notification CTA -->
+          <TelegramCta v-if="!selectedBooking.customerTelegramId" :href="telegramLink" />
 
           <!-- Modular Ticket Details & Actions Card -->
           <LazyBookingTicket 
