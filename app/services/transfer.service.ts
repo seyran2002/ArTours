@@ -9,6 +9,10 @@ export function useTransferService() {
       return api.get<Transfer[]>('transfers')
     },
 
+    async getTransfersCount(): Promise<{ count: number }> {
+      return api.get<{ count: number }>('transfers/count')
+    },
+
     async createTransfer(formData: FormData): Promise<Transfer> {
       return api.post<Transfer>('transfers', formData)
     },

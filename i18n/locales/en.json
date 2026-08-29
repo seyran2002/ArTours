@@ -19,7 +19,8 @@
       "destinations": "Destinations",
       "travelers": "Travelers",
       "exploreArmenia": "Explore Armenia",
-      "noResults": "No results found for your search"
+      "noResults": "No results found for your search",
+      "years": "Years"
     },
     "popularDestinations": {
       "titlePart1": "Popular",

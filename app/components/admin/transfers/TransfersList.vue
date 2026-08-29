@@ -2,7 +2,6 @@
 import { ref, computed } from 'vue'
 import BaseIcon from '~/components/ui/BaseIcon.vue'
 import TransferCardAdmin from '~/components/ui/TransferCardAdmin.vue'
-import { useTransfersState } from '~/composables/useTransfersState'
 import type { Transfer } from '~/types/transfer'
 
 const props = defineProps<{
@@ -25,8 +24,10 @@ const filteredTransfers = computed(() => {
   return props.transfers.filter((t) =>
     t.ruTitle?.toLowerCase().includes(query) ||
     t.enTitle?.toLowerCase().includes(query) ||
+    t.hyTitle?.toLowerCase().includes(query) ||
     t.ruDescription?.toLowerCase().includes(query) ||
-    t.enDescription?.toLowerCase().includes(query)
+    t.enDescription?.toLowerCase().includes(query) ||
+    t.hyDescription?.toLowerCase().includes(query)
   )
 })
 
@@ -55,7 +56,7 @@ function confirmDelete(id: string) {
           <input
             v-model="searchQuery"
             type="text"
-            placeholder="Search transfers by Russian or English title / description..."
+            placeholder="Փնտրել տրանսֆերներ վերնագրով կամ նկարագրությամբ..."
             class="w-full bg-transparent text-sm font-medium text-zinc-800 placeholder-zinc-400 outline-none border-none"
           />
           <button
@@ -75,7 +76,7 @@ function confirmDelete(id: string) {
         class="w-full sm:w-auto px-5 py-2.5 text-sm font-semibold bg-primary hover:bg-primary-dark text-white rounded-xl transition-all duration-300 cursor-pointer hover:shadow-lg shadow-primary/10 active:scale-95 flex items-center justify-center gap-2"
       >
         <BaseIcon name="plus" size="sm" />
-        <span>Create Transfer</span>
+        <span>Ստեղծել Տրանսֆեր</span>
       </button>
     </div>
 
@@ -140,9 +141,9 @@ function confirmDelete(id: string) {
       class="bg-white/70 border border-zinc-200/60 rounded-3xl p-16 shadow-sm text-center"
     >
       <BaseIcon name="search" size="lg" class="text-zinc-300 mb-4 mx-auto block" />
-      <h3 class="text-lg font-bold text-zinc-800">No transfers found</h3>
+      <h3 class="text-lg font-bold text-zinc-800">Չգտնվեց ոչ մի տրանսֆեր</h3>
       <p class="text-sm text-zinc-400 mt-1 max-w-sm mx-auto">
-        We couldn't find any transfer services matching "{{ searchQuery }}". Adjust your keyword or create a new transfer.
+        Չգտնվեց ոչ մի տրանսֆեր, որը համապատասխանում է "{{ searchQuery }}"։ Փոփոխեք ձեր որոնման բառը կամ ստեղծեք նոր տրանսֆեր։
       </p>
       <button
         v-if="searchQuery"
@@ -150,7 +151,7 @@ function confirmDelete(id: string) {
         @click="searchQuery = ''"
         class="mt-4 px-4 py-2 border border-zinc-200 text-xs font-bold text-zinc-600 hover:text-zinc-800 hover:bg-zinc-50 rounded-xl cursor-pointer"
       >
-        Clear Search
+        Մաքրել որոնումը
       </button>
     </div>
   </div>

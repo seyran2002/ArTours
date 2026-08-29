@@ -26,8 +26,10 @@ const filteredTours = computed(() => {
   return props.tours.filter((t) =>
     t.ruTitle?.toLowerCase().includes(query) ||
     t.enTitle?.toLowerCase().includes(query) ||
+    t.hyTitle?.toLowerCase().includes(query) ||
     t.ruDescription?.toLowerCase().includes(query) ||
-    t.enDescription?.toLowerCase().includes(query)
+    t.enDescription?.toLowerCase().includes(query) ||
+    t.hyDescription?.toLowerCase().includes(query)
   )
 })
 
@@ -56,7 +58,7 @@ function confirmDelete(id: string) {
           <input
             v-model="searchQuery"
             type="text"
-            placeholder="Search tours by Russian or English title / description..."
+            placeholder="Փնտրել տուրեր վերնագրով կամ նկարագրությամբ..."
             class="w-full bg-transparent text-sm font-medium text-zinc-800 placeholder-zinc-400 outline-none border-none"
           />
           <button
@@ -76,7 +78,7 @@ function confirmDelete(id: string) {
         class="w-full sm:w-auto px-5 py-2.5 text-sm font-semibold bg-primary hover:bg-primary-dark text-white rounded-xl transition-all duration-300 cursor-pointer hover:shadow-lg shadow-primary/10 active:scale-95 flex items-center justify-center gap-2"
       >
         <BaseIcon name="plus" size="sm" />
-        <span>Create Tour</span>
+        <span>Ստեղծել Տուր</span>
       </button>
     </div>
 
@@ -139,13 +141,13 @@ function confirmDelete(id: string) {
       class="bg-white/70 border border-zinc-200/60 rounded-3xl p-16 shadow-sm text-center"
     >
       <BaseIcon name="search" size="lg" class="text-zinc-300 mb-4 mx-auto block" />
-      <h3 class="text-lg font-bold text-zinc-800">No tours found</h3>
+      <h3 class="text-lg font-bold text-zinc-800">Չգտնվեց ոչ մի տուր</h3>
       <p class="text-sm text-zinc-400 mt-1 max-w-sm mx-auto">
         <template v-if="searchQuery">
-          We couldn't find any tours matching "{{ searchQuery }}". Adjust your keyword or create a new tour.
+          Չգտնվեց ոչ մի տուր, որը համապատասխանում է "{{ searchQuery }}"։ Փոփոխեք ձեր որոնման բառը կամ ստեղծեք նոր տուր։
         </template>
         <template v-else>
-          No tours have been created yet. Click "Create Tour" to add your first one.
+          Դեռևս տուրեր չեն ստեղծվել։ Սեղմեք "Ստեղծել Տուր" կոճակը՝ ձեր առաջին տուրն ավելացնելու համար։
         </template>
       </p>
       <button

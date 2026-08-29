@@ -1,22 +1,44 @@
 export const adminToken = {
   get(): string | null {
-    if (!import.meta.client) return null
-
-    const match = document.cookie
-      .split('; ')
-      .find((row) => row.startsWith('admin_token='))
-
-    return match ? decodeURIComponent(match.slice('admin_token='.length)) : null
+    try {
+      const cookie = useCookie<string | null>('admin_token')
+      return cookie.value ?? null
+    } catch {
+      if (typeof document !== 'undefined') {
+        const match = document.cookie
+          .split('; ')
+          .find((row) => row.startsWith('admin_token='))
+        return match ? decodeURIComponent(match.slice('admin_token='.length)) : null
+      }
+      return null
+    }
   },
 
   set(token: string, maxAgeSeconds = 28_800): void {
-    if (!import.meta.client) return
-    document.cookie = `admin_token=${encodeURIComponent(token)}; path=/; max-age=${maxAgeSeconds}; SameSite=Lax; Secure`
+    try {
+      const cookie = useCookie<string | null>('admin_token', {
+        maxAge: maxAgeSeconds,
+        path: '/',
+        sameSite: 'lax',
+        secure: true
+      })
+      cookie.value = token
+    } catch {
+      if (typeof document !== 'undefined') {
+        document.cookie = `admin_token=${encodeURIComponent(token)}; path=/; max-age=${maxAgeSeconds}; SameSite=Lax; Secure`
+      }
+    }
   },
 
   clear(): void {
-    if (!import.meta.client) return
-    document.cookie = 'admin_token=; path=/; max-age=0; SameSite=Lax; Secure'
+    try {
+      const cookie = useCookie<string | null>('admin_token')
+      cookie.value = null
+    } catch {
+      if (typeof document !== 'undefined') {
+        document.cookie = 'admin_token=; path=/; max-age=0; SameSite=Lax; Secure'
+      }
+    }
   },
 }
 

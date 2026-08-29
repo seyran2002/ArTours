@@ -1,24 +1,25 @@
 <script setup lang="ts">
 import { ref, watch, nextTick } from 'vue'
 import { useI18n } from '#imports'
-import { useRouteMap } from '~/composables/useRouteMap'
+import { useRouteMap, type MapLocation } from '~/composables/useRouteMap'
 import BaseIcon from '~/components/ui/BaseIcon.vue'
 import BaseButton from '~/components/ui/BaseButton.vue'
 
 const props = defineProps<{
   polyline: string
+  locations?: MapLocation[]
 }>()
 
 const { locale } = useI18n()
 
-// Initialize Route Map composable
+// Initialize Route Map composable — pass locations for numbered transfer markers
 const {
   isMapVisible,
   isMapLoading,
   mapError,
   toggleMap,
   initMap
-} = useRouteMap(props.polyline)
+} = useRouteMap(props.polyline, props.locations)
 
 const mapContainer = ref<HTMLDivElement | null>(null)
 
@@ -89,6 +90,26 @@ watch(isMapVisible, async (newVal) => {
             {{ mapError }}
           </p>
         </div>
+      </div>
+    </div>
+
+    <!-- Transfer Locations Legend -->
+    <div
+      v-if="locations && locations.length > 0 && isMapVisible"
+      class="flex flex-wrap gap-2 mt-1"
+    >
+      <div
+        v-for="(loc, idx) in locations"
+        :key="idx"
+        class="flex items-center gap-1.5 text-[11px] text-zinc-600 font-medium bg-zinc-50 border border-zinc-200 rounded-full px-2.5 py-1"
+      >
+        <span
+          class="inline-flex items-center justify-center w-4 h-4 rounded-full text-[9px] font-bold text-white shrink-0"
+          style="background-color: #F89B1F;"
+        >
+          {{ idx + 1 }}
+        </span>
+        <span class="truncate max-w-[120px]">{{ loc.name }}</span>
       </div>
     </div>
   </div>

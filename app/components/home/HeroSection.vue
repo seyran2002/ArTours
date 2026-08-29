@@ -1,6 +1,20 @@
 <script setup lang="ts">
-import { useImage, useHead } from '#imports'
+import { useImage, useHead, useAsyncData } from '#imports'
 import { computed } from 'vue'
+import { useTransferService } from '~/services/transfer.service'
+
+const years = new Date().getFullYear() - 2017
+
+const transferService = useTransferService()
+const { data: countData } = useAsyncData<{ count: number }>(
+  'transfers-count',
+  () => transferService.getTransfersCount(),
+  { lazy: true }
+)
+
+const destinationCount = computed(() => {
+  return countData.value?.count != null ? `${countData.value.count}+` : '150+'
+})
 
 const img = useImage()
 
@@ -111,7 +125,7 @@ useHead({
       <!-- ── Quick Stats ── -->
       <div class="mt-14 flex items-center justify-center gap-8 sm:gap-12">
         <div class="text-center">
-          <span class="block text-2xl sm:text-3xl font-extrabold text-white tracking-tight">150+</span>
+          <span class="block text-2xl sm:text-3xl font-extrabold text-white tracking-tight">{{ destinationCount }}</span>
           <span class="text-[10px] sm:text-xs font-semibold uppercase tracking-widest text-white/50">{{ $t('home.hero.destinations') }}</span>
         </div>
         <div class="w-px h-8 bg-white/15" />
@@ -121,8 +135,8 @@ useHead({
         </div>
         <div class="w-px h-8 bg-white/15" />
         <div class="text-center">
-          <span class="block text-2xl sm:text-3xl font-extrabold text-white tracking-tight">4.9</span>
-          <span class="text-[10px] sm:text-xs font-semibold uppercase tracking-widest text-white/50">Rating</span>
+          <span class="block text-2xl sm:text-3xl font-extrabold text-white tracking-tight">{{ years }}+</span>
+          <span class="text-[10px] sm:text-xs font-semibold uppercase tracking-widest text-white/50">{{ $t('home.hero.years') }}</span>
         </div>
       </div>
 

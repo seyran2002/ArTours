@@ -77,7 +77,7 @@ async function handleDeleteTag(tagId: string, tagName: string) {
 function startEditing(tagId: string, ruName: string, enName: string, hyName: string) {
   editingTagId.value = tagId
   editingTagRuName.value = ruName
-  editingTagEnName.value = enName
+  editingTagEnName.value = enName;
   editingTagHyName.value = hyName
   errorMessage.value = ''
   successMessage.value = ''
@@ -203,6 +203,9 @@ async function handleUpdateTag(tagId: string) {
                 <span class="text-xs text-zinc-500 font-medium">
                   {{ tag.enName }}
                 </span>
+                <span class="text-xs text-zinc-500 font-medium">
+                  {{ tag.hyName }}
+                </span>
               </div>
               <span v-if="tag.isMain" class="px-2 py-0.5 bg-amber-50 text-amber-600 text-[10px] font-semibold rounded-full border border-amber-200/40 h-fit">
                 Հիմնական
@@ -216,7 +219,7 @@ async function handleUpdateTag(tagId: string) {
               <!-- Edit tag button -->
               <button
                 type="button"
-                @click="startEditing(tag.id, tag.ruName, tag.enName)"
+                @click="startEditing(tag.id, tag.ruName, tag.enName, tag.hyName)"
                 :disabled="isLoading"
                 class="p-2 rounded-xl border transition-all duration-300 active:scale-95 cursor-pointer bg-zinc-50 border-zinc-100 hover:border-zinc-200 text-zinc-500 hover:bg-zinc-100/60 disabled:opacity-40 disabled:cursor-not-allowed"
                 title="Edit Tag"
@@ -253,6 +256,14 @@ async function handleUpdateTag(tagId: string) {
                 v-model="editingTagEnName"
                 type="text"
                 placeholder="Անգլերեն Անվանումը"
+                @keydown.enter.prevent="handleUpdateTag(tag.id)"
+                @keydown.escape.prevent="cancelEditing"
+                class="w-full px-3 py-1.5 text-sm bg-white border border-primary/30 rounded-xl outline-none focus:shadow-[0_0_0_3px_rgba(18,83,78,0.06)] transition-all duration-300 font-medium text-zinc-800"
+              />
+              <input
+                v-model="editingTagHyName"
+                type="text"
+                placeholder="Հայերեն Անվանումը"
                 @keydown.enter.prevent="handleUpdateTag(tag.id)"
                 @keydown.escape.prevent="cancelEditing"
                 class="w-full px-3 py-1.5 text-sm bg-white border border-primary/30 rounded-xl outline-none focus:shadow-[0_0_0_3px_rgba(18,83,78,0.06)] transition-all duration-300 font-medium text-zinc-800"

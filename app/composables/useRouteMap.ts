@@ -4,6 +4,12 @@ import { useRuntimeConfig } from '#app'
 // Module-level cache for decoded polylines (persists across component remounts and re-renders)
 const polylineCache = new Map<string, { lat: number; lng: number }[]>()
 
+export interface MapLocation {
+  lat: number
+  lng: number
+  name: string
+}
+
 // Helper function to load Google Maps script
 function loadGoogleMapsScript(apiKey: string): Promise<void> {
   if (typeof window === 'undefined') return Promise.resolve()
@@ -11,15 +17,26 @@ function loadGoogleMapsScript(apiKey: string): Promise<void> {
   const win = window as any
 
   // Already loaded
-  if (win.google?.maps?.Map) return Promise.resolve()
+  if (win.google?.maps?.importLibrary) return Promise.resolve()
 
   // Already loading — reuse the in-flight promise
   if (win.__googleMapsLoadingPromise) return win.__googleMapsLoadingPromise
 
   const promise = new Promise<void>((resolve, reject) => {
+    const existingScript = document.getElementById('google-maps-script')
+    if (existingScript) {
+      if (win.google?.maps) {
+        resolve()
+      } else {
+        existingScript.addEventListener('load', () => resolve())
+        existingScript.addEventListener('error', (err) => reject(err))
+      }
+      return
+    }
+
     const script = document.createElement('script')
     script.id = 'google-maps-script'
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places`
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places,marker&loading=async`
     script.async = true
     script.defer = true
     script.onload = () => resolve()
@@ -77,7 +94,35 @@ function decodePolyline(encoded: string): { lat: number; lng: number }[] {
   return points
 }
 
-export function useRouteMap(polyline: string) {
+/**
+ * Creates a numbered pin DOM element for use with AdvancedMarkerElement.
+ */
+function createNumberedPin(index: number, label: string): HTMLElement {
+  const wrapper = document.createElement('div')
+  wrapper.style.cssText = [
+    'display:flex',
+    'align-items:center',
+    'justify-content:center',
+    'width:28px',
+    'height:28px',
+    'border-radius:50%',
+    'background-color:#F89B1F',
+    'color:#ffffff',
+    'font-size:11px',
+    'font-weight:700',
+    'font-family:inherit',
+    'border:2px solid #ffffff',
+    'box-shadow:0 2px 6px rgba(0,0,0,0.40)',
+    'cursor:default',
+    'user-select:none',
+    'line-height:1',
+  ].join(';')
+  wrapper.title = label
+  wrapper.textContent = `${index + 1}`
+  return wrapper
+}
+
+export function useRouteMap(polyline: string, locations?: MapLocation[]) {
   const config = useRuntimeConfig()
   const apiKey = config.public.googleMapsApiKey as string | undefined
 
@@ -109,16 +154,21 @@ export function useRouteMap(polyline: string) {
         throw new Error('Google Maps SDK could not be loaded.')
       }
 
+      // Import maps and marker libraries
+      const { Map } = await win.google.maps.importLibrary('maps')
+      const { AdvancedMarkerElement } = await win.google.maps.importLibrary('marker')
+
       // decodePolyline will retrieve from cache if it exists, otherwise compute & cache
       const coordinates = decodePolyline(polyline)
       if (coordinates.length === 0) {
         throw new Error('Could not decode coordinates from polyline.')
       }
 
-      // Initialize map
-      mapInstance = new win.google.maps.Map(element, {
+      // Initialize map with mapId required for AdvancedMarkerElement
+      mapInstance = new Map(element, {
         zoom: 12,
         center: coordinates[0],
+        mapId: 'artours_route_map',
         disableDefaultUI: false,
         fullscreenControl: true,
         streetViewControl: false,
@@ -136,40 +186,64 @@ export function useRouteMap(polyline: string) {
       })
       routePolyline.setMap(mapInstance)
 
-      // Fit map bounds
+      // Fit map bounds to the route polyline
       const bounds = new win.google.maps.LatLngBounds()
       coordinates.forEach(c => bounds.extend(c))
+
+      // Extend bounds to include all transfer locations so they remain visible
+      if (locations && locations.length > 0) {
+        locations.forEach(loc => bounds.extend({ lat: loc.lat, lng: loc.lng }))
+      }
+
       mapInstance.fitBounds(bounds)
 
       // Add Start Marker (Green Dot)
-      new win.google.maps.Marker({
+      const startPin = document.createElement('div')
+      startPin.style.cssText = [
+        'width:14px',
+        'height:14px',
+        'border-radius:50%',
+        'background-color:#10b981',
+        'border:2px solid #ffffff',
+        'box-shadow:0 2px 5px rgba(0,0,0,0.35)',
+      ].join(';')
+
+      new AdvancedMarkerElement({
         position: coordinates[0],
         map: mapInstance,
         title: 'Start Location',
-        icon: {
-          path: win.google.maps.SymbolPath.CIRCLE,
-          scale: 6,
-          fillColor: '#10b981', // green-500
-          fillOpacity: 1,
-          strokeColor: '#ffffff',
-          strokeWeight: 2,
-        }
+        content: startPin
       })
 
       // Add End Marker (Red Dot)
-      new win.google.maps.Marker({
+      const endPin = document.createElement('div')
+      endPin.style.cssText = [
+        'width:14px',
+        'height:14px',
+        'border-radius:50%',
+        'background-color:#ef4444',
+        'border:2px solid #ffffff',
+        'box-shadow:0 2px 5px rgba(0,0,0,0.35)',
+      ].join(';')
+
+      new AdvancedMarkerElement({
         position: coordinates[coordinates.length - 1],
         map: mapInstance,
         title: 'Destination',
-        icon: {
-          path: win.google.maps.SymbolPath.CIRCLE,
-          scale: 6,
-          fillColor: '#ef4444', // red-500
-          fillOpacity: 1,
-          strokeColor: '#ffffff',
-          strokeWeight: 2,
-        }
+        content: endPin
       })
+
+      // ── Transfer location markers (numbered pins) ──────────────────────────
+      if (locations && locations.length > 0) {
+        locations.forEach((location, index) => {
+          new AdvancedMarkerElement({
+            position: { lat: location.lat, lng: location.lng },
+            map: mapInstance,
+            title: location.name,
+            content: createNumberedPin(index, location.name)
+          })
+        })
+      }
 
       isInitialized = true
     } catch (err: any) {

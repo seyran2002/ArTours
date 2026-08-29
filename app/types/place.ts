@@ -1,3 +1,5 @@
+import type { Tag } from "./tag"
+
 export interface Place {
   id: string | number
   price: number
@@ -7,4 +9,5 @@ export interface Place {
   image: string
   badge?: string
   toursCount?: number
+  tags?: Tag[];
 }

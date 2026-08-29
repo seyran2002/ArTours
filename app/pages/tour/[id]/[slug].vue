@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import type { MapLocation } from '~/composables/useRouteMap'
 import { useRoute, useI18n, useLocalePath } from '#imports'
 import { useTour } from '~/composables/useTour'
 import { usePageSeo } from '~/composables/usePageSeo'
@@ -40,6 +41,19 @@ const pageTitle = computed(() => {
 })
 
 const featureImage = computed(() => tour.value?.mainImage || '/logo.webp')
+
+// ─── Transfer stop locations for the route map ───────────────────
+const transferLocations = computed<MapLocation[]>(() => {
+  if (!tour.value?.transfers?.length) return []
+  return tour.value.transfers
+    .filter(t => t.transfer?.toLat != null && t.transfer?.toLng != null)
+    .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+    .map(t => ({
+      lat: t.transfer.toLat as number,
+      lng: t.transfer.toLng as number,
+      name: t.transfer.toAddressText || t.transfer.enTitle || 'Stop'
+    }))
+})
 
 // ─── TouristTrip Schema JSON-LD ─────────────────────────────
 const tourSchema = computed(() => {
@@ -160,7 +174,10 @@ usePageSeo({
               </p>
               
               <!-- Transfer Route Map Component -->
-              <LazyTransfersTransferRouteMap :polyline="tour.routePolyline" />
+              <LazyTransfersTransferRouteMap
+                :polyline="tour.routePolyline"
+                :locations="transferLocations"
+              />
             </div>
           </div>
 

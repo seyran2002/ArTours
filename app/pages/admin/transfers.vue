@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
-import { useTransfersState } from '~/composables/useTransfersState'
 import { useTag } from '~/composables/useTag'
 import AdminTransfersTransfersList from '~/components/admin/transfers/TransfersList.vue'
 import AdminTransfersTransferForm from '~/components/admin/transfers/TransferForm.vue'
