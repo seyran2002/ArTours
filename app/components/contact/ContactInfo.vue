@@ -39,9 +39,9 @@ const channels = computed<ContactChannel[]>(() => [
   {
     icon: 'send',
     label: 'Telegram',
-    value: '@ArToursTravel',
+    value: 'ArTours Armenia',
     detail: t('contactUs.telegramDesc'),
-    href: 'https://t.me/ArToursTravel',
+    href: 'https://t.me/+37455425595',
     iconBg: 'bg-sky-50',
     iconBorder: 'border-sky-100',
     iconColor: 'text-sky-600'

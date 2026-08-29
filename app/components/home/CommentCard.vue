@@ -162,7 +162,7 @@ onUnmounted(() => {
       <div 
         :class="[
           testimonial.avatarColor,
-          'w-10 h-10 rounded-full flex items-center justify-center text-sm font-extrabold text-white shadow-sm transition-transform duration-500 group-hover:scale-105'
+          'w-10 h-10 min-w-10 min-h-10 rounded-full flex items-center justify-center text-sm font-extrabold text-white shadow-sm transition-transform duration-500 group-hover:scale-105'
         ]"
       >
         {{ testimonial.letter[locale] }}

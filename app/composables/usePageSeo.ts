@@ -144,12 +144,12 @@ export function usePageSeo(options: SeoOptions) {
 
   const socialSameAs = [
     siteUrl,
-    'https://www.facebook.com/artours.am',
-    'https://www.facebook.com/artours',
-    'https://t.me/artours',
-    'https://t.me/artours_am',
+    'https://www.facebook.com/ArTourGuide.Armenia',
+    'https://www.facebook.com/ArTourGuide.Armenia',
+    'https://t.me/+37455425595',
+    'https://t.me/+37455425595',
     'https://wa.me/37455425595',
-    'https://www.instagram.com/artours'
+    'https://www.instagram.com/artour_guide_armenia'
   ]
 
   const brandKnowsAbout = [

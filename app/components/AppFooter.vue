@@ -141,7 +141,7 @@ const localePath = useLocalePath()
               <!-- Telegram -->
               <li>
                 <a 
-                  href="https://t.me/artours" 
+                  href="https://t.me/+37455425595" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   class="flex items-center gap-2.5 group hover:text-primary transition-colors outline-none"
@@ -158,7 +158,7 @@ const localePath = useLocalePath()
               <!-- Instagram -->
               <li>
                 <a 
-                  href="https://instagram.com/artours" 
+                  href="https://www.instagram.com/artour_guide_armenia" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   class="flex items-center gap-2.5 group hover:text-primary transition-colors outline-none"
@@ -175,7 +175,7 @@ const localePath = useLocalePath()
               <!-- Facebook -->
               <li>
                 <a 
-                  href="https://facebook.com/artours" 
+                  href="https://www.facebook.com/ArTourGuide.Armenia" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   class="flex items-center gap-2.5 group hover:text-primary transition-colors outline-none"
