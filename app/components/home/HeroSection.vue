@@ -5,6 +5,8 @@ import { useTransferService } from '~/services/transfer.service'
 
 const years = new Date().getFullYear() - 2017
 
+const { locale } = useI18n()
+
 const transferService = useTransferService()
 const { data: countData } = useAsyncData<{ count: number }>(
   'transfers-count',
@@ -96,10 +98,10 @@ useHead({
     <div class="absolute inset-x-0 top-0 h-48 z-[1] bg-gradient-to-b from-white/95 via-white/50 to-transparent pointer-events-none" />
 
     <!-- ── Hero Content ── -->
-    <div class="relative z-10 w-full max-w-3xl mx-auto px-6 text-center hero-content -translate-y-16 md:translate-y-0">
+    <div class="relative z-10 w-full max-w-3xl mx-auto px-6 text-center hero-content -translate-y-8 min-width-[380px]:-translate-y-16 md:translate-y-0">
 
       <!-- Badge -->
-      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-sm border border-white/15 mb-8">
+      <div class="hidden min-[380px]:inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-sm border border-white/15 mb-8">
         <span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse" />
         <span class="text-[11px] font-bold uppercase tracking-[0.18em] text-white/90">
           {{ $t('home.hero.exploreArmenia') }}
@@ -123,7 +125,14 @@ useHead({
       <LazySearchSelect />
 
       <!-- ── Quick Stats ── -->
-      <div class="mt-14 flex items-center justify-center gap-8 sm:gap-12">
+      <div 
+        :class="[
+          'mt-14 flex items-center justify-center',
+          { 'gap-8 sm:gap-12': locale === 'en' },
+          { 'gap-4 sm:gap-8': locale === 'hy' },
+          { 'gap-6 sm:gap-10': locale === 'ru' }
+        ]"
+      >
         <div class="text-center">
           <span class="block text-2xl sm:text-3xl font-extrabold text-white tracking-tight">{{ destinationCount }}</span>
           <span class="text-[10px] sm:text-xs font-semibold uppercase tracking-widest text-white/50">{{ $t('home.hero.destinations') }}</span>
@@ -143,7 +152,7 @@ useHead({
     </div>
 
     <!-- ── Scroll Indicator ── -->
-    <div class="absolute bottom-24 md:bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 opacity-60">
+    <div class="absolute bottom-24 md:bottom-8 left-1/2 -translate-x-1/2 z-10 hidden min-[380px]:flex flex-col items-center gap-2 opacity-60">
       <span class="text-[9px] font-bold uppercase tracking-[0.2em] text-white/60">Scroll</span>
       <div class="w-5 h-8 rounded-full border-2 border-white/30 flex items-start justify-center p-1">
         <span class="w-1 h-2 rounded-full bg-white/80 animate-bounce" />
