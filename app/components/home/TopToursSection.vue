@@ -15,11 +15,6 @@ const localePath = useLocalePath()
 
 <template>
   <section class="max-w-[1440px] mx-auto px-6 lg:px-8 relative">
-    <!-- Ambient Backdrop Decorative Lights -->
-    <div class="absolute inset-0 overflow-hidden lg:overflow-visible pointer-events-none -z-10">
-      <div class="absolute top-[15%] md:top-1/4 -left-20 sm:left-4 md:left-10 w-[280px] h-[280px] sm:w-[400px] sm:h-[400px] md:w-[450px] md:h-[450px] lg:w-[500px] lg:h-[500px] bg-primary/15 rounded-full blur-3xl" />
-    </div>
-
     <!-- Section Header -->
     <div class="flex flex-col md:flex-row md:items-end md:justify-between mb-6 md:mb-10 gap-6 relative">
       <div class="text-left max-w-2xl space-y-4">

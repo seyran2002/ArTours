@@ -19,7 +19,7 @@ const culturalHighlights = computed(() => [
     iconBg: 'bg-teal-500/10 text-teal-300',
     colSpan: 'lg:col-span-7 md:col-span-2',
     badge: t('about.land.tags.history.badge'),
-    to: '/tours?tag=b70a307c-77f4-4e8e-bfb8-17c540060b30',
+    to: '/tours?tag=82a8fda0-f117-4e82-80c1-e61572289888',
   },
   {
     id: 'mountains',
@@ -33,7 +33,7 @@ const culturalHighlights = computed(() => [
     iconBg: 'bg-zinc-500/10 text-zinc-300',
     colSpan: 'lg:col-span-5 md:col-span-2',
     badge: t('about.land.tags.mountains.badge'),
-    to: '/tours?tag=6bd7893a-472e-44a3-b6c5-acc6e2c4ced2',
+    to: '/tours?tag=95331d07-0653-43f5-9870-d1aba4e938d3',
   },
   {
     id: 'sevan',
@@ -47,7 +47,7 @@ const culturalHighlights = computed(() => [
     iconBg: 'bg-sky-500/10 text-sky-300',
     colSpan: 'lg:col-span-4 md:col-span-1',
     badge: t('about.land.tags.sevan.badge'),
-    to: '/tours?tag=5b6eea4b-23a3-44e8-b3a0-94a2938a58cd',
+    to: '/tours?tag=821e6601-51ed-4f96-9cf9-f269c2259b97',
   },
   {
     id: 'hiking',
@@ -61,7 +61,7 @@ const culturalHighlights = computed(() => [
     iconBg: 'bg-emerald-500/10 text-emerald-300',
     colSpan: 'lg:col-span-4 md:col-span-1',
     badge: t('about.land.tags.hiking.badge'),
-    to: '/tours?tag=af60c3fd-361d-467b-8fa0-dccf0ce64b6a',
+    to: '/tours?tag=eb9de284-8e9a-48e7-bbae-e99135208172',
   },
   {
     id: 'hospitality',
@@ -75,7 +75,7 @@ const culturalHighlights = computed(() => [
     iconBg: 'bg-amber-500/10 text-amber-300',
     colSpan: 'lg:col-span-4 md:col-span-2',
     badge: t('about.land.tags.hospitality.badge'),
-    to: '/tours?tag=fc65198b-b825-48df-a640-2be63a66a9b7',
+    to: '/tours?tag=147bc82c-d444-4a2e-b82b-be7652a90cba',
   }
 ]);
 </script>

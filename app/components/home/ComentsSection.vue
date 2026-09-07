@@ -572,7 +572,7 @@ const testimonials: Testimonial[] = [
 .animate-marquee {
   display: flex;
   width: max-content;
-  animation: marquee 55s linear infinite;
+  animation: marquee 170s linear infinite;
   will-change: transform;
 }
 

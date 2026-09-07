@@ -3,11 +3,7 @@ import BaseBadge from '~/components/ui/BaseBadge.vue'
 </script>
 
 <template>
-  <section class="max-w-[1440px] mx-auto px-6 lg:px-8 py-8 md:py-12 relative overflow-hidden bg-white">
-    <!-- Ambient glowing backgrounds for depth -->
-    <div class="absolute -top-40 right-1/4 w-96 h-96 rounded-full bg-amber-50/40 blur-3xl pointer-events-none" />
-    <div class="absolute -bottom-40 left-1/4 w-96 h-96 rounded-full bg-teal-50/30 blur-3xl pointer-events-none" />
-
+  <section class="max-w-[1440px] mx-auto px-6 lg:px-8 py-8 md:py-12 relative bg-white">
     <div class="grid md:grid-cols-12 gap-8 md:gap-12 lg:gap-16 items-center">
       <!-- Left Column: Biography & Message (Col 8) -->
       <div class="md:col-span-8 space-y-6">
