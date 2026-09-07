@@ -1,8 +1,20 @@
 <script setup lang="ts">
-import { useImage, useHead } from '#imports'
+import { useImage, useHead, useAsyncData } from '#imports'
 import { computed } from 'vue'
+import { useTransferService } from '~/services/transfer.service'
 
 const { t } = useI18n()
+
+const transferService = useTransferService()
+const { data: countData } = useAsyncData<{ count: number }>(
+  'transfers-count',
+  () => transferService.getTransfersCount(),
+  { lazy: true }
+)
+
+const destinationCount = computed(() => {
+  return countData.value?.count != null ? `${countData.value.count}+` : '150+'
+})
 
 const img = useImage()
 
@@ -24,12 +36,12 @@ useHead({
   ]
 })
 
-const stats = [
+const stats = computed(() => [
   { label: t('about.hero.happyTravelers'), value: '12,000+', desc: t('about.hero.happyDesc') },
   { label: t('about.hero.toursCompleted'), value: '350+', desc: t('about.hero.toursDesc') },
-  { label: t('about.hero.locationsExplored'), value: '150+', desc: t('about.hero.locationsDesc') },
+  { label: t('about.hero.locationsExplored'), value: destinationCount.value, desc: t('about.hero.locationsDesc') },
   { label: t('about.hero.yearsExperience'), value: `${new Date().getFullYear() - 2017}+`, desc: t('about.hero.yearsDesc') }
-]
+])
 </script>
 
 <template>
