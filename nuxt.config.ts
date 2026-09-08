@@ -86,6 +86,7 @@ export default defineNuxtConfig({
     public: {
       apiUrl: process.env.BASE_URL,
       googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY,
+      googleAnalyticsId: process.env.GOOGLE_ANALYTICS_ID || 'G-GRN9Q0VFPX',
     },
   },
 })
