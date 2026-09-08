@@ -20,7 +20,7 @@ const img = useImage()
 
 const heroSrcset = computed(() => {
   return [375, 430, 640, 840, 1024, 1280, 1920]
-    .map(w => `${img('v1780488823/about_rynoi2', { width: w, quality: 35, c: 'fill', gravity: 'auto', f: 'webp' }, { provider: 'cloudinary' })} ${w}w`)
+    .map(w => `${img('v1788890547/about_ceh3fe', { width: w, quality: 35, c: 'fill', gravity: 'auto', f: 'webp' }, { provider: 'cloudinary' })} ${w}w`)
     .join(', ')
 })
 
@@ -53,15 +53,15 @@ const stats = computed(() => [
 
       <NuxtImg
         provider="cloudinary"
-        src="v1780488823/about_rynoi2"
+        src="v1788890547/about_ceh3fe"
         width="1280"
         height="720"
-        quality="35"
+        quality="100"
         format="webp"
         fetchpriority="high"
         loading="eager"
         decoding="async"
-        class="absolute inset-0 w-full h-full object-cover"
+        class="absolute inset-0 w-full h-full object-cover object-center max-md:object-[30%_center]"
         alt="Lush green forests and misty valleys of Armenia — ArTours travel destinations"
       />
     </picture>

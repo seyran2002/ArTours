@@ -12,7 +12,7 @@ usePageSeo({
   ogDescriptionKey:  'seo.about.ogDescription',
   siteNameKey:       'seo.about.siteName',
   // Hero image used as OG / Twitter card image
-  imagePath: 'https://res.cloudinary.com/dl8iqp69h/image/upload/f_auto,q_auto:good,w_1200,c_fill,g_auto/v1780488823/about_rynoi2.webp',
+  imagePath: 'https://res.cloudinary.com/dl8iqp69h/image/upload/f_auto,q_auto:good,w_1200,c_fill,g_auto/v1788890547/about_ceh3fe.webp',
   schemas: ['Organization', 'WebSite', 'TravelAgency', 'AboutPage'],
 })
 </script>

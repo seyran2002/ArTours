@@ -281,7 +281,7 @@ export function usePageSeo(options: SeoOptions) {
             'alternateName': ['ArTours Armenia', 'artours.am', 'ArTours — Armenia Tours & Transfers'],
             'url': siteUrl,
             'logo': `${siteUrl}/logo.webp`,
-            'image': 'https://res.cloudinary.com/dl8iqp69h/image/upload/f_auto,q_auto:good,w_1280,c_fill,g_auto/v1780488823/about_rynoi2.webp',
+            'image': 'https://res.cloudinary.com/dl8iqp69h/image/upload/f_auto,q_auto:good,w_1280,c_fill,g_auto/v1788890547/about_ceh3fe.webp',
             'brand': brandEntity,
             'description': description.value || 'Official private tours, excursions, and airport transfers in Armenia by ArTours.',
             'disambiguatingDescription': 'ArTours (artours.am) is an official tourism brand in Yerevan, Armenia offering custom tours and chauffeured travel transfers.',
@@ -336,7 +336,7 @@ export function usePageSeo(options: SeoOptions) {
             },
             'primaryImageOfPage': {
               '@type': 'ImageObject',
-              'url': 'https://res.cloudinary.com/dl8iqp69h/image/upload/f_auto,q_auto:good,w_1280,c_fill,g_auto/v1780488823/about_rynoi2.webp',
+              'url': 'https://res.cloudinary.com/dl8iqp69h/image/upload/f_auto,q_auto:good,w_1280,c_fill,g_auto/v1788890547/about_ceh3fe.webp',
               'width': 1280,
               'height': 720
             }
