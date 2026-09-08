@@ -23,15 +23,16 @@ export default defineNuxtPlugin(() => {
   }
 
   // Initialize GA4 config
-  // Set send_page_view: false to prevent double tracking and let router handle SPA transitions
+  // This automatically fires the initial page_view when the script loads
   gtag('js', new Date())
-  gtag('config', measurementId, {
-    send_page_view: false,
-  })
+  gtag('config', measurementId)
 
-  // Track initial page load and every client-side route navigation
+  // Track subsequent client-side route navigations
   const router = useRouter()
-  router.afterEach((to) => {
+  router.afterEach((to, from) => {
+    // Skip if it's the initial navigation on page load (already tracked above by gtag config)
+    if (!from.name && to.fullPath === from.fullPath) return
+
     nextTick(() => {
       gtag('event', 'page_view', {
         page_title: document.title,
