@@ -50,6 +50,15 @@ export default defineNuxtConfig({
           media: 'print',
           onload: "this.media='all'"
         }
+      ],
+      script: [
+        {
+          src: 'https://www.googletagmanager.com/gtag/js?id=G-GRN9Q0VFPX',
+          async: true
+        },
+        {
+          innerHTML: `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-GRN9Q0VFPX');`
+        }
       ]
     }
   },
