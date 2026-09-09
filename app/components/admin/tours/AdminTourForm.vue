@@ -428,7 +428,7 @@ const handleSave = async () => {
                   : 'border-zinc-200 focus-within:border-primary/30'
               ]"
             >
-              <span class="pl-5 text-xs font-bold text-zinc-600 shrink-0">$</span>
+              <span class="pl-5 text-xs font-bold text-zinc-600 shrink-0">€</span>
               <BaseInput
                 :model-value="price === '' ? '' : String(price)"
                 @update:model-value="val => price = val === '' ? '' : Number(val)"
