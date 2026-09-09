@@ -56,15 +56,15 @@ defineProps<{
     <div class="space-y-2 text-sm">
       <div class="flex justify-between text-zinc-400">
         <span>{{ $t('booking.form.summary.subtotal') }}</span>
-        <span class="font-semibold text-white">${{ breakdown.original.toFixed(2) }}</span>
+        <span class="font-semibold text-white">€{{ breakdown.original.toFixed(2) }}</span>
       </div>
       <div v-if="breakdown.groupTierApplied" class="flex justify-between text-emerald-400">
         <span>10% {{ $t('booking.form.summary.discount') }}</span>
-        <span class="font-semibold">−${{ breakdown.discountAmount.toFixed(2) }}</span>
+        <span class="font-semibold">−€{{ breakdown.discountAmount.toFixed(2) }}</span>
       </div>
       <div class="border-t border-white/10 pt-3 flex justify-between">
         <span class="font-bold text-white text-base">{{ $t('booking.form.summary.total') }}</span>
-        <span class="font-black text-secondary text-xl">${{ breakdown.discounted.toFixed(2) }}</span>
+        <span class="font-black text-secondary text-xl">€{{ breakdown.discounted.toFixed(2) }}</span>
       </div>
     </div>
 

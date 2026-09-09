@@ -68,7 +68,7 @@ const eligibleForCancellation = computed(() =>
           </div>
           <div class="space-y-1">
             <span class="text-[9px] tracking-wider text-teal-200/70 uppercase font-bold block">{{ $t('booking.form.summary.totalAmount') }}</span>
-            <span class="font-extrabold text-sm sm:text-base text-secondary">${{ booking.amount }}</span>
+            <span class="font-extrabold text-sm sm:text-base text-secondary">€{{ booking.amount }}</span>
           </div>
         </div>
 

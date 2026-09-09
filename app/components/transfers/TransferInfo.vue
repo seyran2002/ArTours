@@ -95,7 +95,7 @@ const parsedEntranceFees = computed(() => {
           {{ $t('transfers.cost') }}
         </span>
         <div class="flex items-baseline gap-1">
-          <span class="text-3xl font-black text-zinc-900 font-sans">${{ transfer.minimumPrice }}</span>
+          <span class="text-3xl font-black text-zinc-900 font-sans">€{{ transfer.minimumPrice }}</span>
           <span class="text-xs font-medium text-zinc-500">
             {{ $t('transfers.for3People') }}
           </span>

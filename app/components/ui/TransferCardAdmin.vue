@@ -100,7 +100,7 @@ const emit = defineEmits<{
         <div v-if="transfer.minimumPrice" class="shrink-0">
           <span class="text-[10px] text-zinc-500 block uppercase font-bold tracking-widest leading-none mb-1">Արժեքը սկսած</span>
           <span class="text-lg font-extrabold text-zinc-950 font-sans tracking-tight">
-            ${{ transfer.minimumPrice }}
+            €{{ transfer.minimumPrice }}
             <span class="text-xs font-semibold text-zinc-500">/ 3 հոգու համար</span>
           </span>
         </div>

@@ -153,7 +153,7 @@ const badge = computed(() => {
         <div class="shrink-0">
           <span class="text-[9px] text-zinc-500 block uppercase font-bold tracking-widest leading-none mb-1">{{ $t('transfers.pricingFrom') }}</span>
           <span class="text-lg sm:text-xl lg:text-lg xl:text-xl font-extrabold text-zinc-900 font-sans tracking-tight">
-            ${{ transfer.minimumPrice }}
+            €{{ transfer.minimumPrice }}
             <span class="text-[10px] sm:text-xs font-semibold text-zinc-500">{{ $t('transfers.for3People') }}</span>
           </span>
         </div>

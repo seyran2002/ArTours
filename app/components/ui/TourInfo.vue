@@ -76,7 +76,7 @@ const hasMeals = computed(() => {
           {{ $t('tours.pricingFrom') }}
         </span>
         <div class="flex items-baseline gap-1">
-          <span class="text-3xl font-black text-zinc-900 font-sans">${{ tour.minimumPrice }}</span>
+          <span class="text-3xl font-black text-zinc-900 font-sans">€{{ tour.minimumPrice }}</span>
           <span class="text-xs font-medium text-zinc-500">
             / {{ $t('tours.for3People') }}
           </span>

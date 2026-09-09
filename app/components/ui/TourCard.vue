@@ -261,7 +261,7 @@ function getHourWordRu(n: number): string {
         <div class="shrink-0">
           <span class="text-[9px] text-zinc-500 block uppercase font-bold tracking-widest leading-none mb-1">{{ $t('tours.pricingFrom') }}</span>
           <span class="text-lg sm:text-xl lg:text-lg xl:text-xl font-extrabold text-zinc-950 font-sans tracking-tight">
-            ${{ tour.minimumPrice }}
+            €{{ tour.minimumPrice }}
             <span class="text-[10px] sm:text-xs font-semibold text-zinc-500">/ {{ $t('tours.for3People') }}</span>
           </span>
         </div>

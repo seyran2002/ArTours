@@ -98,7 +98,7 @@ const emit = defineEmits<{
         <div v-if="tour.minimumPrice" class="shrink-0">
           <span class="text-[9px] text-zinc-400 block uppercase font-bold tracking-widest leading-none mb-1">Pricing From</span>
           <span class="text-lg font-extrabold text-zinc-950 font-sans tracking-tight">
-            ${{ tour.minimumPrice }}
+            €{{ tour.minimumPrice }}
             <span class="text-[10px] font-semibold text-zinc-400">/ pax</span>
           </span>
         </div>
