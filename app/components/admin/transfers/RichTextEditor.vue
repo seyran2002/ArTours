@@ -219,7 +219,6 @@ function updateActiveStates() {
 
 :deep(p) {
   margin-bottom: 0;
-  line-height: 1;
 }
 
 :deep(ul) {
