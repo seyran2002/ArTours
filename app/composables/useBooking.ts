@@ -4,6 +4,7 @@ import type {
   BookingType,
   BookingResponse,
   PriceBreakdown,
+  CreateBookingDto,
 } from '~/types/booking'
 
 export interface BookingFormState {
@@ -80,7 +81,7 @@ export function useBooking() {
     const breakdown = computePrice(price, form.peopleCount)
 
     try {
-      const dto = {
+      const dto: CreateBookingDto = {
         type,
         peopleCount: form.peopleCount,
         travelDate: form.travelDate,
@@ -89,11 +90,10 @@ export function useBooking() {
         customerPhone: form.customerPhone.trim(),
         notes: form.notes.trim() || undefined,
         ...(type === 'TOUR' ? { tourId: entityId } : { transferId: entityId }),
-        // totalPrice is calculated client-side and sent; backend may re-calculate
         totalPrice: breakdown.discounted,
       }
 
-      const result = await service.createBooking(dto as any)
+      const result = await service.createBooking(dto)
       bookingResult.value = result
       submitSuccess.value = true
       return result

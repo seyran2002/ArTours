@@ -15,6 +15,7 @@ export interface CreateBookingDto {
   tourId?: string
   transferId?: string
   peopleCount: number
+  totalPrice: number
   travelDate: string
   customerName: string
   customerEmail: string
