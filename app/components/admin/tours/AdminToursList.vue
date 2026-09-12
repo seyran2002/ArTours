@@ -78,7 +78,7 @@ function confirmDelete(id: string) {
         class="w-full sm:w-auto px-5 py-2.5 text-sm font-semibold bg-primary hover:bg-primary-dark text-white rounded-xl transition-all duration-300 cursor-pointer hover:shadow-lg shadow-primary/10 active:scale-95 flex items-center justify-center gap-2"
       >
         <BaseIcon name="plus" size="sm" />
-        <span>Ստեղծել Տուր</span>
+        <span>Ստեղծել Տուր/Տրանսֆեր</span>
       </button>
     </div>
 
@@ -147,7 +147,7 @@ function confirmDelete(id: string) {
           Չգտնվեց ոչ մի տուր, որը համապատասխանում է "{{ searchQuery }}"։ Փոփոխեք ձեր որոնման բառը կամ ստեղծեք նոր տուր։
         </template>
         <template v-else>
-          Դեռևս տուրեր չեն ստեղծվել։ Սեղմեք "Ստեղծել Տուր" կոճակը՝ ձեր առաջին տուրն ավելացնելու համար։
+          Դեռևս տուրեր չեն ստեղծվել։ Սեղմեք "Ստեղծել Տուր/Տրանսֆեր" կոճակը՝ ձեր առաջին տուրն ավելացնելու համար։
         </template>
       </p>
       <button

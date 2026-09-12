@@ -16,7 +16,7 @@ defineProps<{
     <!-- Header -->
     <div>
       <span class="text-[9px] tracking-[0.2em] text-teal-300 uppercase font-extrabold block mb-1">
-        {{ type === 'TOUR' ? $t('booking.form.summary.tourTitle') : $t('booking.form.summary.transferTitle') }}
+        {{ type === 'TOUR' ? $t('booking.form.summary.tourTitle') : $t('booking.form.summary.locationTitle') }}
       </span>
       <h4 class="text-base font-bold leading-snug text-white">{{ entityTitle }}</h4>
     </div>
@@ -88,7 +88,7 @@ defineProps<{
               : 'bg-secondary/20 text-secondary border border-secondary/30'
           ]"
         >
-          {{ type === 'TOUR' ?  $t('booking.form.summary.tour')  : $t('booking.form.summary.transfer') }}
+          {{ type === 'TOUR' ?  $t('booking.form.summary.tour')  : $t('booking.form.summary.Location') }}
         </span>
       </div>
     </div>

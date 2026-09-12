@@ -1,6 +1,6 @@
-export interface SearchResult {
+﻿export interface SearchResult {
   id: string
-  type: 'tour' | 'transfer'
+  type: 'tour' | 'Location'
   slug: string
   enTitle: string
   ruTitle: string

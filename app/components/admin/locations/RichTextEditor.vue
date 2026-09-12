@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, watch } from 'vue'
+import BaseIcon from '~/components/ui/BaseIcon.vue'
 
 const props = defineProps<{
   modelValue?: string

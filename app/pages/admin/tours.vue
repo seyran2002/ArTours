@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { useAdminTour } from '~/composables/useAdminTour'
-import { useTransfer } from '~/composables/useTransfer'
+import { useLocation } from '~/composables/useLocation'
 import { useTag } from '~/composables/useTag'
 import AdminToursList from '~/components/admin/tours/AdminToursList.vue'
 import AdminTourForm from '~/components/admin/tours/AdminTourForm.vue'
-import AdminTransfersTagsManagement from '~/components/admin/transfers/TagsManagement.vue'
+import AdminLocationsTagsManagement from '~/components/admin/locations/TagsManagement.vue'
 import BaseIcon from '~/components/ui/BaseIcon.vue'
 
 definePageMeta({
@@ -20,7 +20,7 @@ useHead({
 })
 
 const adminTour = useAdminTour()
-const transfer = useTransfer()
+const Location = useLocation()
 const tag = useTag()
 
 const tours = computed(() => adminTour.tours.value)
@@ -35,8 +35,8 @@ onMounted(async () => {
   if (tag.tags.value.length === 0) {
     loadPromises.push(tag.fetchTags())
   }
-  if (transfer.transfers.value.length === 0) {
-    loadPromises.push(transfer.fetchTransfers())
+  if (Location.locations.value.length === 0) {
+    loadPromises.push(Location.fetchLocations())
   }
 
   await Promise.all(loadPromises)
@@ -93,8 +93,8 @@ function onFormCancel() {
     <!-- Header & Stats -->
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
       <div>
-        <h1 class="text-3xl font-bold font-serif text-zinc-900 tracking-tight">Տուրեր</h1>
-        <p class="text-sm text-zinc-500 mt-1">Կառավարեք պատմական, մշակութային և բնությանը նվիրված տուրերը, գնագոյացումը և տեգերի զտումը:</p>
+        <h1 class="text-3xl font-bold font-serif text-zinc-900 tracking-tight">Տուրեր/Տրանսֆերներ</h1>
+        <p class="text-sm text-zinc-500 mt-1">Կառավարեք պատմական, մշակութային և բնությանը նվիրված տուրերն ու Տրանսֆերները, գնագոյացումը և տեգերի զտումը:</p>
       </div>
 
       <!-- Quick Stats -->
@@ -153,7 +153,7 @@ function onFormCancel() {
           ]"
         >
           <BaseIcon :name="editingTourId ? 'edit' : 'plus'" size="xs" />
-          <span>{{ editingTourId ? 'Խմբագրել Տուր' : 'Ստեղծել Տուր' }}</span>
+          <span>{{ editingTourId ? 'Խմբագրել Տուր/Տրանսֆեր' : 'Ստեղծել Տուր/Տրանսֆեր' }}</span>
         </button>
 
         <!-- Tags Tab -->
@@ -200,7 +200,7 @@ function onFormCancel() {
 
       <!-- 3. TAGS MANAGEMENT -->
       <div v-else-if="activeView === 'tags'" class="animate-fade-in">
-        <AdminTransfersTagsManagement />
+        <AdminLocationsTagsManagement />
       </div>
     </div>
 

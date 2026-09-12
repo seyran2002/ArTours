@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import FilterTag from '~/components/ui/FilterTag.vue'
 import type { Tag } from '~/types/tag'
 

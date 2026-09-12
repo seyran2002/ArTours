@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import BaseButton from '~/components/ui/BaseButton.vue'
 import BaseIcon from '~/components/ui/BaseIcon.vue'
 
@@ -17,7 +17,7 @@ defineEmits<{
   <div v-if="totalFiltered > 0" class="flex flex-col items-center gap-4 pt-10 sm:pt-14">
     <!-- Count indicator -->
     <p class="text-xs font-semibold text-zinc-500 tracking-wide">
-      {{ $t('transfers.showingCount', {
+      {{ $t('locations.showingCount', {
         current: Math.min(visibleCount, totalFiltered),
         total: totalFiltered
       }) }}

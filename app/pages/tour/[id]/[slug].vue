@@ -4,7 +4,7 @@ import type { MapLocation } from '~/composables/useRouteMap'
 import { useRoute, useI18n, useLocalePath } from '#imports'
 import { useTour } from '~/composables/useTour'
 import { usePageSeo } from '~/composables/usePageSeo'
-import TransferImageGallery from '~/components/transfers/TransferImageGallery.vue'
+import LocationImageGallery from '~/components/locations/LocationImageGallery.vue'
 import BaseIcon from '~/components/ui/BaseIcon.vue'
 import BaseButton from '~/components/ui/BaseButton.vue'
 import { BookingType } from '~/types/booking'
@@ -42,16 +42,16 @@ const pageTitle = computed(() => {
 
 const featureImage = computed(() => tour.value?.mainImage || '/logo.webp')
 
-// ─── Transfer stop locations for the route map ───────────────────
-const transferLocations = computed<MapLocation[]>(() => {
-  if (!tour.value?.transfers?.length) return []
-  return tour.value.transfers
-    .filter(t => t.transfer?.toLat != null && t.transfer?.toLng != null)
+// ─── Location stop locations for the route map ───────────────────
+const locationStops = computed<MapLocation[]>(() => {
+  if (!tour.value?.locations?.length) return []
+  return tour.value.locations
+    .filter(t => t.location?.toLat != null && t.location?.toLng != null)
     .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
     .map(t => ({
-      lat: t.transfer.toLat as number,
-      lng: t.transfer.toLng as number,
-      name: t.transfer.toAddressText || t.transfer.enTitle || 'Stop'
+      lat: t.location.toLat as number,
+      lng: t.location.toLng as number,
+      name: t.location.toAddressText || t.location.enTitle || 'Stop'
     }))
 })
 
@@ -153,7 +153,7 @@ usePageSeo({
       <!-- Content -->
       <div v-else-if="tour" class="space-y-8">
         <!-- 1. Image Gallery Component -->
-        <TransferImageGallery
+        <LocationImageGallery
           :images="tour.images || []"
           :main-image="tour.mainImage || ''"
         />
@@ -173,10 +173,10 @@ usePageSeo({
                 {{ $t('tours.routeMapDescription') }}
               </p>
               
-              <!-- Transfer Route Map Component -->
-              <LazyTransfersTransferRouteMap
+              <!-- Location Route Map Component -->
+              <LazyLocationsLocationRouteMap
                 :polyline="tour.routePolyline"
-                :locations="transferLocations"
+                :locations="locationStops"
               />
             </div>
           </div>
@@ -185,7 +185,7 @@ usePageSeo({
           <div class="lg:col-span-1 border border-zinc-200/60 rounded-3xl p-6 shadow-sm space-y-6 lg:sticky lg:top-36">
             <div class="space-y-2">
               <span class="text-[10px] font-bold text-zinc-500 uppercase tracking-wider">
-                {{ $t('transfers.cost') }}
+                {{ $t('locations.cost') }}
               </span>
               <div class="flex items-baseline gap-1">
                 <span class="text-4xl font-black text-zinc-900 font-sans">€{{ tour.minimumPrice }}</span>

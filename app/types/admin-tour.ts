@@ -1,5 +1,5 @@
 import type { Tag } from './tag'
-import type { Transfer } from './transfer'
+import type { Location } from './location'
 
 export interface AdminTour {
   id: string;
@@ -22,8 +22,8 @@ export interface AdminTour {
   createdAt?: string;
   updatedAt?: string;
   tags?: Tag[];
-  transfers?: Transfer[];
-  transferIds?: string[];
+  locations?: Location[];
+  locationIds?: string[];
 }
 
 export interface AdminTourEntranceFee {

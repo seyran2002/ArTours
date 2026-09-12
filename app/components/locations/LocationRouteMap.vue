@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { ref, watch, nextTick } from 'vue'
 import { useI18n } from '#imports'
 import { useRouteMap, type MapLocation } from '~/composables/useRouteMap'
@@ -12,7 +12,7 @@ const props = defineProps<{
 
 const { locale } = useI18n()
 
-// Initialize Route Map composable — pass locations for numbered transfer markers
+// Initialize Route Map composable — pass locations for numbered Location markers
 const {
   isMapVisible,
   isMapLoading,
@@ -93,7 +93,7 @@ watch(isMapVisible, async (newVal) => {
       </div>
     </div>
 
-    <!-- Transfer Locations Legend -->
+    <!-- Location Locations Legend -->
     <div
       v-if="locations && locations.length > 0 && isMapVisible"
       class="flex flex-wrap gap-2 mt-1"

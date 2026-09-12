@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+﻿import { ref } from 'vue'
 import { useRuntimeConfig } from '#app'
 
 // Module-level cache for decoded polylines (persists across component remounts and re-renders)
@@ -190,7 +190,7 @@ export function useRouteMap(polyline: string, locations?: MapLocation[]) {
       const bounds = new win.google.maps.LatLngBounds()
       coordinates.forEach(c => bounds.extend(c))
 
-      // Extend bounds to include all transfer locations so they remain visible
+      // Extend bounds to include all Location locations so they remain visible
       if (locations && locations.length > 0) {
         locations.forEach(loc => bounds.extend({ lat: loc.lat, lng: loc.lng }))
       }
@@ -233,7 +233,7 @@ export function useRouteMap(polyline: string, locations?: MapLocation[]) {
         content: endPin
       })
 
-      // ── Transfer location markers (numbered pins) ──────────────────────────
+      // ── Location location markers (numbered pins) ──────────────────────────
       if (locations && locations.length > 0) {
         locations.forEach((location, index) => {
           new AdvancedMarkerElement({

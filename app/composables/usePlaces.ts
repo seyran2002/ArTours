@@ -1,10 +1,10 @@
-import { ref, computed, watch, onUnmounted } from 'vue'
+﻿import { ref, computed, watch, onUnmounted } from 'vue'
 import type { Place } from '~/types/place'
 
 const ITEMS_PER_PAGE = 8
 
 export const usePlaces = () => {
-  const { transfers } = useTransfersState()
+  const { locations } = useLocationsState()
 
   // Search state
   const searchQuery = ref('')
@@ -19,7 +19,7 @@ export const usePlaces = () => {
 
   // Extract unique categories from place data
   const categories = computed<string[]>(() => {
-    const uniqueBadges = [...new Set(transfers.value.map(p => p.badge).filter(Boolean) as string[])]
+    const uniqueBadges = [...new Set(locations.value.map(p => p.badge).filter(Boolean) as string[])]
     return ['All', ...uniqueBadges.sort()]
   })
 
@@ -34,7 +34,7 @@ export const usePlaces = () => {
 
   // Filtered places: category + search
   const filteredPlaces = computed<Place[]>(() => {
-    let result = transfers.value
+    let result = locations.value
 
     // Filter by category / tag ID
     if (activeCategory.value !== 'All') {

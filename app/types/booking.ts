@@ -1,5 +1,6 @@
 export enum BookingType {
   TOUR = 'TOUR',
+  LOCATION = 'LOCATION',
   TRANSFER = 'TRANSFER',
 }
 
@@ -13,7 +14,7 @@ export enum BookingStatus {
 export interface CreateBookingDto {
   type: BookingType
   tourId?: string
-  transferId?: string
+  locationId?: string
   peopleCount: number
   totalPrice: number
   travelDate: string
@@ -61,7 +62,15 @@ export interface BookingResponse {
     minimumPrice?: number;
     duration?: { days: number; hours: number } | JSON;
   }
-  transfer?: {
+  location?: {
+    id: string;
+    enTitle: string;
+    ruTitle: string;
+    minimumPrice?: number;
+    fromAddressText?: string;
+    toAddressText?: string;
+  }
+  Location?: {
     id: string;
     enTitle: string;
     ruTitle: string;

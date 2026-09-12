@@ -1,4 +1,4 @@
-import type { Tag } from './tag';
+﻿import type { Tag } from './tag';
 
 export interface EntranceFee {
     enName: string;
@@ -7,7 +7,7 @@ export interface EntranceFee {
     fee: number;
 }
 
-export interface Transfer {
+export interface Location {
     id: string;
     slug?: string;
     enTitle: string;

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import BaseIcon from '~/components/ui/BaseIcon.vue'
 import BaseButton from '~/components/ui/BaseButton.vue'
 import BaseBadge from '~/components/ui/BaseBadge.vue'
@@ -44,13 +44,13 @@ const emit = defineEmits<{
         {{ tour.tags[0].ruName }}
       </BaseBadge>
 
-      <!-- Related Transfers Badge -->
+      <!-- Related locations Badge -->
       <div
-        v-if="tour.transfers && tour.transfers.length > 0"
+        v-if="tour.locations && tour.locations.length > 0"
         class="absolute bottom-3 left-3 z-10 flex items-center gap-1.5 px-2.5 py-1 bg-black/40 backdrop-blur-sm text-white text-[10px] font-bold rounded-xl border border-white/20"
       >
-        <BaseIcon name="transfer" size="xs" />
-        <span>{{ tour.transfers.length }} transfers</span>
+        <BaseIcon name="Location" size="xs" />
+        <span>{{ tour.locations.length }} locations</span>
       </div>
     </div>
 

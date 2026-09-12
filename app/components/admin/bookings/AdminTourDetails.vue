@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { computed } from 'vue'
 import { useI18n } from '#imports'
 import type { Tour } from '~/types/tour'
@@ -45,9 +45,9 @@ const { formattedDuration } = useShowDuration(() => props.tour.duration)
       <p class="text-sm text-zinc-600 leading-relaxed font-normal whitespace-pre-line">{{ description }}</p>
     </div>
 
-    <!-- Itinerary / Included Transfers -->
+    <!-- Itinerary / Included locations -->
     <div class="border-t border-zinc-100 pt-6">
-      <TourItinerary :transfers="tour.transfers" />
+      <TourItinerary :locations="tour.locations" />
     </div>
   </div>
 </template>

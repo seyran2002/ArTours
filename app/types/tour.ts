@@ -1,9 +1,12 @@
-import type { Transfer, EntranceFee } from './transfer';
+import type { Location, EntranceFee } from './location';
 import type { Tag } from './tag';
+
+export type TourType = 'TOUR' | 'TRANSFER';
 
 export interface Tour {
   id?: string;
   slug?: string;
+  type?: TourType;
   enTitle: string;
   ruTitle: string;
   hyTitle?: string;
@@ -21,7 +24,7 @@ export interface Tour {
   entranceFees?: string | EntranceFee[];
   createdAt?: string;
   updatedAt?: string;
-  transfers: TourTransfer[];
+  locations: TourLocation[];
   tags: Tag[];
 }
 
@@ -30,11 +33,11 @@ interface Duration {
   hours: number;
 }
 
-interface TourTransfer {
+interface TourLocation {
   id: string;
   tourId: string;
-  transferId: string;
+  locationId: string;
   order: number;
   createdAt: string;
-  transfer: Transfer;
+  Location: Location;
 }

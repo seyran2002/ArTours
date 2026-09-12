@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import type { Tour } from '~/types/tour'
 import BaseButton from '~/components/ui/BaseButton.vue'
 import BaseIcon from '~/components/ui/BaseIcon.vue'
@@ -233,11 +233,11 @@ function getHourWordRu(n: number): string {
 
         <!-- Locations & Duration Row -->
         <div class="flex flex-wrap gap-2 pt-1">
-          <BaseBadge v-if="tour.transfers?.length" variant="neutral" size="sm" class="text-zinc-500 border-zinc-100/80">
+          <BaseBadge v-if="tour.locations?.length" variant="neutral" size="sm" class="text-zinc-500 border-zinc-100/80">
             <template #prefix>
               <BaseIcon name="map-pin" size="xs" custom-class="text-zinc-500 shrink-0" />
             </template>
-            {{ tour.transfers.length }} {{ tour.transfers.length === 1 ? $t('tours.location') : $t('tours.locations') }}
+            {{ tour.locations.length }} {{ tour.locations.length === 1 ? $t('tours.location') : $t('tours.locations') }}
           </BaseBadge>
 
           <BaseBadge v-if="formattedDuration" variant="neutral" size="sm" class="text-zinc-500 border-zinc-100/80">

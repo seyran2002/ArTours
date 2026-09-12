@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { ref, onMounted, watch, computed } from 'vue'
 import { useRoute, useRouter, useLocalePath } from '#imports'
 import BaseButton from '~/components/ui/BaseButton.vue'
@@ -74,7 +74,7 @@ const triggerToast = (message: string) => {
  * used by BookingTicket and BookingStepper.
  */
 function adaptApiResponse(data: any): Booking {
-  const entity = data.tour || data.transfer || {}
+  const entity = data.tour || data.Location || {}
   const title = entity.enTitle || 'ArTours Experience'
 
   // Format travel date (preferred) or fall back to creation date
@@ -117,7 +117,7 @@ function adaptApiResponse(data: any): Booking {
     paymentMethod: 'cash',
     customerTelegramId: data.customerTelegramId,
     ...(duration && { duration: duration  }),
-    ...(data.transfer?.toAddressText && { location: data.transfer.toAddressText }),
+    ...(data.Location?.toAddressText && { location: data.Location.toAddressText }),
   }
 }
 

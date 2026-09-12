@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import BaseIcon from '~/components/ui/BaseIcon.vue'
 import BaseInput from '~/components/ui/BaseInput.vue'
 import BaseButton from '~/components/ui/BaseButton.vue'
@@ -96,7 +96,8 @@ const statusOptions: { value: BookingStatus; label: string }[] = [
         >
           <option value="">Բոլոր տեսակ.</option>
           <option :value="BookingType.TOUR">Տուրերը</option>
-          <option :value="BookingType.TRANSFER">Տրանսֆերները</option>
+          <option :value="BookingType.LOCATION">Ուղղություններ</option>
+          <option :value="BookingType.TRANSFER">Տրանսֆեր</option>
         </select>
         <BaseIcon
           name="chevron-down"

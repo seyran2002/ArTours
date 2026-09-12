@@ -158,7 +158,7 @@ function processImg(url: string): { src: string; provider: string | undefined } 
     </div>
 
     <!-- Image Preview Modal — shared by both mobile and desktop -->
-    <LazyAdminTransfersImagePreviewModal
+    <LazyAdminLocationsImagePreviewModal
       v-model:current-index="currentIndex"
       :images="galleryImages"
       :is-open="isPreviewOpen"

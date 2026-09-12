@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import BaseIcon from '~/components/ui/BaseIcon.vue'
 import { useAdminAuthService } from '~/services/admin-auth.service'
 
@@ -20,7 +20,7 @@ const isExpanded = computed(() => hovered.value || props.mobileMenuOpen)
 
 const navLinks = [
   { label: 'Dashboard',  to: '/admin',           icon: 'grid'     },
-  { label: 'Transfers',  to: '/admin/transfers',  icon: 'transfer' },
+  { label: 'locations',  to: '/admin/locations',  icon: 'Location' },
   { label: 'Tours',      to: '/admin/tours',      icon: 'tours'    },
   { label: 'Bookings',   to: '/admin/bookings',   icon: 'booking'  },
 ]

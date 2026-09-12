@@ -1,30 +1,30 @@
 <script setup lang="ts">
-import type { Transfer } from '~/types/transfer'
-import TransferCard from '~/components/ui/TransferCard.vue'
+import type { Location } from '~/types/location'
+import LocationCard from '~/components/ui/LocationCard.vue'
 import BaseIcon from '~/components/ui/BaseIcon.vue'
 import { useI18n } from '#imports'
 
 const { locale } = useI18n()
 
 defineProps<{
-  transfers: Transfer[]
+  locations: Location[]
 }>()
 </script>
 
 <template>
-  <!-- Transfers Grid -->
+  <!-- locations Grid -->
   <div
-    v-if="transfers.length"
+    v-if="locations.length"
     class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-6"
   >
     <div
-      v-for="(transfer, index) in transfers"
-      :key="transfer.id"
+      v-for="(Location, index) in locations"
+      :key="Location.id"
       class="animate-fade-in-up"
       :style="{ animationDelay: `${(index % 8) * 60}ms` }"
     >
-      <TransferCard
-        :transfer="transfer"
+      <LocationCard
+        :Location="Location"
         :is-priority="index === 0"
       />
     </div>
@@ -39,10 +39,10 @@ defineProps<{
       <BaseIcon name="search" size="lg" custom-class="text-zinc-300" />
     </div>
     <h3 class="text-lg sm:text-xl font-bold text-zinc-800 font-serif mb-2">
-      {{ locale === 'ru' ? 'Трансферы не найдены' : 'No transfers found' }}
+      {{ locale === 'ru' ? 'Локации не найдены' : locale === 'hy' ? 'Ուղղություններ չեն գտնվել' : 'No locations found' }}
     </h3>
     <p class="text-sm text-zinc-400 max-w-sm leading-relaxed">
-      {{ locale === 'ru' ? 'Мы не смогли найти трансферы, соответствующие вашим критериям. Попробуйте изменить поиск или фильтры.' : "We couldn't find any transfers matching your criteria. Try adjusting your search or filters." }}
+      {{ locale === 'ru' ? 'Мы не смогли найти локации, соответствующие вашим критериям. Попробуйте изменить поиск или фильтры.' : locale === 'hy' ? 'Ձեր չափանիշներին համապատասխան վայրեր չեն գտնվել: Փորձեք փոխել որոնումը կամ զտիչները:' : "We couldn't find any locations matching your criteria. Try adjusting your search or filters." }}
     </p>
   </div>
 </template>

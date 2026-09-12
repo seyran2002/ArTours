@@ -116,7 +116,7 @@ async function handleUpdateTag(tagId: string) {
     <!-- Form to Create New Tag -->
     <div class="bg-white border border-zinc-200/60 rounded-2xl p-6 shadow-sm h-fit">
       <h3 class="text-base font-bold text-zinc-800 mb-2">Ստեղծել Նոր Տեգ</h3>
-      <p class="text-xs text-zinc-500 mb-6">Ավելացրեք տեգեր տրանսֆերնեը և տուրերը խմբավորելու և զտելու համար:</p>
+      <p class="text-xs text-zinc-500 mb-6">Ավելացրեք տեգեր ուղղությունները և տուրերը խմբավորելու և զտելու համար:</p>
 
       <form @submit.prevent="handleAddTag" class="space-y-4">
         <div>
@@ -173,7 +173,7 @@ async function handleUpdateTag(tagId: string) {
       <div class="flex items-center justify-between mb-6">
         <div>
           <h3 class="text-base font-bold text-zinc-800">Տեգերի Ցուցակ</h3>
-          <p class="text-xs text-zinc-500 mt-1">Կառավարեք տրանսֆերները կատեգորիաներով և ստուգեք դրանց օգտագործման վիճակագրությունը:</p>
+          <p class="text-xs text-zinc-500 mt-1">Կառավարեք վայրերը կատեգորիաներով և ստուգեք դրանց օգտագործման վիճակագրությունը:</p>
         </div>
         <div class="px-3 py-1 rounded-full bg-zinc-100 text-[10px] font-bold text-zinc-500 uppercase tracking-wider">
           Քանակը՝ {{ tags.length }}

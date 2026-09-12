@@ -1,17 +1,18 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue'
 import type { TourDuration } from '~/types/admin-tour'
+import type { TourType } from '~/types/tour'
 import BaseIcon from '~/components/ui/BaseIcon.vue'
 import BaseInput from '~/components/ui/BaseInput.vue'
 import BaseButton from '~/components/ui/BaseButton.vue'
-import TransferMultiSelect from '~/components/ui/TransferMultiSelect.vue'
+import LocationMultiSelect from '~/components/ui/LocationMultiSelect.vue'
 import StarRatingSelector from '~/components/ui/StarRatingSelector.vue'
 import MealOptionsSelector from '~/components/ui/MealOptionsSelector.vue'
 import { useAdminTour } from '~/composables/useAdminTour'
-import { useTransfer } from '~/composables/useTransfer'
+import { useLocation } from '~/composables/useLocation'
 import { useTag } from '~/composables/useTag'
 import { useBuildRoutePolyline } from '~/composables/useBuildRoutePolyline'
-import ImageGalleryManager from '~/components/admin/transfers/ImageGalleryManager.vue'
+import ImageGalleryManager from '~/components/admin/locations/ImageGalleryManager.vue'
 
 const props = defineProps<{
   tourId?: string
@@ -23,7 +24,7 @@ const emit = defineEmits<{
 }>()
 
 const { tours, createTour, updateTour } = useAdminTour()
-const { transfers, fetchTransfers, loading: transfersLoading } = useTransfer()
+const { locations, fetchLocations, loading: locationsLoading } = useLocation()
 const tagStore = useTag()
 const tags = computed(() => tagStore.tags.value)
 const { buildTourRoutePolyline } = useBuildRoutePolyline()
@@ -37,11 +38,12 @@ const ruDescription = ref('')
 const hyDescription = ref('')
 const price = ref<number | ''>('')
 const selectedTags = ref<string[]>([])
-const selectedTransferIds = ref<string[]>([])
+const selectedLocationIds = ref<string[]>([])
 const entranceFees = ref<{ enName: string; ruName: string; hyName: string; fee: number }[]>([])
 const images = ref<string[]>([])
 const mainImage = ref('')
 const duration = ref<TourDuration>({ days: 0, hours: 0 })
+const tourType = ref<TourType>('TOUR')
 
 // Overnight Tour computed & reactive fields
 const isOvernight = computed(() => duration.value.days > 1)
@@ -73,9 +75,9 @@ const isEditMode = computed(() => !!props.tourId)
 onMounted(async () => {
   await tagStore.fetchTags()
 
-  // Fetch transfers if not yet loaded
-  if (transfers.value.length === 0) {
-    await fetchTransfers()
+  // Fetch locations if not yet loaded
+  if (locations.value.length === 0) {
+    await fetchLocations()
   }
 
   if (isEditMode.value) {
@@ -88,13 +90,14 @@ onMounted(async () => {
       ruDescription.value = existing.ruDescription || ''
       hyDescription.value = existing.hyDescription || ''
       price.value = existing.minimumPrice ?? ''
+      tourType.value = (existing as any).type ?? 'TOUR'
 
       selectedTags.value = existing.tags?.map((tag: any) => tag.id) || []
 
-      // Preselect related transfers
-      selectedTransferIds.value =
-        existing.transferIds ||
-        existing.transfers?.map((t: any) => t.transfer.id) ||
+      // Preselect related locations
+      selectedLocationIds.value =
+        existing.locationIds ||
+        existing.locations?.map((t: any) => t.Location?.id || t.location?.id) ||
         []
 
       entranceFees.value =
@@ -208,6 +211,10 @@ function validate(): boolean {
     errors.value.price = 'Գինը պետք է լինի 0-ից մեծ'
   }
 
+  if (!tourType.value) {
+    errors.value.tourType = 'Տեսակը պարտադիր է'
+  }
+
   return Object.keys(errors.value).length === 0
 }
 
@@ -265,15 +272,15 @@ const handleSave = async () => {
       formData.append('tagIds', JSON.stringify(selectedTags.value))
     }
 
-    // Related Transfers
-    if (selectedTransferIds.value.length > 0) {
-      formData.append('transferIds', JSON.stringify(selectedTransferIds.value))
+    // Related locations
+    if (selectedLocationIds.value.length > 0) {
+      formData.append('locationIds', JSON.stringify(selectedLocationIds.value))
 
-      const orderedTransfers = selectedTransferIds.value
-        .map(id => transfers.value.find(t => String(t.id) === String(id)))
+      const orderedLocations = selectedLocationIds.value
+        .map(id => locations.value.find(t => String(t.id) === String(id)))
         .filter((t): t is any => !!t)
 
-      const routePolyline = await buildTourRoutePolyline(orderedTransfers)
+      const routePolyline = await buildTourRoutePolyline(orderedLocations)
       if (routePolyline) {
         formData.append('routePolyline', routePolyline)
       }
@@ -286,6 +293,9 @@ const handleSave = async () => {
     if (activeEntranceFees.length > 0) {
       formData.append('entranceFees', JSON.stringify(activeEntranceFees))
     }
+
+    // Type (TOUR | TRANSFER)
+    formData.append('type', tourType.value)
 
     // Duration
     formData.append('duration', JSON.stringify(duration.value))
@@ -320,12 +330,12 @@ const handleSave = async () => {
 </script>
 
 <template>
-  <div class="bg-white border border-zinc-200/60 rounded-3xl p-6 sm:p-8 shadow-sm max-w-4xl mx-auto animate-fade-in">
+  <div class="bg-white border border-zinc-200/60 rounded-3xl p-6 sm:p-8 shadow-sm max-w-6xl mx-auto animate-fade-in">
     <!-- Form Header -->
     <div class="flex items-center justify-between border-b border-zinc-100 pb-4 mb-6">
       <div>
         <h2 class="text-xl font-bold text-zinc-900">
-          {{ isEditMode ? 'Խմբագրել Տուր' : 'Ստեղծել Տուր' }}
+          {{ isEditMode ? 'Խմբագրել Տուր/Տրանսֆեր' : 'Ստեղծել Տուր/Տրանսֆեր' }}
         </h2>
         <p class="text-xs text-zinc-500 mt-1">
           Լրացրեք ստորև նշված դաշտերը ըստ Ձեր տուրի:
@@ -343,6 +353,43 @@ const handleSave = async () => {
     </div>
 
     <form @submit.prevent="handleSave" class="space-y-8">
+
+      <!-- ── TOUR TYPE SELECTOR ── -->
+      <div id="tour-field-tourType" class="space-y-2">
+        <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">
+          Տեսակ (Type) <span class="text-red-500">*</span>
+        </label>
+        <p class="text-[10px] text-zinc-400 -mt-0.5">Ընտրեք՝ սա Տուր է, թե Տրանսֆեր</p>
+        <div class="inline-flex items-center gap-1 p-1 bg-zinc-100 border border-zinc-200 rounded-2xl">
+          <button
+            type="button"
+            id="tour-type-tour"
+            :class="[
+              'flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200',
+              tourType === 'TOUR'
+                ? 'bg-white text-primary shadow-sm border border-primary/20'
+                : 'text-zinc-500 hover:text-zinc-700'
+            ]"
+            @click="tourType = 'TOUR'"
+          >
+            <span>🗺️</span> Տուր
+          </button>
+          <button
+            type="button"
+            id="tour-type-transfer"
+            :class="[
+              'flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200',
+              tourType === 'TRANSFER'
+                ? 'bg-white text-primary shadow-sm border border-primary/20'
+                : 'text-zinc-500 hover:text-zinc-700'
+            ]"
+            @click="tourType = 'TRANSFER'"
+          >
+            <span>🚐</span> Տրանսֆեր
+          </button>
+        </div>
+        <p v-if="errors.tourType" class="text-xs text-red-500 font-medium">{{ errors.tourType }}</p>
+      </div>
 
       <!-- ── TITLES ROW (EN & RU) ── -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -596,14 +643,14 @@ const handleSave = async () => {
         </div>
       </div>
 
-      <!-- ── RELATED TRANSFERS MULTISELECT ── -->
-      <div id="tour-field-transfers" class="space-y-2">
-        <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Կապված Տրանսֆերներ (Related Transfers)</label>
-        <p class="text-[11px] text-zinc-400 -mt-0.5">Select transfers to associate with this tour. Displayed in Russian.</p>
-        <TransferMultiSelect
-          v-model="selectedTransferIds"
-          :transfers="transfers"
-          :loading="transfersLoading"
+      <!-- ── RELATED locations MULTISELECT ── -->
+      <div id="tour-field-locations" class="space-y-2">
+        <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Կապված Ուղղություններ (Related Locations)</label>
+        <p class="text-[11px] text-zinc-400 -mt-0.5">Select locations to associate with this tour. Displayed in Russian.</p>
+        <LocationMultiSelect
+          v-model="selectedLocationIds"
+          :locations="locations"
+          :loading="locationsLoading"
         />
       </div>
 

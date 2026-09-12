@@ -1,4 +1,4 @@
-import { computed } from 'vue'
+﻿import { computed } from 'vue'
 import { useRoute } from '#imports'
 import type { NavigationLink } from '../types/navigation'
 
@@ -14,11 +14,11 @@ export const useNavigation = () => {
       ariaLabel: 'Go to home page'
     },
     {
-      label: 'Transfers',
-      labelKey: 'header.transfers',
-      path: '/transfers',
-      icon: 'transfer',
-      ariaLabel: 'View available transfers'
+      label: 'locations',
+      labelKey: 'header.locations',
+      path: '/locations',
+      icon: 'Location',
+      ariaLabel: 'View available locations'
     },
     {
       label: 'Tours',

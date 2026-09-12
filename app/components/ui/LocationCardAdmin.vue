@@ -1,12 +1,12 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import BaseIcon from '~/components/ui/BaseIcon.vue'
 import BaseButton from '~/components/ui/BaseButton.vue'
 import BaseBadge from '~/components/ui/BaseBadge.vue'
-import type { Transfer } from '~/types/transfer'
+import type { Location } from '~/types/location'
 
 withDefaults(
   defineProps<{
-    transfer: Transfer
+    Location: Location
     adminMode?: boolean
   }>(),
   {
@@ -15,7 +15,7 @@ withDefaults(
 )
 
 const emit = defineEmits<{
-  edit: [transfer: Transfer]
+  edit: [Location: Location]
 }>()
 </script>
 
@@ -26,9 +26,9 @@ const emit = defineEmits<{
     <!-- Card Image Section -->
     <div class="relative rounded-t-3xl overflow-hidden aspect-[16/10] sm:aspect-[16/9] md:aspect-[16/10] lg:aspect-[4/3] w-full shrink-0">
       <NuxtImg
-        v-if="transfer.mainImage"
-        :src="transfer.mainImage"
-        :alt="transfer.enTitle"
+        v-if="Location.mainImage"
+        :src="Location.mainImage"
+        :alt="Location.enTitle"
         class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
         sizes="xs:340px sm:400px md:340px lg:380px xl:420px"
         format="webp"
@@ -39,8 +39,8 @@ const emit = defineEmits<{
       </div>
       <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-80" />
 
-      <BaseBadge v-if="transfer?.tags?.[0]" class="absolute top-3 left-3 z-10" variant="glass" size="xs" pulse pulse-color="secondary">
-        {{ transfer.tags[0].ruName }}
+      <BaseBadge v-if="Location?.tags?.[0]" class="absolute top-3 left-3 z-10" variant="glass" size="xs" pulse pulse-color="secondary">
+        {{ Location.tags[0].ruName }}
      </BaseBadge>
     </div>
 
@@ -52,17 +52,17 @@ const emit = defineEmits<{
         <!-- RU Title — Primary -->
         <h3 class="text-lg font-bold text-zinc-900 font-serif leading-snug group-hover:text-primary transition-colors duration-300 line-clamp-2 flex items-start gap-2">
           <span class="mt-0.5 shrink-0 px-1.5 py-0.5 text-[8px] font-extrabold tracking-widest uppercase rounded bg-primary/10 text-primary border border-primary/20">RU</span>
-          <span>{{ transfer.ruTitle || '—' }}</span>
+          <span>{{ Location.ruTitle || '—' }}</span>
         </h3>
         <!-- EN Title — Secondary -->
         <p class="text-sm font-semibold text-zinc-500 leading-snug line-clamp-1 flex items-start gap-2">
           <span class="mt-0.5 shrink-0 px-1.5 py-0.5 text-[8px] font-extrabold tracking-widest uppercase rounded bg-zinc-100 text-zinc-500 border border-zinc-200">EN</span>
-          <span>{{ transfer.enTitle || '—' }}</span>
+          <span>{{ Location.enTitle || '—' }}</span>
         </p>
         <!-- HY Title — Secondary -->
         <p class="text-sm font-semibold text-zinc-500 leading-snug line-clamp-1 flex items-start gap-2">
           <span class="mt-0.5 shrink-0 px-1.5 py-0.5 text-[8px] font-extrabold tracking-widest uppercase rounded bg-zinc-100 text-zinc-500 border border-zinc-200">HY</span>
-          <span>{{ transfer.hyTitle || '—' }}</span>
+          <span>{{ Location.hyTitle || '—' }}</span>
         </p>
       </div>
 
@@ -75,21 +75,21 @@ const emit = defineEmits<{
         <div class="flex gap-2">
           <span class="mt-0.5 shrink-0 px-1.5 py-0.5 text-[8px] font-extrabold tracking-widest uppercase rounded bg-primary/10 text-primary border border-primary/20 h-fit">RU</span>
           <p class="text-[13px] text-zinc-700 leading-relaxed line-clamp-3">
-            {{ transfer.ruDescription || '—' }}
+            {{ Location.ruDescription || '—' }}
           </p>
         </div>
         <!-- EN Description — Secondary -->
         <div class="flex gap-2">
           <span class="mt-0.5 shrink-0 px-1.5 py-0.5 text-[8px] font-extrabold tracking-widest uppercase rounded bg-zinc-100 text-zinc-500 border border-zinc-200 h-fit">EN</span>
           <p class="text-xs text-zinc-500 leading-relaxed line-clamp-2">
-            {{ transfer.enDescription || '—' }}
+            {{ Location.enDescription || '—' }}
           </p>
         </div>
         <!-- HY Description — Secondary -->
         <div class="flex gap-2">
           <span class="mt-0.5 shrink-0 px-1.5 py-0.5 text-[8px] font-extrabold tracking-widest uppercase rounded bg-zinc-100 text-zinc-500 border border-zinc-200 h-fit">HY</span>
           <p class="text-xs text-zinc-500 leading-relaxed line-clamp-2">
-            {{ transfer.hyDescription || '—' }}
+            {{ Location.hyDescription || '—' }}
           </p>
         </div>
       </div>
@@ -97,10 +97,10 @@ const emit = defineEmits<{
       <!-- ── CTA FOOTER ── -->
       <div class="pt-4 border-t border-zinc-100 flex items-center justify-between gap-3 mt-auto">
         <!-- Minimum Price -->
-        <div v-if="transfer.minimumPrice" class="shrink-0">
+        <div v-if="Location.minimumPrice" class="shrink-0">
           <span class="text-[10px] text-zinc-500 block uppercase font-bold tracking-widest leading-none mb-1">Արժեքը սկսած</span>
           <span class="text-lg font-extrabold text-zinc-950 font-sans tracking-tight">
-            €{{ transfer.minimumPrice }}
+            €{{ Location.minimumPrice }}
             <span class="text-xs font-semibold text-zinc-500">/ 3 հոգու համար</span>
           </span>
         </div>
@@ -114,7 +114,7 @@ const emit = defineEmits<{
           variant="secondary"
           size="sm"
           class="shadow-sm px-4 shrink-0 flex items-center gap-1.5 hover:bg-primary"
-          @click.prevent="emit('edit', transfer)"
+          @click.prevent="emit('edit', Location)"
         >
           <BaseIcon name="edit" size="xs" />
           <span>Խմբագրել</span>
@@ -122,7 +122,7 @@ const emit = defineEmits<{
 
         <BaseButton
           v-else
-          :to="`/tours?location=${encodeURIComponent(transfer.enTitle)}`"
+          :to="`/tours?location=${encodeURIComponent(Location.enTitle)}`"
           variant="secondary"
           size="sm"
           class="shadow-sm px-4 shrink-0"

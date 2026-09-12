@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import BaseIcon from '~/components/ui/BaseIcon.vue'
 
 const props = defineProps<{
@@ -25,11 +25,11 @@ const onInput = (event: Event) => {
         custom-class="text-zinc-400 group-focus-within:text-primary transition-colors duration-300 shrink-0" 
       />
       <input
-        id="transfers-search"
+        id="locations-search"
         type="text"
         :value="modelValue"
         @input="onInput"
-        :placeholder="$t('transfers.searchPlaceholder')"
+        :placeholder="$t('locations.searchPlaceholder')"
         aria-label="Search destinations"
         class="w-full bg-transparent text-sm font-medium text-zinc-800 placeholder-zinc-400 outline-none border-none"
       />

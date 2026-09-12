@@ -1,32 +1,32 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import type { Tag } from '~/types/tag'
-import { useTransfers } from '~/composables/useTransfers'
+import { useLocations } from '~/composables/useLocations'
 import { usePagination } from '~/composables/usePagination'
 import { useTag } from '~/composables/useTag'
 import { useI18n } from '#imports'
-import TransfersHeader from '~/components/transfers/TransfersHeader.vue'
-import TransfersSearch from '~/components/transfers/TransfersSearch.vue'
-import TransfersFilters from '~/components/transfers/TransfersFilters.vue'
-import TransfersGrid from '~/components/transfers/TransfersGrid.vue'
-import TransfersLoadMore from '~/components/transfers/TransfersLoadMore.vue'
-import type { Transfer } from '~/types/transfer'
+import LocationsHeader from '~/components/locations/LocationsHeader.vue'
+import LocationsSearch from '~/components/locations/LocationsSearch.vue'
+import LocationsFilters from '~/components/locations/LocationsFilters.vue'
+import LocationsGrid from '~/components/locations/LocationsGrid.vue'
+import LocationsLoadMore from '~/components/locations/LocationsLoadMore.vue'
+import type { Location } from '~/types/location'
 
 const { locale } = useI18n()
 import { usePageSeo } from '~/composables/usePageSeo'
 
 usePageSeo({
-  titleKey: 'seo.transfers.title',
-  descriptionKey: 'seo.transfers.description',
-  keywordsKey: 'seo.transfers.keywords',
-  ogTitleKey: 'seo.transfers.ogTitle',
-  ogDescriptionKey: 'seo.transfers.ogDescription',
-  siteNameKey: 'seo.transfers.siteName',
+  titleKey: 'seo.locations.title',
+  descriptionKey: 'seo.locations.description',
+  keywordsKey: 'seo.locations.keywords',
+  ogTitleKey: 'seo.locations.ogTitle',
+  ogDescriptionKey: 'seo.locations.ogDescription',
+  siteNameKey: 'seo.locations.siteName',
   schemas: ['Organization', 'WebSite']
 })
 
 // Data Fetching
-const { transfers, loading } = useTransfers()
+const { locations, loading } = useLocations()
 const tag = useTag()
 const { public: { apiUrl } } = useRuntimeConfig()
 
@@ -48,14 +48,14 @@ const setSearchQuery = (query: string) => {
 }
 
 // Client-side Filtering Logic
-const filteredTransfers = computed(() => {
-  let result = transfers.value
+const filteredLocations = computed(() => {
+  let result = locations.value
 
   // Search filter
   if (searchQuery.value.trim()) {
     const q = searchQuery.value.toLowerCase();
-    const titleKey = `${locale.value}Title` as keyof Transfer;
-    const descKey = `${locale.value}Description` as keyof Transfer;
+    const titleKey = `${locale.value}Title` as keyof Location;
+    const descKey = `${locale.value}Description` as keyof Location;
 
     result = result.filter(t => 
       (t[titleKey] as string)?.toLowerCase().includes(q) || 
@@ -76,11 +76,11 @@ const filteredTransfers = computed(() => {
 
 // Pagination Logic
 const { 
-  paginatedItems: visibleTransfers, 
+  paginatedItems: visibleLocations, 
   hasMore, 
   visibleCount, 
   loadMore 
-} = usePagination(filteredTransfers, 8)
+} = usePagination(filteredLocations, 8)
 
 </script>
 
@@ -94,19 +94,19 @@ const {
 
     <div class="max-w-[1440px] mx-auto px-6 lg:px-8">
       <!-- Header -->
-      <TransfersHeader />
+      <LocationsHeader />
 
       <!-- Search & Filters Bar -->
       <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 sm:items-start mb-8 sm:mb-10">
         <div class="w-full sm:max-w-sm">
-          <TransfersSearch
+          <LocationsSearch
             :model-value="searchQuery"
             @update:model-value="setSearchQuery"
           />
         </div>
 
         <div class="flex-1 flex items-center sm:pt-1">
-          <TransfersFilters
+          <LocationsFilters
             :tags="tags"
             :active-category="activeCategory"
             @update:active-category="activeCategory = $event"
@@ -115,17 +115,17 @@ const {
       </div>
 
       <!-- Loading State -->
-      <div v-if="loading && !transfers.length" class="flex justify-center py-20">
+      <div v-if="loading && !locations.length" class="flex justify-center py-20">
         <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
       </div>
 
-      <!-- Transfers Grid -->
-      <TransfersGrid v-else :transfers="visibleTransfers" />
+      <!-- locations Grid -->
+      <LocationsGrid v-else :locations="visibleLocations" />
 
       <!-- Load More -->
-      <TransfersLoadMore
+      <LocationsLoadMore
         :has-more="hasMore"
-        :total-filtered="filteredTransfers.length"
+        :total-filtered="filteredLocations.length"
         :visible-count="visibleCount"
         @load-more="loadMore"
       />

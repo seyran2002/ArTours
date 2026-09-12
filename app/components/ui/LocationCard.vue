@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Transfer } from '~/types/transfer'
+import type { Location } from '~/types/location'
 import BaseIcon from '~/components/ui/BaseIcon.vue'
 import BaseButton from '~/components/ui/BaseButton.vue'
 import BaseBadge from '~/components/ui/BaseBadge.vue'
@@ -10,7 +10,7 @@ const { locale } = useI18n()
 
 const props = withDefaults(
   defineProps<{
-    transfer?: Transfer
+    Location?: Location
     loading?: boolean
     isPriority?: boolean
   }>(),
@@ -21,12 +21,12 @@ const props = withDefaults(
 
 
 const emit = defineEmits<{
-  edit: [transfer: Transfer]
+  edit: [Location: Location]
 }>()
 
 const mainImage = computed(() => {
-  if (!props.transfer) return '/images/placeholder-transfer.webp'
-  return props.transfer.mainImage || (props.transfer.images && props.transfer.images.length > 0 ? props.transfer.images[0] : '/images/placeholder-transfer.webp')
+  if (!props.Location) return '/images/placeholder-Location.webp'
+  return props.Location.mainImage || (props.Location.images && props.Location.images.length > 0 ? props.Location.images[0] : '/images/placeholder-Location.webp')
 })
 
 const isCloudinary = computed(() => {
@@ -41,9 +41,9 @@ const cleanedImage = computed(() => {
 })
 
 const badge = computed(() => {
-  if (!props.transfer) return null
+  if (!props.Location) return null
   // If there's a main tag, use its name, otherwise fallback or omit
-  const mainTag = props.transfer.tags?.find(t => t.isMain) || props.transfer.tags?.[0]
+  const mainTag = props.Location.tags?.find(t => t.isMain) || props.Location.tags?.[0]
   if (mainTag) {
     return locale.value === 'ru' ? mainTag.ruName : mainTag.enName
   }
@@ -71,10 +71,10 @@ const badge = computed(() => {
           <div class="w-24 h-3 bg-zinc-200 rounded" />
         </div>
 
-        <!-- Skeleton Transfer Title -->
+        <!-- Skeleton Location Title -->
         <div class="w-3/4 h-5 bg-zinc-200 rounded font-serif" />
 
-        <!-- Skeleton Transfer Description -->
+        <!-- Skeleton Location Description -->
         <div class="space-y-2">
           <div class="w-full h-3 bg-zinc-200 rounded" />
           <div class="w-5/6 h-3 bg-zinc-200 rounded" />
@@ -95,8 +95,8 @@ const badge = computed(() => {
 
   <!-- Real Card -->
   <NuxtLink
-    v-else-if="transfer"
-    :to="localePath(`/transfer/${transfer.id}/${transfer.slug}`)"
+    v-else-if="Location"
+    :to="localePath(`/location/${Location.id}/${Location.slug}`)"
     class="bg-white rounded-3xl overflow-hidden  shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:shadow-[0_24px_48px_-12px_rgba(18,83,78,0.08)] hover:-translate-y-1 transition-all duration-500 flex flex-col justify-between group h-full relative"
   >
     <!-- Card Image Section -->
@@ -104,7 +104,7 @@ const badge = computed(() => {
       <NuxtImg
         :provider="isCloudinary ? 'cloudinary' : undefined"
         :src="cleanedImage"
-        :alt="transfer[`${locale}Title`]"
+        :alt="Location[`${locale}Title`]"
         class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
         width="400"
         height="250"
@@ -132,29 +132,29 @@ const badge = computed(() => {
           <div class="flex items-center gap-1.5 text-primary">
             <BaseIcon name="map-pin" size="xs" custom-class="text-primary/95 shrink-0" />
             <span class="truncate text-zinc-500 font-semibold max-w-[150px] sm:max-w-[200px]">
-              {{ transfer.distanceFromYerevan }} {{ $t('transfers.kmFromYerevan')}}
+              {{ Location.distanceFromYerevan }} {{ $t('locations.kmFromYerevan')}}
             </span>
           </div>
         </div>
 
-        <!-- Transfer Title -->
+        <!-- Location Title -->
         <h2 class="text-lg xs:text-xl font-bold text-zinc-900 font-serif leading-snug group-hover:text-primary transition-colors duration-300 line-clamp-1">
-          {{ transfer[`${locale}Title`] }}
+          {{ Location[`${locale}Title`] }}
         </h2>
 
-        <!-- Transfer Description -->
+        <!-- Location Description -->
         <p class="text-xs sm:text-[13px] text-zinc-500 leading-relaxed line-clamp-3">
-          {{ transfer[`${locale}Description`] }}
+          {{ Location[`${locale}Description`] }}
         </p>
       </div>
 
       <!-- CTA Footer -->
       <div class="pt-4 border-t border-zinc-150 flex items-center justify-between gap-4 mt-5">
         <div class="shrink-0">
-          <span class="text-[9px] text-zinc-500 block uppercase font-bold tracking-widest leading-none mb-1">{{ $t('transfers.pricingFrom') }}</span>
+          <span class="text-[9px] text-zinc-500 block uppercase font-bold tracking-widest leading-none mb-1">{{ $t('locations.pricingFrom') }}</span>
           <span class="text-lg sm:text-xl lg:text-lg xl:text-xl font-extrabold text-zinc-900 font-sans tracking-tight">
-            €{{ transfer.minimumPrice }}
-            <span class="text-[10px] sm:text-xs font-semibold text-zinc-500">{{ $t('transfers.for3People') }}</span>
+            €{{ Location.minimumPrice }}
+            <span class="text-[10px] sm:text-xs font-semibold text-zinc-500">{{ $t('locations.for3People') }}</span>
           </span>
         </div>
 
@@ -164,7 +164,7 @@ const badge = computed(() => {
           size="sm"
           class="shadow-sm px-4 shrink-0"
         >
-          {{ $t(`transfers.details`) }}
+          {{ $t(`locations.details`) }}
         </BaseButton>
       </div>
     </div>

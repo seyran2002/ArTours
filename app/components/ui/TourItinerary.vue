@@ -4,14 +4,14 @@ import { useI18n } from '#imports'
 import type { Tour } from '~/types/tour'
 
 const props = defineProps<{
-  transfers: Tour['transfers']
+  locations: Tour['locations']
 }>()
 
 const { locale } = useI18n()
 
-const sortedTransfers = computed(() => {
-  if (!props.transfers) return []
-  return [...props.transfers].sort((a, b) => a.order - b.order)
+const sortedLocations = computed(() => {
+  if (!props.locations) return []
+  return [...props.locations].sort((a, b) => a.order - b.order)
 })
 </script>
 
@@ -21,14 +21,14 @@ const sortedTransfers = computed(() => {
       {{ $t('tours.tourItinerary') }}
     </h3>
     
-    <div v-if="sortedTransfers.length === 0" class="text-sm text-zinc-500 italic">
+    <div v-if="sortedLocations.length === 0" class="text-sm text-zinc-500 italic">
       No itinerary steps available.
     </div>
 
     <div v-else class="relative border-l border-zinc-200/80 ml-4 pl-8 space-y-8">
       <div 
-        v-for="(tourTransfer, index) in sortedTransfers" 
-        :key="tourTransfer.id || index"
+        v-for="(TourLocation, index) in sortedLocations" 
+        :key="TourLocation.id || index"
         class="relative group"
       >
         <!-- Circle indicator on timeline line -->
@@ -39,20 +39,20 @@ const sortedTransfers = computed(() => {
         <div class="space-y-2">
           <!-- Step Title -->
           <h4 class="text-base font-bold text-zinc-800 transition-colors duration-250 group-hover:text-primary">
-            {{ locale === 'ru' ? tourTransfer.transfer.ruTitle : tourTransfer.transfer.enTitle }}
+            {{ locale === 'ru' ? TourLocation.Location.ruTitle : TourLocation.Location.enTitle }}
           </h4>
 
           <!-- Step Long Description -->
           <div 
-            v-if="locale === 'ru' ? tourTransfer.transfer.ruLongDescription : tourTransfer.transfer.enLongDescription"
+            v-if="locale === 'ru' ? TourLocation.Location.ruLongDescription : TourLocation.Location.enLongDescription"
             class="prose prose-zinc max-w-none text-xs sm:text-sm text-zinc-600 leading-relaxed font-normal"
-            v-html="locale === 'ru' ? tourTransfer.transfer.ruLongDescription : tourTransfer.transfer.enLongDescription"
+            v-html="locale === 'ru' ? TourLocation.Location.ruLongDescription : TourLocation.Location.enLongDescription"
           ></div>
           <p 
             v-else
             class="text-xs sm:text-sm text-zinc-500 italic"
           >
-            {{ locale === 'ru' ? tourTransfer.transfer.ruDescription : tourTransfer.transfer.enDescription }}
+            {{ locale === 'ru' ? TourLocation.Location.ruDescription : TourLocation.Location.enDescription }}
           </p>
         </div>
       </div>

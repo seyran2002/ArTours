@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { computed } from 'vue'
 import { useI18n } from '#imports'
 import type { Tour } from '~/types/tour'
@@ -94,13 +94,13 @@ const hasMeals = computed(() => {
         </div>
       </div>
 
-      <div v-if="tour.transfers?.length" class="space-y-1 col-span-2 md:col-span-1">
+      <div v-if="tour.locations?.length" class="space-y-1 col-span-2 md:col-span-1">
         <span class="block text-[10px] font-bold text-zinc-500 uppercase tracking-wider">
-          {{ tour.transfers.length === 1 ? $t('tours.location') : $t('tours.locations') }}
+          {{ tour.locations.length === 1 ? $t('tours.location') : $t('tours.locations') }}
         </span>
         <div class="flex items-baseline gap-1">
           <span class="text-3xl font-black text-zinc-900 font-sans">
-            {{ tour.transfers.length }}
+            {{ tour.locations.length }}
           </span>
         </div>
       </div>
@@ -171,13 +171,13 @@ const hasMeals = computed(() => {
 
     <!-- Itinerary Timeline Component -->
     <div class="border-t border-zinc-100 pt-6">
-      <TourItinerary :transfers="tour.transfers" />
+      <TourItinerary :locations="tour.locations" />
     </div>
 
     <!-- Optional Entrance Fees -->
     <div v-if="parsedEntranceFees.length > 0" class="space-y-4 border-t border-zinc-100 pt-6">
       <h2 class="text-sm font-bold text-zinc-800 uppercase tracking-wider">
-        {{ $t('transfers.entranceFees') }}
+        {{ $t('locations.entranceFees') }}
       </h2>
       <div class="space-y-2.5">
         <div

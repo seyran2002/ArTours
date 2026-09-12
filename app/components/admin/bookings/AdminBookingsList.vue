@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { ref, computed } from 'vue'
 import BaseIcon from '~/components/ui/BaseIcon.vue'
 import BaseButton from '~/components/ui/BaseButton.vue'
@@ -7,7 +7,7 @@ import { useBookingService } from '~/services/booking.service'
 import { BookingStatus, BookingType } from '~/types/booking'
 import type { BookingResponse } from '~/types/booking'
 import AdminTourDetailsModal from '~/components/admin/bookings/AdminTourDetailsModal.vue'
-import AdminTransferDetailsModal from '~/components/admin/bookings/AdminTransferDetailsModal.vue'
+import AdminLocationDetailsModal from '~/components/admin/bookings/AdminLocationDetailsModal.vue'
 
 // ── Data ─────────────────────────────────────────────────────────────────────
 const bookingService = useBookingService()
@@ -110,8 +110,8 @@ function getServiceName(b: BookingResponse): string {
   if (b.type === BookingType.TOUR) {
     return b.tour?.ruTitle ?? b.tour?.enTitle ?? '—'
   }
-  if (b.type === BookingType.TRANSFER) {
-    return b.transfer?.ruTitle ?? b.transfer?.enTitle ?? '—'
+  if (b.type === BookingType.LOCATION || b.type === BookingType.TRANSFER) {
+    return b.location?.ruTitle ?? b.location?.enTitle ?? '—'
   }
   return '—'
 }
@@ -142,9 +142,10 @@ const statusMeta: Record<BookingStatus, { label: string; bg: string; text: strin
   [BookingStatus.COMPLETED]: { label: 'Կատարված',        bg: 'bg-sky-50',     text: 'text-sky-700',     dot: 'bg-sky-400'     },
 }
 
-const typeMeta: Record<BookingType, { label: string; bg: string; text: string }> = {
-  [BookingType.TOUR]:     { label: 'Տուր',      bg: 'bg-violet-50', text: 'text-violet-700' },
-  [BookingType.TRANSFER]: { label: 'Տրանսֆեր', bg: 'bg-cyan-50',   text: 'text-cyan-700'   },
+const typeMeta: Record<string, { label: string; bg: string; text: string }> = {
+  [BookingType.TOUR]:     { label: 'Տուր', bg: 'bg-violet-50', text: 'text-violet-700' },
+  [BookingType.LOCATION]: { label: 'Վայր',      bg: 'bg-cyan-50',   text: 'text-cyan-700'   },
+  [BookingType.TRANSFER]: { label: 'Տրանսֆեր', bg: 'bg-orange-50', text: 'text-orange-700' },
 }
 
 // ── Lifecycle ─────────────────────────────────────────────────────────────────
@@ -261,11 +262,11 @@ onMounted(fetchBookings)
                     {{ getServiceName(booking) }}
                   </span>
                   <button
-                    v-if="booking.tour?.id || booking.transfer?.id"
+                    v-if="booking.tour?.id || booking.location?.id || booking.Location?.id"
                     type="button"
                     class="text-zinc-400 hover:text-primary transition-colors cursor-pointer shrink-0 p-1 rounded-lg hover:bg-zinc-100"
                     title="Մանրամասն / See details"
-                    @click="activeProductModal = { type: booking.type, id: booking.type === BookingType.TOUR ? booking.tour!.id : booking.transfer!.id }"
+                    @click="activeProductModal = { type: booking.type, id: booking.type === BookingType.TOUR ? booking.tour!.id : booking.location!.id }"
                   >
                     <BaseIcon name="external-link" size="sm" />
                   </button>
@@ -396,9 +397,9 @@ onMounted(fetchBookings)
       :open="activeProductModal !== null"
       @close="activeProductModal = null"
     />
-    <AdminTransferDetailsModal
-      v-if="activeProductModal?.type === BookingType.TRANSFER"
-      :transfer-id="activeProductModal.id"
+    <AdminLocationDetailsModal
+      v-if="activeProductModal?.type === BookingType.LOCATION || activeProductModal?.type === BookingType.TRANSFER"
+      :location-id="activeProductModal.id"
       :open="activeProductModal !== null"
       @close="activeProductModal = null"
     />

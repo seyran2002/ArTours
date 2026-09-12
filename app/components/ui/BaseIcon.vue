@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { computed } from 'vue'
 
 const props = withDefaults(
@@ -72,8 +72,8 @@ const styleAttr = computed(() => {
       <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
     </template>
 
-    <!-- Transfer / Car Icon -->
-    <template v-else-if="name === 'transfer'">
+    <!-- Location / Car Icon -->
+    <template v-else-if="name === 'Location'">
       <path d="M5 17H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v9a2 2 0 0 1-2 2h-1" />
       <circle cx="7" cy="17" r="2" />
       <circle cx="14" cy="17" r="2" />

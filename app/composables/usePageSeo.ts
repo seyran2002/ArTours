@@ -137,7 +137,7 @@ export function usePageSeo(options: SeoOptions) {
   const brandEntity = {
     '@type': 'Brand',
     'name': 'ArTours',
-    'alternateName': ['ArTours Armenia', 'artours.am', 'ArTours — Tours & Transfers in Armenia'],
+    'alternateName': ['ArTours Armenia', 'artours.am', 'ArTours — Tours & locations in Armenia'],
     'url': siteUrl,
     'logo': `${siteUrl}/logo.webp`
   }
@@ -156,13 +156,13 @@ export function usePageSeo(options: SeoOptions) {
     'Tours in Armenia',
     'Armenia Travel',
     'Yerevan Excursions',
-    'Armenia Transfers',
+    'Armenia Locations',
     'Private Tours Armenia',
-    'Yerevan Airport Transfer',
+    'Locations in Armenia',
     'Day Trips in Armenia',
     'Туры по Армении',
     'Экскурсии из Еревана',
-    'Трансфер в Армении',
+    'Локации в Армении',
     'Տուրեր Հայաստանում',
     'Զբոսաշրջություն Հայաստանում'
   ]
@@ -191,12 +191,12 @@ export function usePageSeo(options: SeoOptions) {
             '@id': `${siteUrl}/#organization`,
             'name': 'ArTours',
             'legalName': 'ArTours',
-            'alternateName': ['ArTours Armenia', 'ArTours AM', 'artours.am', 'ArTours — Tours & Transfers in Armenia'],
+            'alternateName': ['ArTours Armenia', 'ArTours AM', 'artours.am', 'ArTours — Tours & locations in Armenia'],
             'url': siteUrl,
             'logo': `${siteUrl}/logo.webp`,
             'image': `${siteUrl}/logo.webp`,
             'brand': brandEntity,
-            'disambiguatingDescription': 'ArTours (artours.am) is the official tourism brand, travel agency, and tour operator in Armenia providing private tours from Yerevan, day trips, and airport transfers.',
+            'disambiguatingDescription': 'ArTours (artours.am) is the official tourism brand, travel agency, and tour operator in Armenia providing private tours from Yerevan, day trips, and airport locations.',
             'knowsAbout': brandKnowsAbout,
             'sameAs': socialSameAs,
             'contactPoint': {
@@ -248,8 +248,8 @@ export function usePageSeo(options: SeoOptions) {
             'logo': `${siteUrl}/logo.webp`,
             'image': `${siteUrl}/logo.webp`,
             'brand': brandEntity,
-            'description': description.value || 'Official tours and travel transfers in Armenia with ArTours (artours.am).',
-            'disambiguatingDescription': 'ArTours (artours.am) is the official tour operator for private excursions and travel transfers in Armenia.',
+            'description': description.value || 'Official tours and travel locations in Armenia with ArTours (artours.am).',
+            'disambiguatingDescription': 'ArTours (artours.am) is the official tour operator for private excursions and travel locations in Armenia.',
             'knowsAbout': brandKnowsAbout,
             'priceRange': '$$',
             'address': {
@@ -278,13 +278,13 @@ export function usePageSeo(options: SeoOptions) {
             '@id': `${siteUrl}/#travelagency`,
             'name': 'ArTours',
             'legalName': 'ArTours',
-            'alternateName': ['ArTours Armenia', 'artours.am', 'ArTours — Armenia Tours & Transfers'],
+            'alternateName': ['ArTours Armenia', 'artours.am', 'ArTours — Armenia Tours & locations'],
             'url': siteUrl,
             'logo': `${siteUrl}/logo.webp`,
             'image': 'https://res.cloudinary.com/dl8iqp69h/image/upload/f_auto,q_auto:good,w_1280,c_fill,g_auto/v1788890547/about_ceh3fe.webp',
             'brand': brandEntity,
-            'description': description.value || 'Official private tours, excursions, and airport transfers in Armenia by ArTours.',
-            'disambiguatingDescription': 'ArTours (artours.am) is an official tourism brand in Yerevan, Armenia offering custom tours and chauffeured travel transfers.',
+            'description': description.value || 'Official private tours, excursions, and airport locations in Armenia by ArTours.',
+            'disambiguatingDescription': 'ArTours (artours.am) is an official tourism brand in Yerevan, Armenia offering custom tours and chauffeured travel locations.',
             'knowsAbout': brandKnowsAbout,
             'foundingDate': '2017',
             'founder': {

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { ref, onMounted, onUnmounted, nextTick } from 'vue'
 import { useRouter, useI18n } from '#imports'
 import { useSearch } from '~/composables/useSearch'
@@ -219,7 +219,7 @@ onUnmounted(() => {
                   alt=""
                 />
                 <div v-else class="h-full w-full flex items-center justify-center text-zinc-400 bg-zinc-50">
-                  <BaseIcon :name="item.type === 'tour' ? 'tours' : 'transfer'" size="sm" />
+                  <BaseIcon :name="item.type === 'tour' ? 'tours' : 'Location'" size="sm" />
                 </div>
               </div>
 
@@ -234,7 +234,7 @@ onUnmounted(() => {
                     :class="item.type === 'tour' ? 'bg-emerald-50 text-emerald-700 border border-emerald-100' : 'bg-amber-50 text-amber-700 border border-amber-100'"
                   >
                     <span class="w-1 h-1 rounded-full" :class="item.type === 'tour' ? 'bg-emerald-500' : 'bg-amber-500'" />
-                    {{ item.type === 'tour' ? 'Tour' : 'Transfer' }}
+                    {{ item.type === 'tour' ? 'Tour' : 'Location' }}
                   </span>
                 </div>
               </div>
@@ -269,7 +269,7 @@ onUnmounted(() => {
                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
               </svg>
             </div>
-            <span>{{ $t('transfers.loading') || 'Loading...' }}</span>
+            <span>{{ $t('locations.loading') || 'Loading...' }}</span>
           </div>
         </div>
       </div>

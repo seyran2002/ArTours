@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import BaseIcon from '~/components/ui/BaseIcon.vue'
-import type { Transfer } from '~/types/transfer'
+import type { Location } from '~/types/location'
 
 const props = defineProps<{
-  modelValue: string[]       // Array of selected transfer IDs
-  transfers: Transfer[]      // All available transfers to pick from
+  modelValue: string[]       // Array of selected Location IDs
+  locations: Location[]      // All available locations to pick from
   loading?: boolean
 }>()
 
@@ -16,23 +16,23 @@ const emit = defineEmits<{
 const searchQuery = ref('')
 const isOpen = ref(false)
 
-const filteredTransfers = computed(() => {
+const filteredLocations = computed(() => {
   const query = searchQuery.value.trim().toLowerCase()
-  if (!query) return props.transfers
-  return props.transfers.filter(
+  if (!query) return props.locations
+  return props.locations.filter(
     (t) =>
       t.ruTitle?.toLowerCase().includes(query) ||
       t.enTitle?.toLowerCase().includes(query)
   )
 })
 
-const selectedTransfers = computed(() =>
+const selectedLocations = computed(() =>
   props.modelValue
-    .map((id) => props.transfers.find((t) => t.id === id))
-    .filter((t): t is Transfer => !!t)
+    .map((id) => props.locations.find((t) => t.id === id))
+    .filter((t): t is Location => !!t)
 )
 
-function toggleTransfer(id: string) {
+function toggleLocation(id: string) {
   const current = [...props.modelValue]
   const idx = current.indexOf(id)
   if (idx === -1) {
@@ -43,7 +43,7 @@ function toggleTransfer(id: string) {
   emit('update:modelValue', current)
 }
 
-function removeTransfer(id: string) {
+function removeLocation(id: string) {
   emit('update:modelValue', props.modelValue.filter((v) => v !== id))
 }
 
@@ -53,7 +53,7 @@ function isSelected(id: string) {
 
 function handleClickOutside(event: MouseEvent) {
   const target = event.target as HTMLElement
-  if (!target.closest('[data-transfer-multiselect]')) {
+  if (!target.closest('[data-Location-multiselect]')) {
     isOpen.value = false
   }
 }
@@ -64,36 +64,36 @@ if (import.meta.client) {
 </script>
 
 <template>
-  <div class="space-y-3" data-transfer-multiselect>
+  <div class="space-y-3" data-Location-multiselect>
 
     <!-- Selected Chips -->
     <div
-      v-if="selectedTransfers.length"
+      v-if="selectedLocations.length"
       class="flex flex-wrap gap-2"
     >
       <div
-        v-for="transfer in selectedTransfers"
-        :key="transfer.id"
+        v-for="Location in selectedLocations"
+        :key="Location.id"
         class="flex items-center gap-2 pl-1 pr-2.5 py-1 bg-primary/8 border border-primary/20 rounded-xl text-xs font-semibold text-primary transition-all duration-200 animate-chip-in"
       >
         <!-- Thumbnail -->
         <div class="w-7 h-7 rounded-lg overflow-hidden shrink-0 border border-primary/20">
           <img
-            v-if="transfer.mainImage"
-            :src="transfer.mainImage"
-            :alt="transfer.ruTitle"
+            v-if="Location.mainImage"
+            :src="Location.mainImage"
+            :alt="Location.ruTitle"
             class="w-full h-full object-cover"
           />
           <div v-else class="w-full h-full bg-primary/10 flex items-center justify-center">
             <BaseIcon name="image" size="xs" class="text-primary/40" />
           </div>
         </div>
-        <span class="line-clamp-1 max-w-[120px]">{{ transfer.ruTitle }}</span>
+        <span class="line-clamp-1 max-w-[120px]">{{ Location.ruTitle }}</span>
         <button
           type="button"
-          @click="removeTransfer(transfer.id)"
+          @click="removeLocation(Location.id)"
           class="ml-0.5 p-0.5 rounded-full text-primary/50 hover:text-red-500 hover:bg-red-50 transition-all duration-200 cursor-pointer"
-          :title="`Remove ${transfer.ruTitle}`"
+          :title="`Remove ${Location.ruTitle}`"
         >
           <BaseIcon name="x" size="xs" />
         </button>
@@ -109,11 +109,11 @@ if (import.meta.client) {
         :class="{ 'border-primary/30 bg-white shadow-[0_0_0_3px_rgba(18,83,78,0.06)]': isOpen }"
       >
         <div class="flex items-center gap-2">
-          <BaseIcon name="transfer" size="sm" class="text-zinc-400 shrink-0" />
-          <span v-if="selectedTransfers.length" class="text-zinc-700">
-            {{ selectedTransfers.length }} transfer{{ selectedTransfers.length !== 1 ? 's' : '' }} selected
+          <BaseIcon name="Location" size="sm" class="text-zinc-400 shrink-0" />
+          <span v-if="selectedLocations.length" class="text-zinc-700">
+            {{ selectedLocations.length }} Location{{ selectedLocations.length !== 1 ? 's' : '' }} selected
           </span>
-          <span v-else class="text-zinc-400">Select transfers...</span>
+          <span v-else class="text-zinc-400">Select locations...</span>
         </div>
         <BaseIcon
           name="chevron-down"
@@ -151,36 +151,36 @@ if (import.meta.client) {
             </div>
           </div>
 
-          <!-- Transfers List -->
+          <!-- locations List -->
           <div class="max-h-64 overflow-y-auto">
             <!-- Loading State -->
             <div v-if="loading" class="p-6 text-center">
               <div class="w-5 h-5 border-2 border-primary/30 border-t-primary rounded-full animate-spin mx-auto mb-2" />
-              <p class="text-xs text-zinc-400">Loading transfers...</p>
+              <p class="text-xs text-zinc-400">Loading locations...</p>
             </div>
 
             <!-- Empty State -->
-            <div v-else-if="!filteredTransfers.length" class="p-6 text-center">
+            <div v-else-if="!filteredLocations.length" class="p-6 text-center">
               <BaseIcon name="search" size="md" class="text-zinc-300 mb-2 mx-auto block" />
-              <p class="text-xs font-medium text-zinc-400">No transfers found</p>
+              <p class="text-xs font-medium text-zinc-400">No locations found</p>
             </div>
 
-            <!-- Transfer Options -->
+            <!-- Location Options -->
             <div v-else>
               <button
-                v-for="transfer in filteredTransfers"
-                :key="transfer.id"
+                v-for="Location in filteredLocations"
+                :key="Location.id"
                 type="button"
-                @click.stop="toggleTransfer(transfer.id)"
+                @click.stop="toggleLocation(Location.id)"
                 class="w-full flex items-center gap-3 px-4 py-3 hover:bg-zinc-50 transition-colors duration-150 cursor-pointer border-b border-zinc-50 last:border-0"
-                :class="{ 'bg-primary/5 hover:bg-primary/8': isSelected(transfer.id) }"
+                :class="{ 'bg-primary/5 hover:bg-primary/8': isSelected(Location.id) }"
               >
                 <!-- Thumbnail -->
                 <div class="w-10 h-10 rounded-xl overflow-hidden shrink-0 border border-zinc-100">
                   <img
-                    v-if="transfer.mainImage"
-                    :src="transfer.mainImage"
-                    :alt="transfer.ruTitle"
+                    v-if="Location.mainImage"
+                    :src="Location.mainImage"
+                    :alt="Location.ruTitle"
                     class="w-full h-full object-cover"
                   />
                   <div v-else class="w-full h-full bg-zinc-100 flex items-center justify-center">
@@ -188,21 +188,21 @@ if (import.meta.client) {
                   </div>
                 </div>
 
-                <!-- Transfer Info -->
+                <!-- Location Info -->
                 <div class="flex-1 text-left min-w-0">
-                  <p class="text-sm font-semibold text-zinc-800 line-clamp-1">{{ transfer.ruTitle }}</p>
-                  <p class="text-xs text-zinc-400 line-clamp-1 mt-0.5">{{ transfer.enTitle }}</p>
+                  <p class="text-sm font-semibold text-zinc-800 line-clamp-1">{{ Location.ruTitle }}</p>
+                  <p class="text-xs text-zinc-400 line-clamp-1 mt-0.5">{{ Location.enTitle }}</p>
                 </div>
 
                 <!-- Checkbox indicator -->
                 <div
                   class="w-5 h-5 rounded-md border-2 flex items-center justify-center shrink-0 transition-all duration-200"
-                  :class="isSelected(transfer.id)
+                  :class="isSelected(Location.id)
                     ? 'bg-primary border-primary'
                     : 'border-zinc-300 bg-white'"
                 >
                   <BaseIcon
-                    v-if="isSelected(transfer.id)"
+                    v-if="isSelected(Location.id)"
                     name="check"
                     size="xs"
                     class="text-white"
@@ -213,9 +213,9 @@ if (import.meta.client) {
           </div>
 
           <!-- Footer -->
-          <div v-if="selectedTransfers.length" class="px-4 py-2.5 border-t border-zinc-100 bg-zinc-50/50 flex items-center justify-between">
+          <div v-if="selectedLocations.length" class="px-4 py-2.5 border-t border-zinc-100 bg-zinc-50/50 flex items-center justify-between">
             <span class="text-xs text-zinc-500 font-medium">
-              {{ selectedTransfers.length }} selected
+              {{ selectedLocations.length }} selected
             </span>
             <button
               type="button"

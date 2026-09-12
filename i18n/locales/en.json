@@ -1,7 +1,7 @@
 {
   "header": {
     "home": "Home",
-    "transfers": "Transfers",
+    "locations": "Locations",
     "tours": "Tours",
     "about": "About Us",
     "contact": "Contact",
@@ -60,18 +60,18 @@
       "description": "These are real stories from real travelers who have explored Armenia with us. Their words reflect the heart of our journeys."
     }
   },
-  "transfers": {
-    "badge": "Transfer Services",
+  "locations": {
+    "badge": "Locations",
     "titlePart1": "Explore",
     "titlePart2": "Destinations",
-    "description": "Discover stunning destinations with seamless transfer services. Browse curated locations and book comfortable rides to your next adventure.",
+    "description": "Discover stunning destinations and scenic spots. Browse curated locations and book comfortable rides to your next adventure.",
     "searchPlaceholder": "Search destinations by name...",
-    "backToTransfers": "Back to Transfers",
+    "backToLocations": "Back to Locations",
     "departure": "DEPARTURE",
     "destination": "DESTINATION",
-    "cost": "Transfer Cost",
+    "cost": "Location Cost",
     "for3People": "for 3 people",
-    "transferDetail": "Transfer Details",
+    "locationDetail": "Location Details",
     "distance": "Distance from Yerevan",
     "routeMap": "Route Map",
     "routeMapDescription": "View a visualization of the trip route from the departure origin to the destination on the interactive map.",
@@ -81,9 +81,9 @@
     "perk2": "Proffesianl local driver",
     "perk3": "Comfortable AC vehicle",
     "bookRideNow": "Book Ride Now",
-    "loading": "Loading transfer details...",
-    "transferNotFound": "Transfer not found",
-    "returnToTransfers": "Return to Transfers",
+    "loading": "Loading location details...",
+    "locationNotFound": "Location not found",
+    "returnToLocations": "Return to Locations",
     "details": "More Details",
     "showingCount": "Showing {current} of {total} destinations",
     "kmFromYerevan": " km from Yerevan",
@@ -227,14 +227,14 @@
       ],
       "summary": {
         "tourTitle": "🗺 Tour Booking",
-        "transferTitle": "🚐 Transfer Booking",
+        "locationTitle": "🚐 Location Booking",
         "type": "Type",
         "payment": "Payment",
         "total": "Total",
         "subtotal": "Subtotal",
         "travelers": "Travelers",
         "tour": "Tour",
-        "transfer": "Transfer",
+        "location": "Location",
         "cash": "Cash",
         "travelDate": "Travel Date",
         "cancellationStr": "Free cancellation up to 24h before departure. No upfront payment required.",
@@ -309,7 +309,7 @@
       "about": "About Us",
       "booking": "Booking Status",
       "tours": "Tours",
-      "transfers": "Transfers",
+      "locations": "Locations",
       "contact": "Contact Us"
     },
     "contact": {
@@ -407,11 +407,11 @@
         "a": "Top day tours from Yerevan include Garni Pagan Temple & Geghard Monastery, Lake Sevan & Dilijan National Park, Khor Virap Monastery with Mount Ararat views, and private tours to Tatev Cable Car."
       },
       {
-        "q": "How to book a private transfer from Yerevan Airport (Zvartnots)?",
-        "a": "You can easily book your Yerevan airport transfer online at ArTours (artours.am). Our professional driver meets you at arrival with a custom name sign and provides direct transfer to any destination in Armenia."
+        "q": "How to book a trip to a location from Yerevan?",
+        "a": "You can easily book your trip to any curated location online at ArTours (artours.am). Our professional driver meets you with a comfortable vehicle and provides direct transportation to any destination in Armenia."
       },
       {
-        "q": "Why choose ArTours for tours and transfers in Armenia?",
+        "q": "Why choose ArTours for tours and locations in Armenia?",
         "a": "ArTours is an official tour brand in Armenia. We provide certified local driver-guides, comfortable AC vehicles, transparent pricing, and customizable private tour packages."
       },
       {
@@ -422,11 +422,11 @@
   },
   "seo": {
     "home": {
-      "title": "ArTours — Tours in Armenia, Yerevan Tours & Airport Transfers",
-      "description": "Discover Armenia with ArTours. Book official Armenia tours, Yerevan day trips, private tours in Armenia, tour packages, and Yerevan airport transfers with ArTours (artours.am).",
-      "keywords": "Tours in Armenia, Armenia Tours, Armenia Travel, Yerevan Tours, Private Tours in Armenia, Day Tours in Armenia, Armenia Tour Packages, Armenia Private Transfers, Yerevan Airport Transfer, Things to Do in Armenia, ArTours, ArTours Armenia, artours.am, Private Armenia Tours, Armenia Travel Agency, Armenia Sightseeing Tours, Armenia Day Trips, Guided Tours Armenia, Custom Armenia Tours, Cultural Tours Armenia, Historical Tours Armenia, Armenia Vacation Packages, Places to Visit in Armenia, Garni Temple Tour, Geghard Monastery Tour, Lake Sevan Tour, Dilijan Tour",
-      "ogTitle": "ArTours — Official Tours & Private Transfers in Armenia",
-      "ogDescription": "Discover Armenia with ArTours (artours.am). Expert-guided private tours, day trips from Yerevan, and premium travel transfers across Armenia.",
+      "title": "ArTours — Tours in Armenia, Yerevan Tours & Locations",
+      "description": "Discover Armenia with ArTours. Book official Armenia tours, Yerevan day trips, private tours in Armenia, tour packages, and curated locations with ArTours (artours.am).",
+      "keywords": "Tours in Armenia, Armenia Tours, Armenia Travel, Yerevan Tours, Private Tours in Armenia, Day Tours in Armenia, Armenia Tour Packages, Armenia Locations, Destinations in Armenia, Things to Do in Armenia, ArTours, ArTours Armenia, artours.am, Private Armenia Tours, Armenia Travel Agency, Armenia Sightseeing Tours, Armenia Day Trips, Guided Tours Armenia, Custom Armenia Tours, Cultural Tours Armenia, Historical Tours Armenia, Armenia Vacation Packages, Places to Visit in Armenia, Garni Temple Tour, Geghard Monastery Tour, Lake Sevan Tour, Dilijan Tour",
+      "ogTitle": "ArTours — Official Tours & Locations in Armenia",
+      "ogDescription": "Discover Armenia with ArTours (artours.am). Expert-guided private tours, day trips from Yerevan, and curated locations across Armenia.",
       "siteName": "ArTours Armenia"
     },
     "tours": {
@@ -437,12 +437,12 @@
       "ogDescription": "Exclusive custom tour packages and day excursions from Yerevan with certified local guides from ArTours.",
       "siteName": "ArTours Armenia"
     },
-    "transfers": {
-      "title": "Armenia Private Transfers & Yerevan Airport Transfer — ArTours",
-      "description": "Book reliable Yerevan airport transfers and private transfers in Armenia with ArTours (artours.am). Professional drivers, comfortable vehicles, 24/7 service.",
-      "keywords": "Armenia Private Transfers, Yerevan Airport Transfer, Transfer in Armenia, Yerevan transfer service, ArTours transfer, artours.am",
-      "ogTitle": "Private Transfers in Armenia & Airport Transfer — ArTours",
-      "ogDescription": "Seamless chauffeured transfers from Yerevan Airport (Zvartnots) and all travel destinations across Armenia.",
+    "locations": {
+      "title": "Armenia Locations & Destinations — ArTours",
+      "description": "Explore popular Armenian locations and destinations with ArTours (artours.am). Professional drivers, comfortable vehicles, 24/7 service.",
+      "keywords": "Armenia Locations, Destinations in Armenia, Visit Armenia, Armenia Travel, ArTours, artours.am",
+      "ogTitle": "Armenia Locations & Destinations — ArTours",
+      "ogDescription": "Explore top travel destinations and curated locations across Armenia with ArTours.",
       "siteName": "ArTours Armenia"
     },
     "about": {
@@ -454,11 +454,11 @@
       "siteName": "ArTours Armenia"
     },
     "contact": {
-      "title": "Contact Us — ArTours | Book Armenia Tours & Transfers",
-      "description": "Contact official tour operator ArTours (artours.am) in Yerevan. Phone, WhatsApp, Telegram, or email. Get 24/7 support for custom Armenia tours and transfers.",
-      "keywords": "contact ArTours, artours.am, contact Armenia guide, ArTours phone number, WhatsApp tour Armenia, Telegram ArTours, book Armenia travel, Yerevan transfer",
+      "title": "Contact Us — ArTours | Book Armenia Tours & Locations",
+      "description": "Contact official tour operator ArTours (artours.am) in Yerevan. Phone, WhatsApp, Telegram, or email. Get 24/7 support for custom Armenia tours and locations.",
+      "keywords": "contact ArTours, artours.am, contact Armenia guide, ArTours phone number, WhatsApp tour Armenia, Telegram ArTours, book Armenia travel, Yerevan locations",
       "ogTitle": "Contact Us — ArTours | Get in Touch 24/7",
-      "ogDescription": "Have questions about custom itineraries, private tours, or transfers in Armenia? Contact our travel specialists 24/7 via phone, WhatsApp, Telegram, or email.",
+      "ogDescription": "Have questions about custom itineraries, private tours, or locations in Armenia? Contact our travel specialists 24/7 via phone, WhatsApp, Telegram, or email.",
       "siteName": "ArTours Armenia"
     },
     "booking": {

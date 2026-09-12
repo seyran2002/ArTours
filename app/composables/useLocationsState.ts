@@ -1,13 +1,13 @@
 import { ref } from 'vue'
 import type { Place } from '~/types/place'
 
-export interface EntranceFee {
+interface StateEntranceFee {
   name: string
   price: number
 }
 
 // Global shared refs to preserve state across page components
-const transfers = ref<Place[]>([])
+const locations = ref<Place[]>([])
 const isInitialized = ref(false)
 
 // Realistic distances in km from Yerevan for default destinations
@@ -26,7 +26,7 @@ const defaultDistances: Record<string, number> = {
   'areni': 110
 }
 
-export function useTransfersState() {
+export function useLocationsState() {
   
   function init() {
     if (isInitialized.value) return
@@ -158,7 +158,7 @@ export function useTransfersState() {
       }
     ]
 
-    transfers.value = initialPlaces.map(place => {
+    locations.value = initialPlaces.map(place => {
       const tagId = (place.badge || 'nature').toLowerCase()
       const titleSlug = String(place.id)
       return {
@@ -166,54 +166,54 @@ export function useTransfersState() {
         images: [place.image],
         tags: [tagId],
         distanceFromYerevan: defaultDistances[titleSlug] || 50,
-        fullDescription: `<p>${place.description}</p><p>This transfer service is available 24/7 with comfortable modern vehicles, professional drivers, and direct pickup from Yerevan.</p>`,
+        fullDescription: `<p>${place.description}</p><p>This Location service is available 24/7 with comfortable modern vehicles, professional drivers, and direct pickup from Yerevan.</p>`,
         entranceFees: []
       }
     })
   }
 
-  // --- CRUD TRANSFERS ---
+  // --- CRUD locations ---
 
-  function addTransfer(transferData: Omit<Place, 'id'> & { tags: string[]; distanceFromYerevan: number; fullDescription: string; entranceFees: EntranceFee[]; images: string[] }) {
-    const id = transferData.title.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-') + '-' + Date.now()
+  function addLocation(locationData: Omit<Place, 'id'> & { tags: string[]; distanceFromYerevan: number; fullDescription: string; entranceFees: StateEntranceFee[]; images: string[] }) {
+    const id = locationData.title.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-') + '-' + Date.now()
     
     // Badge default
-    const mainTagName = 'Transfer'
+    const mainTagName = 'Location'
 
-    const newTransfer: Place = {
+    const newLocation: Place = {
       id,
-      title: transferData.title,
-      price: Number(transferData.price),
-      location: transferData.location || 'Armenia',
-      description: transferData.description,
-      image: transferData.image || transferData.images[0] || 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957',
+      title: locationData.title,
+      price: Number(locationData.price),
+      location: locationData.location || 'Armenia',
+      description: locationData.description,
+      image: locationData.image || locationData.images[0] || 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957',
       badge: mainTagName,
       toursCount: 0,
-      tags: transferData.tags,
-      distanceFromYerevan: Number(transferData.distanceFromYerevan),
-      fullDescription: transferData.fullDescription,
-      entranceFees: transferData.entranceFees || [],
-      images: transferData.images || []
+      tags: locationData.tags,
+      distanceFromYerevan: Number(locationData.distanceFromYerevan),
+      fullDescription: locationData.fullDescription,
+      entranceFees: locationData.entranceFees || [],
+      images: locationData.images || []
     }
 
-    transfers.value.unshift(newTransfer)
-    return newTransfer
+    locations.value.unshift(newLocation)
+    return newLocation
   }
 
-  function updateTransfer(id: string | number, updatedData: Partial<Place>) {
-    const idx = transfers.value.findIndex(t => t.id === id)
+  function updateLocation(id: string | number, updatedData: Partial<Place>) {
+    const idx = locations.value.findIndex(t => t.id === id)
     if (idx !== -1) {
-      transfers.value[idx] = {
-        ...transfers.value[idx],
+      locations.value[idx] = {
+        ...locations.value[idx],
         ...updatedData,
-        price: updatedData.price !== undefined ? Number(updatedData.price) : transfers.value[idx].price,
-        distanceFromYerevan: updatedData.distanceFromYerevan !== undefined ? Number(updatedData.distanceFromYerevan) : transfers.value[idx].distanceFromYerevan
+        price: updatedData.price !== undefined ? Number(updatedData.price) : locations.value[idx].price,
+        distanceFromYerevan: updatedData.distanceFromYerevan !== undefined ? Number(updatedData.distanceFromYerevan) : locations.value[idx].distanceFromYerevan
       }
     }
   }
 
-  function deleteTransfer(id: string | number) {
-    transfers.value = transfers.value.filter(t => t.id !== id)
+  function deleteLocation(id: string | number) {
+    locations.value = locations.value.filter(t => t.id !== id)
   }
 
   // Ensure init runs if client-side
@@ -222,10 +222,10 @@ export function useTransfersState() {
   }
 
   return {
-    transfers,
+    locations,
     init,
-    addTransfer,
-    updateTransfer,
-    deleteTransfer
+    addLocation,
+    updateLocation,
+    deleteLocation
   }
 }

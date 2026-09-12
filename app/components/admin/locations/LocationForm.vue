@@ -4,14 +4,14 @@ import BaseIcon from '~/components/ui/BaseIcon.vue'
 import BaseInput from '~/components/ui/BaseInput.vue'
 import BaseButton from '~/components/ui/BaseButton.vue'
 import GooglePlacesInput from '~/components/ui/GooglePlacesInput.vue'
-import { useTransfer } from '~/composables/useTransfer'
+import { useLocation } from '~/composables/useLocation'
 import { useTag } from '~/composables/useTag'
 import { useBuildRoutePolyline } from '~/composables/useBuildRoutePolyline'
 import RichTextEditor from './RichTextEditor.vue'
 import ImageGalleryManager from './ImageGalleryManager.vue'
 
 const props = defineProps<{
-  transferId?: string | number;
+  locationId?: string | number;
 }>();
 
 const emit = defineEmits<{
@@ -19,10 +19,10 @@ const emit = defineEmits<{
   cancel: [];
 }>();
 
-const { transfers, createTransfer, updateTransfer } = useTransfer();
+const { locations, createLocation, updateLocation } = useLocation();
 const tagStore = useTag();
 const tags = computed(() => tagStore.tags.value);
-const { buildTransferRoutePolyline } = useBuildRoutePolyline();
+const { buildLocationRoutePolyline } = useBuildRoutePolyline();
 
 // Form reactive state
 const fromPlaceId = ref('');
@@ -57,7 +57,7 @@ const mainImage = ref('');
 const errors = ref<Record<string, string>>({});
 const isSubmitting = ref(false);
 
-const isEditMode = computed(() => !!props.transferId);
+const isEditMode = computed(() => !!props.locationId);
 
 // Helper to convert base64 data URL to File object
 const dataURLtoFile = (dataurl: string, filename: string): File => {
@@ -164,7 +164,7 @@ const scrollToFirstError = () => {
 
 // ── Try to fetch the route polyline (non-blocking) ─────────────────────────
 const buildRoutePolyline = async (): Promise<string | null> => {
-  return buildTransferRoutePolyline({
+  return buildLocationRoutePolyline({
     fromLat: fromLat.value,
     fromLng: fromLng.value,
     toLat: toLat.value,
@@ -268,13 +268,13 @@ const buildFormData = (routePolyline: string | null): FormData => {
 }
 
 // ── Call the correct API endpoint and handle the response ──────────────────
-const persistTransfer = async (formData: FormData): Promise<void> => {
+const persistLocation = async (formData: FormData): Promise<void> => {
   let saveError: string | null = null
 
-  if (isEditMode.value && props.transferId) {
-    saveError = await updateTransfer(String(props.transferId), formData)
+  if (isEditMode.value && props.locationId) {
+    saveError = await updateLocation(String(props.locationId), formData)
   } else {
-    saveError = await createTransfer(formData)
+    saveError = await createLocation(formData)
   }
 
   if (saveError) {
@@ -296,10 +296,10 @@ const handleSave = async () => {
   try {
     const routePolyline = await buildRoutePolyline()
     const formData      = buildFormData(routePolyline)
-    await persistTransfer(formData)
+    await persistLocation(formData)
   } catch (e) {
-    console.error('Error saving transfer', e)
-    errors.value.submit = 'Failed to save transfer. Please check the network.'
+    console.error('Error saving Location', e)
+    errors.value.submit = 'Failed to save Location. Please check the network.'
   } finally {
     isSubmitting.value = false
   }
@@ -311,7 +311,7 @@ onMounted(async () => {
   await tagStore.fetchTags()
 
   if (isEditMode.value) {
-    const existing = transfers.value.find(t => t.id === props.transferId)
+    const existing = locations.value.find(t => t.id === props.locationId)
     if (existing) {
       fromPlaceId.value = existing.fromPlaceId || '';
       fromAddressText.value = existing.fromAddressText || '';
@@ -349,14 +349,14 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="bg-white border border-zinc-200/60 rounded-3xl p-6 sm:p-8 shadow-sm max-w-4xl mx-auto animate-fade-in">
+  <div class="bg-white border border-zinc-200/60 rounded-3xl p-6 sm:p-8 shadow-sm max-w-6xl mx-auto animate-fade-in">
     <div class="flex items-center justify-between border-b border-zinc-100 pb-4 mb-6">
       <div>
         <h2 class="text-xl font-bold text-zinc-900">
-          {{ isEditMode ? 'Խմբագրել Տրանսֆեր' : 'Ստեղծել Տրանսֆեր' }}
+          {{ isEditMode ? 'Խմբագրել Ուղղություն' : 'Ստեղծել Ուղղություն' }}
         </h2>
         <p class="text-xs text-zinc-500 mt-1">
-          Լրացրեք ստորև նշված դաշտերը ըստ Ձեր տրանսֆերի:
+          Լրացրեք ստորև նշված դաշտերը ըստ Ձեր ուղղության:
         </p>
       </div>
 
@@ -412,29 +412,8 @@ onMounted(async () => {
       </div>
 
       <!-- TITLES ROW (EN, RU & HY) -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <!-- EN TITLE -->
-        <div id="field-enTitle" class="space-y-2">
-          <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Անգլերեն Վերնագիր (Title EN) <span class="text-red-500">*</span></label>
-          <div
-            :class="[
-              'flex items-center bg-white border rounded-2xl transition-all duration-300 focus-within:shadow-[0_0_0_3px_rgba(18,83,78,0.06)]',
-              errors.enTitle
-                ? 'border-red-500 focus-within:border-red-500'
-                : 'border-zinc-200 focus-within:border-primary/30'
-            ]"
-          >
-            <BaseInput
-              v-model="enTitle"
-              type="text"
-              placeholder="e.g. Tsaghkadzor Ski Resort"
-              size="md"
-              class="text-zinc-800 placeholder-zinc-400"
-            />
-          </div>
-          <p v-if="errors.enTitle" class="text-xs text-red-500 font-medium">{{ errors.enTitle }}</p>
-        </div>
-
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        
         <!-- RU TITLE -->
         <div id="field-ruTitle" class="space-y-2">
           <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Ռուսերեն Վերնագիր (Title RU) <span class="text-red-500">*</span></label>
@@ -455,6 +434,28 @@ onMounted(async () => {
             />
           </div>
           <p v-if="errors.ruTitle" class="text-xs text-red-500 font-medium">{{ errors.ruTitle }}</p>
+        </div>
+
+        <!-- EN TITLE -->
+        <div id="field-enTitle" class="space-y-2">
+          <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Անգլերեն Վերնագիր (Title EN) <span class="text-red-500">*</span></label>
+          <div
+            :class="[
+              'flex items-center bg-white border rounded-2xl transition-all duration-300 focus-within:shadow-[0_0_0_3px_rgba(18,83,78,0.06)]',
+              errors.enTitle
+                ? 'border-red-500 focus-within:border-red-500'
+                : 'border-zinc-200 focus-within:border-primary/30'
+            ]"
+          >
+            <BaseInput
+              v-model="enTitle"
+              type="text"
+              placeholder="e.g. Tsaghkadzor Ski Resort"
+              size="md"
+              class="text-zinc-800 placeholder-zinc-400"
+            />
+          </div>
+          <p v-if="errors.enTitle" class="text-xs text-red-500 font-medium">{{ errors.enTitle }}</p>
         </div>
 
         <!-- HY TITLE -->
@@ -509,7 +510,7 @@ onMounted(async () => {
 
         <!-- MINIMUM PRICE -->
         <div id="field-price" class="space-y-2">
-          <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Մինիմալ գինը ($) <span class="text-red-500">*</span></label>
+          <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Մինիմալ գինը (EUR) <span class="text-red-500">*</span></label>
           <div
             :class="[
               'flex items-center bg-white border rounded-2xl transition-all duration-300 focus-within:shadow-[0_0_0_3px_rgba(18,83,78,0.06)]',
@@ -534,20 +535,7 @@ onMounted(async () => {
       </div>
 
       <!-- SHORT DESCRIPTIONS ROW -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <!-- EN SHORT DESC -->
-        <div id="field-enDescription" class="space-y-2">
-          <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Անգլերեն Հակիրճ նկարագրություն <span class="text-red-500">*</span></label>
-          <textarea
-            v-model="enDescription"
-            rows="3"
-            placeholder="Short description in English..."
-            class="w-full px-5 py-3 text-sm bg-white border border-zinc-200 rounded-2xl outline-none focus:border-primary/30 focus:shadow-[0_0_0_3px_rgba(18,83,78,0.06)] transition-all duration-300 font-medium text-zinc-800 placeholder-zinc-400 resize-none"
-            :class="{ 'border-red-500 focus:border-red-500': errors.enDescription }"
-          />
-          <p v-if="errors.enDescription" class="text-xs text-red-500 font-medium">{{ errors.enDescription }}</p>
-        </div>
-
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <!-- RU SHORT DESC -->
         <div id="field-ruDescription" class="space-y-2">
           <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Ռուսերեն Հակիրճ նկարագրություն <span class="text-red-500">*</span></label>
@@ -559,6 +547,19 @@ onMounted(async () => {
             :class="{ 'border-red-500 focus:border-red-500': errors.ruDescription }"
           />
           <p v-if="errors.ruDescription" class="text-xs text-red-500 font-medium">{{ errors.ruDescription }}</p>
+        </div>
+
+        <!-- EN SHORT DESC -->
+        <div id="field-enDescription" class="space-y-2">
+          <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Անգլերեն Հակիրճ նկարագրություն <span class="text-red-500">*</span></label>
+          <textarea
+            v-model="enDescription"
+            rows="3"
+            placeholder="Short description in English..."
+            class="w-full px-5 py-3 text-sm bg-white border border-zinc-200 rounded-2xl outline-none focus:border-primary/30 focus:shadow-[0_0_0_3px_rgba(18,83,78,0.06)] transition-all duration-300 font-medium text-zinc-800 placeholder-zinc-400 resize-none"
+            :class="{ 'border-red-500 focus:border-red-500': errors.enDescription }"
+          />
+          <p v-if="errors.enDescription" class="text-xs text-red-500 font-medium">{{ errors.enDescription }}</p>
         </div>
 
         <!-- HY SHORT DESC -->
@@ -611,21 +612,6 @@ onMounted(async () => {
 
       <!-- FULL DESCRIPTIONS ROW -->
       <div class="space-y-6">
-        <!-- EN FULL DESC -->
-        <div id="field-enLongDescription" class="space-y-2">
-          <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Մանրամասն Նկարագրություն (Անգլերեն) <span class="text-red-500">*</span></label>
-          <div
-            class="rounded-2xl transition-all duration-200"
-            :class="{ 'ring-2 ring-red-400 ring-offset-2': errors.enLongDescription }"
-          >
-            <RichTextEditor
-              v-model="enLongDescription"
-              placeholder="Detailed description in English..."
-            />
-          </div>
-          <p v-if="errors.enLongDescription" class="text-xs text-red-500 font-medium">{{ errors.enLongDescription }}</p>
-        </div>
-
         <!-- RU FULL DESC -->
         <div id="field-ruLongDescription" class="space-y-2">
           <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Մանրամասն Նկարագրություն (Ռուսերեն) <span class="text-red-500">*</span></label>
@@ -639,6 +625,21 @@ onMounted(async () => {
             />
           </div>
           <p v-if="errors.ruLongDescription" class="text-xs text-red-500 font-medium">{{ errors.ruLongDescription }}</p>
+        </div>
+
+        <!-- EN FULL DESC -->
+        <div id="field-enLongDescription" class="space-y-2">
+          <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Մանրամասն Նկարագրություն (Անգլերեն) <span class="text-red-500">*</span></label>
+          <div
+            class="rounded-2xl transition-all duration-200"
+            :class="{ 'ring-2 ring-red-400 ring-offset-2': errors.enLongDescription }"
+          >
+            <RichTextEditor
+              v-model="enLongDescription"
+              placeholder="Detailed description in English..."
+            />
+          </div>
+          <p v-if="errors.enLongDescription" class="text-xs text-red-500 font-medium">{{ errors.enLongDescription }}</p>
         </div>
 
         <!-- HY FULL DESC -->
@@ -676,70 +677,91 @@ onMounted(async () => {
         </div>
 
         <!-- Fees List -->
-        <div v-if="entranceFees.length" class="space-y-3">
+        <div v-if="entranceFees.length" class="space-y-4">
           <div
             v-for="(fee, index) in entranceFees"
             :key="index"
-            class="flex items-center gap-3 animate-slide-in"
+            class="bg-zinc-50/60 border border-zinc-100 rounded-2xl overflow-hidden animate-slide-in"
           >
-            <!-- English Fee Name -->
-            <div class="flex-grow flex items-center bg-white border border-zinc-200 rounded-xl transition-all duration-300 focus-within:border-primary/30">
-              <BaseInput
-                v-model="fee.enName"
-                type="text"
-                placeholder="e.g. Garni Temple Admission (EN)"
+            <!-- Card header: fee # + remove button -->
+            <div class="flex items-center justify-between px-4 py-2.5 bg-zinc-100/60 border-b border-zinc-100">
+              <span class="text-[11px] font-bold text-zinc-500 uppercase tracking-wider">
+                Մուտքավճար #{{ index + 1 }}
+              </span>
+              <BaseButton
+                type="button"
+                variant="ghost"
                 size="sm"
-                class="text-zinc-800 placeholder-zinc-400"
-              />
+                class="!text-red-500 hover:!bg-red-50 !border !border-red-100 !rounded-lg !py-1 !px-2"
+                aria-label="Remove entrance fee row"
+                @click="removeEntranceFee(index)"
+              >
+                <BaseIcon name="trash" size="xs" />
+                <span class="ml-1 text-xs font-semibold">Հեռացնել</span>
+              </BaseButton>
             </div>
 
-            <!-- Russian Fee Name -->
-            <div class="flex-grow flex items-center bg-white border border-zinc-200 rounded-xl transition-all duration-300 focus-within:border-primary/30">
-              <BaseInput
-                v-model="fee.ruName"
-                type="text"
-                placeholder="e.g. Храм Гарни Вход (RU)"
-                size="sm"
-                class="text-zinc-800 placeholder-zinc-400"
-              />
-            </div>
+            <!-- Stacked inputs -->
+            <div class="p-4 space-y-3">
+              <!-- Russian Fee Name -->
+              <div class="space-y-1">
+                <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">RU — Ռուսերեն</span>
+                <div class="flex items-center bg-white border border-zinc-200 rounded-xl transition-all duration-300 focus-within:border-primary/30 focus-within:shadow-[0_0_0_3px_rgba(18,83,78,0.06)]">
+                  <BaseInput
+                    v-model="fee.ruName"
+                    type="text"
+                    placeholder="e.g. Храм Гарни Вход"
+                    size="sm"
+                    class="text-zinc-800 placeholder-zinc-400"
+                  />
+                </div>
+              </div>
 
-            <!-- Armenian Fee Name -->
-            <div class="flex-grow flex items-center bg-white border border-zinc-200 rounded-xl transition-all duration-300 focus-within:border-primary/30">
-              <BaseInput
-                v-model="fee.hyName"
-                type="text"
-                placeholder="օրինակ՝ Գառնի Տաճարի Մուտք (HY)"
-                size="sm"
-                class="text-zinc-800 placeholder-zinc-400"
-              />
-            </div>
+              <!-- English Fee Name -->
+              <div class="space-y-1">
+                <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">EN — Անգլերեն</span>
+                <div class="flex items-center bg-white border border-zinc-200 rounded-xl transition-all duration-300 focus-within:border-primary/30 focus-within:shadow-[0_0_0_3px_rgba(18,83,78,0.06)]">
+                  <BaseInput
+                    v-model="fee.enName"
+                    type="text"
+                    placeholder="e.g. Garni Temple Admission"
+                    size="sm"
+                    class="text-zinc-800 placeholder-zinc-400"
+                  />
+                </div>
+              </div>
 
-            <!-- Fee (Price) -->
-            <div class="w-28 shrink-0 flex items-center bg-white border border-zinc-200 rounded-xl transition-all duration-300 focus-within:border-primary/30">
-              <span class="pl-4 text-xs font-bold text-zinc-600 shrink-0">֏</span>
-              <BaseInput
-                :model-value="String(fee.fee)"
-                @update:model-value="val => fee.fee = val === '' ? 0 : Number(val)"
-                type="number"
-                placeholder="0"
-                size="sm"
-                class="text-zinc-800 placeholder-zinc-400 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                min="0"
-              />
-            </div>
+              <!-- Armenian Fee Name -->
+              <div class="space-y-1">
+                <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">HY — Հայերեն</span>
+                <div class="flex items-center bg-white border border-zinc-200 rounded-xl transition-all duration-300 focus-within:border-primary/30 focus-within:shadow-[0_0_0_3px_rgba(18,83,78,0.06)]">
+                  <BaseInput
+                    v-model="fee.hyName"
+                    type="text"
+                    placeholder="օրինակ՝ Գառնի Տաճարի Մուտք"
+                    size="sm"
+                    class="text-zinc-800 placeholder-zinc-400"
+                  />
+                </div>
+              </div>
 
-            <!-- Remove Button -->
-            <BaseButton
-              type="button"
-              variant="ghost"
-              size="sm"
-              class="!text-red-500 hover:!bg-red-50 !border !border-red-100 !rounded-xl"
-              aria-label="Remove entrance fee row"
-              @click="removeEntranceFee(index)"
-            >
-              <BaseIcon name="trash" size="xs" />
-            </BaseButton>
+              <!-- Fee Price -->
+              <div class="space-y-1">
+                <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Գին (AMD ֏)</span>
+                <div class="flex items-center bg-white border border-zinc-200 rounded-xl transition-all duration-300 focus-within:border-primary/30 focus-within:shadow-[0_0_0_3px_rgba(18,83,78,0.06)] w-full sm:w-48">
+                  <span class="pl-4 text-sm font-bold text-zinc-500 shrink-0">֏</span>
+                  <BaseInput
+                    :model-value="String(fee.fee)"
+                    @update:model-value="val => fee.fee = val === '' ? 0 : Number(val)"
+                    type="number"
+                    placeholder="0"
+                    size="sm"
+                    class="text-zinc-800 placeholder-zinc-400 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                    min="0"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 

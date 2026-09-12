@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { watch, nextTick } from 'vue'
 import type { BookingType, BookingResponse } from '~/types/booking'
 import BaseIcon from '~/components/ui/BaseIcon.vue'
@@ -62,7 +62,7 @@ watch(
           <div class="flex items-center justify-between px-6 sm:px-8 pt-6 pb-4 border-b border-zinc-100 shrink-0">
             <div class="space-y-0.5">
               <p class="text-[10px] font-bold uppercase tracking-widest text-zinc-400">
-                {{ type === 'TOUR' ? 'Tour Booking' : 'Transfer Booking' }}
+                {{ type === 'TOUR' ? 'Tour Booking' : 'Location Booking' }}
               </p>
               <h2 class="text-lg font-bold text-zinc-900 leading-tight line-clamp-1">
                 {{ entityTitle }}

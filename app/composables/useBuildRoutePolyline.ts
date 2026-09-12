@@ -1,6 +1,6 @@
 import { useRouteBuilder } from './useRouteBuilder'
 
-export interface SimpleTransferCoords {
+export interface SimpleLocationCoords {
   fromLat?: number | null
   fromLng?: number | null
   toLat?: number | null
@@ -10,35 +10,35 @@ export interface SimpleTransferCoords {
 export function useBuildRoutePolyline() {
   const { buildRoute } = useRouteBuilder()
 
-  async function buildTransferRoutePolyline(transfer: SimpleTransferCoords): Promise<string | null> {
+  async function buildLocationRoutePolyline(Location: SimpleLocationCoords): Promise<string | null> {
     if (
-      transfer.fromLat == null ||
-      transfer.fromLng == null ||
-      transfer.toLat == null ||
-      transfer.toLng == null
+      Location.fromLat == null ||
+      Location.fromLng == null ||
+      Location.toLat == null ||
+      Location.toLng == null
     ) {
       return null
     }
 
     try {
       const { polyline } = await buildRoute(
-        { lat: Number(transfer.fromLat), lng: Number(transfer.fromLng) },
-        { lat: Number(transfer.toLat), lng: Number(transfer.toLng) }
+        { lat: Number(Location.fromLat), lng: Number(Location.fromLng) },
+        { lat: Number(Location.toLat), lng: Number(Location.toLng) }
       )
       return polyline
     } catch (err: any) {
-      console.warn('buildTransferRoutePolyline failed:', err?.message ?? err)
+      console.warn('buildLocationRoutePolyline failed:', err?.message ?? err)
       return null
     }
   }
 
-  async function buildTourRoutePolyline(transfers: SimpleTransferCoords[]): Promise<string | null> {
-    if (!transfers || transfers.length === 0) {
+  async function buildTourRoutePolyline(locations: SimpleLocationCoords[]): Promise<string | null> {
+    if (!locations || locations.length === 0) {
       return null
     }
 
-    // Step 1: Take ONLY the FIRST transfer's fromLat, fromLng as origin.
-    const first = transfers[0]
+    // Step 1: Take ONLY the FIRST Location's fromLat, fromLng as origin.
+    const first = locations[0]
     if (
       !first ||
       first.fromLat == null ||
@@ -49,9 +49,9 @@ export function useBuildRoutePolyline() {
       return null
     }
 
-    // Validate coordinates for remaining transfers
-    for (let i = 1; i < transfers.length; i++) {
-      const t = transfers[i]
+    // Validate coordinates for remaining locations
+    for (let i = 1; i < locations.length; i++) {
+      const t = locations[i]
       if (!t || t.toLat == null || t.toLng == null) {
         return null
       }
@@ -59,18 +59,18 @@ export function useBuildRoutePolyline() {
 
     const origin = { lat: Number(first.fromLat), lng: Number(first.fromLng) }
 
-    // If there is only 1 transfer, the route is just T1.from -> T1.to
-    if (transfers.length === 1) {
+    // If there is only 1 Location, the route is just T1.from -> T1.to
+    if (locations.length === 1) {
       try {
         const { polyline } = await buildRoute(origin, { lat: Number(first.toLat), lng: Number(first.toLng) })
         return polyline
       } catch (err: any) {
-        console.warn('buildTourRoutePolyline (1 transfer) failed:', err?.message ?? err)
+        console.warn('buildTourRoutePolyline (1 Location) failed:', err?.message ?? err)
         return null
       }
     }
 
-    // If there are multiple transfers:
+    // If there are multiple locations:
     // Route must be:
     // T1.fromLat, T1.fromLng ->
     // T1.toLat, T1.toLng ->
@@ -79,8 +79,8 @@ export function useBuildRoutePolyline() {
     // Waypoints will be T1.to, T2.to, ..., T(N-1).to
     // Destination will be TN.to
     const waypoints: { lat: number; lng: number }[] = []
-    for (let i = 0; i < transfers.length - 1; i++) {
-      const t = transfers[i]
+    for (let i = 0; i < locations.length - 1; i++) {
+      const t = locations[i]
       if (t && t.toLat != null && t.toLng != null) {
         waypoints.push({
           lat: Number(t.toLat),
@@ -89,7 +89,7 @@ export function useBuildRoutePolyline() {
       }
     }
 
-    const last = transfers[transfers.length - 1]
+    const last = locations[locations.length - 1]
     if (!last || last.toLat == null || last.toLng == null) {
       return null
     }
@@ -105,13 +105,13 @@ export function useBuildRoutePolyline() {
       console.log('Routes API polyline successfully generated:', polyline)
       return polyline
     } catch (err: any) {
-      console.warn('buildTourRoutePolyline (multiple transfers) failed using Routes API:', err?.message ?? err)
+      console.warn('buildTourRoutePolyline (multiple locations) failed using Routes API:', err?.message ?? err)
       return null
     }
   }
 
   return {
-    buildTransferRoutePolyline,
+    buildLocationRoutePolyline,
     buildTourRoutePolyline,
   }
 }

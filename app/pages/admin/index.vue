@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 definePageMeta({
   layout: 'admin'
 })
@@ -21,7 +21,7 @@ useHead({
     <!-- Stats cards -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
       <div class="bg-white/70 backdrop-blur-sm border border-zinc-200/60 rounded-2xl p-6 shadow-sm hover:shadow transition-shadow duration-200">
-        <p class="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-1">Total Transfers</p>
+        <p class="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-1">Total locations</p>
         <p class="text-3xl font-bold text-zinc-800">—</p>
       </div>
       <div class="bg-white/70 backdrop-blur-sm border border-zinc-200/60 rounded-2xl p-6 shadow-sm hover:shadow transition-shadow duration-200">

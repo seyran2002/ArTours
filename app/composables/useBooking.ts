@@ -89,7 +89,7 @@ export function useBooking() {
         customerEmail: form.customerEmail.trim(),
         customerPhone: form.customerPhone.trim(),
         notes: form.notes.trim() || undefined,
-        ...(type === 'TOUR' ? { tourId: entityId } : { transferId: entityId }),
+        ...(type === 'TOUR' ? { tourId: entityId } : { locationId: entityId }),
         totalPrice: breakdown.discounted,
       }
 

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { computed, ref } from 'vue'
 import { useBooking, computePrice } from '~/composables/useBooking'
 import type { BookingType, BookingResponse, BookingStatus } from '~/types/booking'
@@ -95,10 +95,10 @@ const bookingDisplayData = computed(() => {
 
   return {
     ref: r.bookingNumber,
-    enTitle: r.tour?.enTitle || r.transfer?.enTitle || props.entityTitle,
-    ruTitle: r.tour?.ruTitle || r.transfer?.ruTitle || props.entityTitle,
-    location: r.transfer?.fromAddressText
-      ? `${r.transfer.fromAddressText} → ${r.transfer.toAddressText || ''}`
+    enTitle: r.tour?.enTitle || r.Location?.enTitle || props.entityTitle,
+    ruTitle: r.tour?.ruTitle || r.Location?.ruTitle || props.entityTitle,
+    location: r.Location?.fromAddressText
+      ? `${r.Location.fromAddressText} → ${r.Location.toAddressText || ''}`
       : 'Armenia',
     enTravelDate: enTravelDateFormatted,
     ruTravelDate: ruTravelDateFormatted,

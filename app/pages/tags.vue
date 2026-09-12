@@ -1,4 +1,4 @@
-// app/pages/tags.vue
+﻿// app/pages/tags.vue
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useTag } from '~/composables/useTag'
@@ -9,7 +9,7 @@ import type { Tag } from '~/types/tag'
 useHead({
   title: 'Tags — ArTours',
   meta: [
-    { name: 'description', content: 'Browse all tags used in tours and transfers.' }
+    { name: 'description', content: 'Browse all tags used in tours and locations.' }
   ]
 })
 

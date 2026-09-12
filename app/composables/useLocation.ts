@@ -1,48 +1,48 @@
 import { ref, computed, type ComputedRef, type Ref } from 'vue'
 import { useState, useFetch, useRuntimeConfig } from '#app'
-import { useTransferService } from '~/services/transfer.service'
-import type { Transfer } from '~/types/transfer'
+import { useLocationService } from '~/services/location.service'
+import type { Location } from '~/types/location'
 
-export function useTransfer(id: string): {
-  transfer: ComputedRef<Transfer | null>
+export function useLocation(id: string): {
+  Location: ComputedRef<Location | null>
   loading: Ref<boolean>
   error: Ref<any>
   refresh: () => Promise<void>
 }
-export function useTransfer(): {
-  transfers: Ref<Transfer[]>
+export function useLocation(): {
+  locations: Ref<Location[]>
   loading: Ref<boolean>
   error: Ref<string | null>
-  fetchTransfers: () => Promise<void>
-  createTransfer: (formData: FormData) => Promise<string | null>
-  updateTransfer: (id: string, formData: FormData) => Promise<string | null>
-  deleteTransfer: (id: string) => Promise<string | null>
+  fetchLocations: () => Promise<void>
+  createLocation: (formData: FormData) => Promise<string | null>
+  updateLocation: (id: string, formData: FormData) => Promise<string | null>
+  deleteLocation: (id: string) => Promise<string | null>
 }
-export function useTransfer(id?: string): any {
+export function useLocation(id?: string): any {
   if (id) {
     const { public: { apiUrl } } = useRuntimeConfig()
     const baseUrl = apiUrl.endsWith('/') ? apiUrl : `${apiUrl}/`
-    const transferUrl = `${baseUrl}transfers/${id}`
+    const locationUrl = `${baseUrl}locations/${id}`
 
-    const { data, pending, error, refresh } = useFetch<Transfer>(transferUrl, {
-      key: `transfer-fetch-${id}`,
+    const { data, pending, error, refresh } = useFetch<Location>(locationUrl, {
+      key: `Location-fetch-${id}`,
       server: true,
       lazy: false
     })
 
-    const transfer = computed(() => data.value)
+    const Location = computed(() => data.value)
 
     return {
-      transfer,
+      Location,
       loading: pending,
       error,
       refresh
     }
   }
 
-  const transferService = useTransferService()
+  const locationService = useLocationService()
 
-  const transfers = useState<Transfer[]>('transfers', () => [])
+  const locations = useState<Location[]>('locations', () => [])
   const loading = ref<boolean>(false)
   const error = ref<string | null>(null)
 
@@ -60,11 +60,11 @@ export function useTransfer(id?: string): any {
     return 'An unexpected error occurred. Please try again.'
   }
 
-  async function fetchTransfers(): Promise<void> {
+  async function fetchLocations(): Promise<void> {
     loading.value = true
     error.value = null
     try {
-      transfers.value = await transferService.getTransfers()
+      locations.value = await locationService.getLocations()
     } catch (err) {
       error.value = extractErrorMessage(err)
     } finally {
@@ -72,12 +72,12 @@ export function useTransfer(id?: string): any {
     }
   }
 
-  async function createTransfer(formData: FormData): Promise<string | null> {
+  async function createLocation(formData: FormData): Promise<string | null> {
     loading.value = true
     error.value = null
     try {
-      await transferService.createTransfer(formData)
-      await fetchTransfers()
+      await locationService.createLocation(formData)
+      await fetchLocations()
       return null
     } catch (err) {
       const message = extractErrorMessage(err)
@@ -88,12 +88,12 @@ export function useTransfer(id?: string): any {
     }
   }
 
-  async function updateTransfer(id: string, formData: FormData): Promise<string | null> {
+  async function updateLocation(id: string, formData: FormData): Promise<string | null> {
     loading.value = true
     error.value = null
     try {
-      await transferService.updateTransfer(id, formData)
-      await fetchTransfers()
+      await locationService.updateLocation(id, formData)
+      await fetchLocations()
       return null
     } catch (err) {
       const message = extractErrorMessage(err)
@@ -104,12 +104,12 @@ export function useTransfer(id?: string): any {
     }
   }
 
-  async function deleteTransfer(id: string): Promise<string | null> {
+  async function deleteLocation(id: string): Promise<string | null> {
     loading.value = true
     error.value = null
     try {
-      await transferService.deleteTransfer(id)
-      transfers.value = transfers.value.filter((t) => t.id !== id)
+      await locationService.deleteLocation(id)
+      locations.value = locations.value.filter((t) => t.id !== id)
       return null
     } catch (err) {
       const message = extractErrorMessage(err)
@@ -121,12 +121,12 @@ export function useTransfer(id?: string): any {
   }
 
   return {
-    transfers,
+    locations,
     loading,
     error,
-    fetchTransfers,
-    createTransfer,
-    updateTransfer,
-    deleteTransfer,
+    fetchLocations,
+    createLocation,
+    updateLocation,
+    deleteLocation,
   }
 }

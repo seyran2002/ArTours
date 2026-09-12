@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 import { useApiClient } from '~/services/api'
-import type { Transfer } from '~/types/transfer'
+import type { Location } from '~/types/location'
 import AdminDetailModal from './AdminDetailModal.vue'
-import AdminTransferDetails from './AdminTransferDetails.vue'
+import AdminLocationDetails from './AdminLocationDetails.vue'
 import BaseIcon from '~/components/ui/BaseIcon.vue'
 
 const props = defineProps<{
-  transferId: string
+  locationId: string
   open: boolean
 }>()
 
@@ -16,18 +16,18 @@ const emit = defineEmits<{
 }>()
 
 const api = useApiClient()
-const transfer = ref<Transfer | null>(null)
+const Location = ref<Location | null>(null)
 const loading = ref(false)
 const error = ref<string | null>(null)
 
 async function fetchDetails() {
-  if (!props.transferId) return
+  if (!props.locationId) return
   loading.value = true
   error.value = null
   try {
-    transfer.value = await api.get<Transfer>(`transfers/${props.transferId}`)
+    Location.value = await api.get<Location>(`locations/${props.locationId}`)
   } catch (e: any) {
-    error.value = e?.message || 'Տրանսֆերի տվյալները բեռնել չհաջողվեց'
+    error.value = e?.message || 'Վայրի տվյալները բեռնել չհաջողվեց'
   } finally {
     loading.value = false
   }
@@ -36,7 +36,7 @@ async function fetchDetails() {
 watch(
   () => props.open,
   (newOpen) => {
-    if (newOpen && !transfer.value) {
+    if (newOpen && !Location.value) {
       fetchDetails()
     }
   },
@@ -45,7 +45,7 @@ watch(
 </script>
 
 <template>
-  <AdminDetailModal v-if="open" title="Տրանսֆերի Մանրամասներ / Transfer Details" @close="emit('close')">
+  <AdminDetailModal v-if="open" title="Վայրի Մանրամասներ / Location Details" @close="emit('close')">
     <div v-if="loading" class="flex flex-col items-center justify-center py-12 gap-3 text-zinc-500">
       <BaseIcon name="clock" size="lg" class="animate-spin text-primary" />
       <span class="text-sm font-medium">Բեռնվում է... / Loading...</span>
@@ -59,6 +59,6 @@ watch(
       </button>
     </div>
 
-    <AdminTransferDetails v-else-if="transfer" :transfer="transfer" />
+    <AdminLocationDetails v-else-if="Location" :Location="Location" />
   </AdminDetailModal>
 </template>

@@ -1,27 +1,27 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import BaseIcon from '~/components/ui/BaseIcon.vue'
-import TransferCardAdmin from '~/components/ui/TransferCardAdmin.vue'
-import type { Transfer } from '~/types/transfer'
+import LocationCardAdmin from '~/components/ui/LocationCardAdmin.vue'
+import type { Location } from '~/types/location'
 
 const props = defineProps<{
-  transfers: Transfer[]
+  locations: Location[]
 }>()
 
 const emit = defineEmits<{
-  edit: [transferId: string | number]
+  edit: [locationId: string | number]
   create: []
 }>()
 
-const { deleteTransfer } = useTransfer();
+const { deleteLocation } = useLocation();
 // Search filters
 const searchQuery = ref('')
 const deleteConfirmId = ref<string | number | null>(null)
 
-const filteredTransfers = computed(() => {
+const filteredLocations = computed(() => {
   const query = searchQuery.value.trim().toLowerCase()
-  if (!query) return props.transfers
-  return props.transfers.filter((t) =>
+  if (!query) return props.locations
+  return props.locations.filter((t) =>
     t.ruTitle?.toLowerCase().includes(query) ||
     t.enTitle?.toLowerCase().includes(query) ||
     t.hyTitle?.toLowerCase().includes(query) ||
@@ -31,8 +31,8 @@ const filteredTransfers = computed(() => {
   )
 })
 
-function onEditCard(transfer: Transfer) {
-  emit('edit', transfer.id)
+function onEditCard(Location: Location) {
+  emit('edit', Location.id)
 }
 
 function promptDelete(id: string) {
@@ -40,7 +40,7 @@ function promptDelete(id: string) {
 }
 
 function confirmDelete(id: string) {
-  deleteTransfer(id)
+  deleteLocation(id)
   deleteConfirmId.value = null
 }
 </script>
@@ -56,7 +56,7 @@ function confirmDelete(id: string) {
           <input
             v-model="searchQuery"
             type="text"
-            placeholder="Փնտրել տրանսֆերներ վերնագրով կամ նկարագրությամբ..."
+            placeholder="Փնտրել վայրեր վերնագրով կամ նկարագրությամբ..."
             class="w-full bg-transparent text-sm font-medium text-zinc-800 placeholder-zinc-400 outline-none border-none"
           />
           <button
@@ -69,30 +69,30 @@ function confirmDelete(id: string) {
         </div>
       </div>
 
-      <!-- Add New Transfer Button -->
+      <!-- Add New Location Button -->
       <button
         type="button"
         @click="emit('create')"
         class="w-full sm:w-auto px-5 py-2.5 text-sm font-semibold bg-primary hover:bg-primary-dark text-white rounded-xl transition-all duration-300 cursor-pointer hover:shadow-lg shadow-primary/10 active:scale-95 flex items-center justify-center gap-2"
       >
         <BaseIcon name="plus" size="sm" />
-        <span>Ստեղծել Տրանսֆեր</span>
+        <span>Ստեղծել Ուղղություն</span>
       </button>
     </div>
 
     <!-- Cards Grid -->
     <div
-      v-if="filteredTransfers.length"
+      v-if="filteredLocations.length"
       class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
     >
       <div
-        v-for="transfer in filteredTransfers"
-        :key="transfer.id"
+        v-for="Location in filteredLocations"
+        :key="Location.id"
         class="relative group"
       >
         <!-- Place Card (in Admin Mode) -->
-        <TransferCardAdmin
-          :transfer="transfer"
+        <LocationCardAdmin
+          :Location="Location"
           :admin-mode="true"
           @edit="onEditCard"
         />
@@ -100,11 +100,11 @@ function confirmDelete(id: string) {
         <!-- Overlay Delete Button (Corner trash can) -->
         <div class="absolute top-4 right-4 z-20 flex gap-2">
           <button
-            v-if="deleteConfirmId !== transfer.id"
+            v-if="deleteConfirmId !== Location.id"
             type="button"
-            @click="promptDelete(transfer.id)"
+            @click="promptDelete(Location.id)"
             class="p-1.5 rounded-lg bg-red-500 hover:bg-red-600 border border-red-500/20 text-white shadow-lg active:scale-90 transition-all duration-300 cursor-pointer flex items-center justify-center"
-            title="Delete Transfer"
+            title="Delete Location"
           >
             <BaseIcon name="trash" size="xs" />
           </button>
@@ -116,7 +116,7 @@ function confirmDelete(id: string) {
           >
             <button
               type="button"
-              @click="confirmDelete(transfer.id)"
+              @click="confirmDelete(Location.id)"
               class="px-2.5 py-0.5 text-xs font-extrabold bg-white text-red-600 rounded-lg hover:bg-zinc-100 transition-all active:scale-95 cursor-pointer"
             >
               Ջնջել
@@ -141,9 +141,9 @@ function confirmDelete(id: string) {
       class="bg-white/70 border border-zinc-200/60 rounded-3xl p-16 shadow-sm text-center"
     >
       <BaseIcon name="search" size="lg" class="text-zinc-300 mb-4 mx-auto block" />
-      <h3 class="text-lg font-bold text-zinc-800">Չգտնվեց ոչ մի տրանսֆեր</h3>
+      <h3 class="text-lg font-bold text-zinc-800">Չգտնվեց ոչ մի վայր</h3>
       <p class="text-sm text-zinc-400 mt-1 max-w-sm mx-auto">
-        Չգտնվեց ոչ մի տրանսֆեր, որը համապատասխանում է "{{ searchQuery }}"։ Փոփոխեք ձեր որոնման բառը կամ ստեղծեք նոր տրանսֆեր։
+        Չգտնվեց ոչ մի վայր, որը համապատասխանում է "{{ searchQuery }}"։ Փոփոխեք ձեր որոնման բառը կամ ստեղծեք նոր վայր։
       </p>
       <button
         v-if="searchQuery"

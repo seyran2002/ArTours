@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { useImage, useHead, useAsyncData } from '#imports'
 import { computed } from 'vue'
-import { useTransferService } from '~/services/transfer.service'
+import { useLocationService } from '~/services/location.service'
 
 const { t } = useI18n()
 
-const transferService = useTransferService()
+const locationService = useLocationService()
 const { data: countData } = useAsyncData<{ count: number }>(
-  'transfers-count',
-  () => transferService.getTransfersCount(),
+  'locations-count',
+  () => locationService.getLocationsCount(),
   { lazy: true }
 )
 

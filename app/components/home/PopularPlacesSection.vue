@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { Transfer } from '~/types/transfer';
+import type { Location } from '~/types/location';
 
 defineProps<{
-  popularTransfers?: Transfer[]
+  popularLocations?: Location[]
   loading?: boolean
 }>()
 </script>
@@ -38,16 +38,16 @@ defineProps<{
           :key="n"
           class="w-80 sm:w-96 shrink-0 snap-start md:w-auto h-full"
         >
-          <LazyTransferCard loading />
+          <LazyLocationCard loading />
         </div>
       </template>
       <template v-else>
         <div 
-          v-for="place in popularTransfers" 
+          v-for="place in popularLocations" 
           :key="place.id"
           class="w-80 sm:w-96 shrink-0 snap-start md:w-auto h-full"
         >
-          <LazyTransferCard :transfer="place" />
+          <LazyLocationCard :Location="place" />
         </div>
       </template>
     </div>

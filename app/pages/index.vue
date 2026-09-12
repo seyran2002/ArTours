@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useRuntimeConfig, useLazyFetch } from '#imports'
-import type { Transfer } from '~/types/transfer';
+import type { Location } from '~/types/location';
 import type { Tour } from '~/types/tour';
 import HeroSection from '~/components/home/HeroSection.vue';
 import { usePageSeo } from '~/composables/usePageSeo';
@@ -9,8 +9,8 @@ import { useI18n } from '#imports'
 const { t, tm } = useI18n()
 
 const { public: { apiUrl } } = useRuntimeConfig()
-const popularTransfersUrl = `${apiUrl.endsWith('/') ? apiUrl : apiUrl + '/'}transfers/popular`
-const { data: popularTransfers, status: transfersStatus } = useLazyFetch<Transfer[]>(popularTransfersUrl, { key: 'popular-transfers' })
+const popularLocationsUrl = `${apiUrl.endsWith('/') ? apiUrl : apiUrl + '/'}locations/popular`
+const { data: popularLocations, status: locationsStatus } = useLazyFetch<Location[]>(popularLocationsUrl, { key: 'popular-locations' })
 
 const popularToursUrl = `${apiUrl.endsWith('/') ? apiUrl : apiUrl + '/'}tours/popular`
 const { data: popularTours, status: toursStatus } = useLazyFetch<Tour[]>(popularToursUrl, { key: 'popular-tours' })
@@ -52,8 +52,8 @@ usePageSeo({
     <!-- Hero Section (Luxury Layout) -->
     <HeroSection />
     <LazyHomePopularPlacesSection
-      :popular-transfers="popularTransfers || []"
-      :loading="transfersStatus === 'pending' || !popularTransfers"
+      :popular-locations="popularLocations || []"
+      :loading="locationsStatus === 'pending' || !popularLocations"
     />
     <LazyHomeTopToursSection
       :popular-tours="popularTours || []" 
