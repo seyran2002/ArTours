@@ -4,6 +4,7 @@ import BaseIcon from '~/components/ui/BaseIcon.vue'
 import BaseInput from '~/components/ui/BaseInput.vue'
 import BaseButton from '~/components/ui/BaseButton.vue'
 import GooglePlacesInput from '~/components/ui/GooglePlacesInput.vue'
+import type { MultilingualPlaceData } from '~/composables/useGooglePlaceMultilingual'
 import { useLocation } from '~/composables/useLocation'
 import { useLocationService } from '~/services/location.service'
 import { useTag } from '~/composables/useTag'
@@ -37,12 +38,16 @@ const fromAddressText = ref('');
 const fromLat = ref<number | null>(null);
 const fromLng = ref<number | null>(null);
 const fromCity = ref<string | null>(null);
+// Multilingual place data for FROM location
+const fromMultilingual = ref<MultilingualPlaceData | null>(null);
 
 const toPlaceId = ref('');
 const toAddressText = ref('');
 const toLat = ref<number | null>(null);
 const toLng = ref<number | null>(null);
 const toCity = ref<string | null>(null);
+// Multilingual place data for TO location
+const toMultilingual = ref<MultilingualPlaceData | null>(null);
 
 const enTitle = ref('');
 const ruTitle = ref('');
@@ -85,6 +90,32 @@ const toggleTag = (tagId: string) => {
   } else {
     selectedTags.value.splice(index, 1)
   }
+}
+
+// ── Auto-fill title fields from multilingual place name ────────────────────
+// When both FROM and TO places are selected, suggest route titles in each
+// language (e.g. "Yerevan – Dilijan") only for fields the user hasn't filled.
+const autoFillTitlesIfEmpty = () => {
+  const langs: Array<'en' | 'ru' | 'hy'> = ['en', 'ru', 'hy']
+  const titleRefs: Record<'en' | 'ru' | 'hy', typeof enTitle> = {
+    en: enTitle,
+    ru: ruTitle,
+    hy: hyTitle,
+  }
+
+  langs.forEach((lang) => {
+    // Only suggest when the title field is currently empty
+    if (titleRefs[lang].value.trim() !== '') return
+
+    const fromName = fromMultilingual.value?.name[lang] || fromAddressText.value || ''
+    const toName   = toMultilingual.value?.name[lang]   || toAddressText.value   || ''
+
+    if (fromName && toName) {
+      titleRefs[lang].value = `${fromName} – ${toName}`
+    } else if (fromName || toName) {
+      titleRefs[lang].value = fromName || toName
+    }
+  })
 }
 
 // Entrance fees logic
@@ -204,6 +235,29 @@ const buildFormData = (routePolyline: string | null): FormData => {
   if (!isEditMode.value) {
     if (fromCity.value) formData.append('fromCity', fromCity.value)
     if (toCity.value)   formData.append('toCity',   toCity.value)
+  }
+
+  // Multilingual address fields (en/ru/hy) for FROM and TO
+  // These are derived from the Google Places API (New) REST calls in the browser.
+  // The backend currently stores a single `fromAddressText` / `toAddressText`; these
+  // additional fields are sent for future-proofing and can be stored once the schema is extended.
+  const fromML = fromMultilingual.value
+  if (fromML) {
+    if (fromML.address.en) formData.append('fromAddressEn', fromML.address.en)
+    if (fromML.address.ru) formData.append('fromAddressRu', fromML.address.ru)
+    if (fromML.address.hy) formData.append('fromAddressHy', fromML.address.hy)
+    if (fromML.name.en)    formData.append('fromNameEn',    fromML.name.en)
+    if (fromML.name.ru)    formData.append('fromNameRu',    fromML.name.ru)
+    if (fromML.name.hy)    formData.append('fromNameHy',    fromML.name.hy)
+  }
+  const toML = toMultilingual.value
+  if (toML) {
+    if (toML.address.en) formData.append('toAddressEn', toML.address.en)
+    if (toML.address.ru) formData.append('toAddressRu', toML.address.ru)
+    if (toML.address.hy) formData.append('toAddressHy', toML.address.hy)
+    if (toML.name.en)    formData.append('toNameEn',    toML.name.en)
+    if (toML.name.ru)    formData.append('toNameRu',    toML.name.ru)
+    if (toML.name.hy)    formData.append('toNameHy',    toML.name.hy)
   }
 
   // Titles & descriptions
@@ -463,6 +517,8 @@ watch(
               fromLat = data.lat;
               fromLng = data.lng;
               fromCity = data.city;
+              fromMultilingual = data.multilingual;
+              autoFillTitlesIfEmpty();
             }"
           />
           <p v-if="errors.from" class="text-xs text-red-500 font-medium">{{ errors.from }}</p>
@@ -481,6 +537,8 @@ watch(
               toLat = data.lat;
               toLng = data.lng;
               toCity = data.city;
+              toMultilingual = data.multilingual;
+              autoFillTitlesIfEmpty();
             }"
           />
           <p v-if="errors.to" class="text-xs text-red-500 font-medium">{{ errors.to }}</p>

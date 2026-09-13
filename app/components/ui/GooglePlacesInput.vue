@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, shallowRef, onMounted, onUnmounted } from 'vue'
 import { useRuntimeConfig } from '#app'
+import { useGooglePlaceMultilingual, type MultilingualPlaceData } from '~/composables/useGooglePlaceMultilingual'
 
 interface SuggestionItem {
   key: string
@@ -25,11 +26,15 @@ const emit = defineEmits<{
     lat: number | null
     lng: number | null
     city: string | null
+    /** Multilingual name + address fetched in parallel (en/ru/hy). Null if unavailable. */
+    multilingual: MultilingualPlaceData | null
   }]
 }>()
 
 const config = useRuntimeConfig()
 const apiKey = config.public.googleMapsApiKey as string | undefined
+
+const { fetchMultilingualPlace } = useGooglePlaceMultilingual()
 
 const wrapperRef = ref<HTMLElement | null>(null)
 const inputRef = ref<HTMLInputElement | null>(null)
@@ -160,7 +165,8 @@ const onInput = (e: Event) => {
     addressText: value,
     lat: null,
     lng: null,
-    city: null
+    city: null,
+    multilingual: null,
   })
 
   if (debounceTimer) {
@@ -228,13 +234,27 @@ const selectSuggestion = async (suggestion: SuggestionItem) => {
       }
     }
 
+    // Fetch multilingual place data in parallel (en, ru, hy)
+    // This uses the Google Places API (New) REST endpoint from the browser.
+    // On production (artours.am) the API key allows this; on localhost it will
+    // be blocked by Google and the multilingual field will be null gracefully.
+    let multilingual: MultilingualPlaceData | null = null
+    if (placeId && lat !== null && lng !== null) {
+      try {
+        multilingual = await fetchMultilingualPlace(placeId, lat, lng)
+      } catch {
+        // silently ignore — the rest of the data is still valid
+      }
+    }
+
     emit('update:modelValue', addressText)
     emit('place-changed', {
       placeId,
       addressText,
       lat,
       lng,
-      city
+      city,
+      multilingual,
     })
   } catch (err) {
     console.error('Error fetching place details:', err)
@@ -267,7 +287,10 @@ const onKeyUp = () => {
 
 const onKeyEnter = () => {
   if (isOpen.value && activeIndex.value >= 0 && activeIndex.value < suggestions.value.length) {
-    selectSuggestion(suggestions.value[activeIndex.value])
+    const selected = suggestions.value[activeIndex.value]
+    if (selected) {
+      selectSuggestion(selected)
+    }
   }
 }
 
