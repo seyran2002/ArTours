@@ -1,4 +1,4 @@
-﻿import type { Tag } from './tag';
+import type { Tag } from './tag';
 
 export interface EntranceFee {
     enName: string;
@@ -26,10 +26,22 @@ export interface Location {
     entranceFees?: EntranceFee[];
     fromPlaceId?: string;
     fromAddressText?: string;
+    enFromAddress?: string;
+    ruFromAddress?: string;
+    hyFromAddress?: string;
+    enFromName?: string;
+    ruFromName?: string;
+    hyFromName?: string;
     fromLat?: number | null;
     fromLng?: number | null;
     toPlaceId?: string;
     toAddressText?: string;
+    enToAddress?: string;
+    ruToAddress?: string;
+    hyToAddress?: string;
+    enToName?: string;
+    ruToName?: string;
+    hyToName?: string;
     toLat?: number | null;
     toLng?: number | null;
     routePolyline?: string | null;

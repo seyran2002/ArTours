@@ -68,7 +68,7 @@ const parsedEntranceFees = computed(() => {
             {{ $t('locations.departure') }}
           </span>
           <span class="text-sm font-semibold text-zinc-800">
-            {{ location.fromAddressText }}
+            {{ location[`${locale}FromAddress`] }}
           </span>
         </div>
       </div>
@@ -82,7 +82,7 @@ const parsedEntranceFees = computed(() => {
             {{ $t('locations.destination') }}
           </span>
           <span class="text-sm font-semibold text-zinc-800">
-            {{ location.toAddressText }}
+            {{ location[`${locale}ToAddress`] }}
           </span>
         </div>
       </div>

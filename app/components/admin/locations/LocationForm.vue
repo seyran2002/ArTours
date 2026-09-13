@@ -243,21 +243,21 @@ const buildFormData = (routePolyline: string | null): FormData => {
   // additional fields are sent for future-proofing and can be stored once the schema is extended.
   const fromML = fromMultilingual.value
   if (fromML) {
-    if (fromML.address.en) formData.append('fromAddressEn', fromML.address.en)
-    if (fromML.address.ru) formData.append('fromAddressRu', fromML.address.ru)
-    if (fromML.address.hy) formData.append('fromAddressHy', fromML.address.hy)
-    if (fromML.name.en)    formData.append('fromNameEn',    fromML.name.en)
-    if (fromML.name.ru)    formData.append('fromNameRu',    fromML.name.ru)
-    if (fromML.name.hy)    formData.append('fromNameHy',    fromML.name.hy)
+    if (fromML.address.en) formData.append('enFromAddress', fromML.address.en)
+    if (fromML.address.ru) formData.append('ruFromAddress', fromML.address.ru)
+    if (fromML.address.hy) formData.append('hyFromAddress', fromML.address.hy)
+    if (fromML.name.en)    formData.append('enFromName',    fromML.name.en)
+    if (fromML.name.ru)    formData.append('ruFromName',    fromML.name.ru)
+    if (fromML.name.hy)    formData.append('hyFromName',    fromML.name.hy)
   }
   const toML = toMultilingual.value
   if (toML) {
-    if (toML.address.en) formData.append('toAddressEn', toML.address.en)
-    if (toML.address.ru) formData.append('toAddressRu', toML.address.ru)
-    if (toML.address.hy) formData.append('toAddressHy', toML.address.hy)
-    if (toML.name.en)    formData.append('toNameEn',    toML.name.en)
-    if (toML.name.ru)    formData.append('toNameRu',    toML.name.ru)
-    if (toML.name.hy)    formData.append('toNameHy',    toML.name.hy)
+    if (toML.address.en) formData.append('enToAddress', toML.address.en)
+    if (toML.address.ru) formData.append('ruToAddress', toML.address.ru)
+    if (toML.address.hy) formData.append('hyToAddress', toML.address.hy)
+    if (toML.name.en)    formData.append('enToName',    toML.name.en)
+    if (toML.name.ru)    formData.append('ruToName',    toML.name.ru)
+    if (toML.name.hy)    formData.append('hyToName',    toML.name.hy)
   }
 
   // Titles & descriptions
