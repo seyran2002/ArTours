@@ -132,7 +132,10 @@ const badge = computed(() => {
           <div class="flex items-center gap-1.5 text-primary">
             <BaseIcon name="map-pin" size="xs" custom-class="text-primary/95 shrink-0" />
             <span class="truncate text-zinc-500 font-semibold max-w-[150px] sm:max-w-[200px]">
-              {{ Location.distanceFromYerevan }} {{ $t('locations.kmFromYerevan')}}
+              {{ Location.distanceFromYerevan
+                ? `${Location.distanceFromYerevan} ${$t('locations.kmFromYerevan')}`
+                : ''
+              }}
             </span>
           </div>
         </div>
