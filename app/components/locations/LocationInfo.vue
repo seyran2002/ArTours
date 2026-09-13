@@ -6,35 +6,35 @@ import BaseBadge from '~/components/ui/BaseBadge.vue'
 import BaseIcon from '~/components/ui/BaseIcon.vue'
 
 const props = defineProps<{
-  Location: Location
+  location: Location
 }>()
 
 const { locale } = useI18n()
 
 // Localized Title & Description
 const title = computed(() => {
-  return locale.value === 'ru' ? props.Location.ruTitle : props.Location.enTitle
+  return locale.value === 'ru' ? props.location.ruTitle : props.location.enTitle
 })
 
 const shortDescription = computed(() => {
-  return locale.value === 'ru' ? props.Location.ruDescription : props.Location.enDescription
+  return locale.value === 'ru' ? props.location.ruDescription : props.location.enDescription
 })
 
 const longDescription = computed(() => {
-  return locale.value === 'ru' ? props.Location.ruLongDescription : props.Location.enLongDescription
+  return locale.value === 'ru' ? props.location.ruLongDescription : props.location.enLongDescription
 })
 
 // Parsed Entrance Fees list
 const parsedEntranceFees = computed(() => {
-  if (!props.Location.entranceFees) return []
-  if (typeof props.Location.entranceFees === 'string') {
+  if (!props.location.entranceFees) return []
+  if (typeof props.location.entranceFees === 'string') {
     try {
-      return JSON.parse(props.Location.entranceFees)
+      return JSON.parse(props.location.entranceFees)
     } catch {
       return []
     }
   }
-  return props.Location.entranceFees
+  return props.location.entranceFees
 })
 </script>
 
@@ -44,7 +44,7 @@ const parsedEntranceFees = computed(() => {
     <div class="space-y-3">
       <div class="flex flex-wrap gap-2">
         <BaseBadge
-          v-for="tag in Location.tags"
+          v-for="tag in location.tags"
           :key="tag.id"
           class="bg-primary/10 text-primary border-none text-xs font-semibold px-3 py-1 rounded-full"
         >
@@ -68,7 +68,7 @@ const parsedEntranceFees = computed(() => {
             {{ $t('locations.departure') }}
           </span>
           <span class="text-sm font-semibold text-zinc-800">
-            {{ Location.fromAddressText }}
+            {{ location.fromAddressText }}
           </span>
         </div>
       </div>
@@ -82,7 +82,7 @@ const parsedEntranceFees = computed(() => {
             {{ $t('locations.destination') }}
           </span>
           <span class="text-sm font-semibold text-zinc-800">
-            {{ Location.toAddressText }}
+            {{ location.toAddressText }}
           </span>
         </div>
       </div>
@@ -95,19 +95,19 @@ const parsedEntranceFees = computed(() => {
           {{ $t('locations.cost') }}
         </span>
         <div class="flex items-baseline gap-1">
-          <span class="text-3xl font-black text-zinc-900 font-sans">€{{ Location.minimumPrice }}</span>
+          <span class="text-3xl font-black text-zinc-900 font-sans">€{{ location.minimumPrice }}</span>
           <span class="text-xs font-medium text-zinc-500">
             {{ $t('locations.for3People') }}
           </span>
         </div>
       </div>
 
-      <div v-if="Location.distanceFromYerevan" class="space-y-1">
+      <div v-if="location.distanceFromYerevan" class="space-y-1">
         <span class="block text-xs font-bold text-zinc-500 uppercase tracking-wider">
           {{ $t('locations.distance') }}
         </span>
         <div class="flex items-baseline gap-1">
-          <span class="text-3xl font-black text-zinc-900 font-sans">{{ Location.distanceFromYerevan }}</span>
+          <span class="text-3xl font-black text-zinc-900 font-sans">{{ location.distanceFromYerevan }}</span>
           <span class="text-xs font-medium text-zinc-500">
             {{ $t('km') }}
           </span>
