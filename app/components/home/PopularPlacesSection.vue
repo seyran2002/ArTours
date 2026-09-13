@@ -47,7 +47,7 @@ defineProps<{
           :key="place.id"
           class="w-80 sm:w-96 shrink-0 snap-start md:w-auto h-full"
         >
-          <LazyLocationCard :Location="place" />
+          <LazyLocationCard :location="place" />
         </div>
       </template>
     </div>

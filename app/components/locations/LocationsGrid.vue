@@ -18,13 +18,13 @@ defineProps<{
     class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-6"
   >
     <div
-      v-for="(Location, index) in locations"
-      :key="Location.id"
+      v-for="(loc, index) in locations"
+      :key="loc.id"
       class="animate-fade-in-up"
       :style="{ animationDelay: `${(index % 8) * 60}ms` }"
     >
       <LocationCard
-        :Location="Location"
+        :location="loc"
         :is-priority="index === 0"
       />
     </div>
