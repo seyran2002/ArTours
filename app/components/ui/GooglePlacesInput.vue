@@ -100,6 +100,13 @@ const extractText = (val: any): string => {
   return ''
 }
 
+const removePlusCode = (text: string): string => {
+  if (!text) return ''
+  let cleaned = text.replace(/^[A-Z0-9]{4,8}\+[A-Z0-9]{2,4}\s*,?\s*/i, '').trim()
+  cleaned = cleaned.replace(/\b[A-Z0-9]{4,8}\+[A-Z0-9]{2,4}\b\s*,?\s*/gi, '').trim()
+  return cleaned.replace(/^[\s,]+|[\s,]+$/g, '')
+}
+
 const fetchPredictions = async (query: string) => {
   if (!query || !query.trim() || !placesLibrary) {
     suggestions.value = []
@@ -203,7 +210,29 @@ const selectSuggestion = async (suggestion: SuggestionItem) => {
     sessionToken = null
 
     const displayName = extractText(place.displayName)
-    const addressText = place.formattedAddress || displayName || suggestion.fullText || suggestion.mainText
+    const rawFormatted = place.formattedAddress ? extractText(place.formattedAddress) : ''
+    const cleanedFormatted = removePlusCode(rawFormatted)
+    const cleanedDisplay = removePlusCode(displayName)
+    const cleanedFull = removePlusCode(suggestion.fullText)
+    const cleanedMain = removePlusCode(suggestion.mainText)
+
+    let addressText = ''
+    if (cleanedFormatted) {
+      if (cleanedDisplay && !cleanedFormatted.toLowerCase().includes(cleanedDisplay.toLowerCase())) {
+        addressText = `${cleanedDisplay}, ${cleanedFormatted}`
+      } else {
+        addressText = cleanedFormatted
+      }
+    } else if (cleanedDisplay) {
+      if (cleanedFull && !cleanedFull.toLowerCase().includes(cleanedDisplay.toLowerCase())) {
+        addressText = `${cleanedDisplay}, ${cleanedFull}`
+      } else {
+        addressText = cleanedDisplay
+      }
+    } else {
+      addressText = cleanedFull || cleanedMain || ''
+    }
+
     const placeId = place.id || null
 
     let lat: number | null = null

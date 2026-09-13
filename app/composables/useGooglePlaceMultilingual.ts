@@ -63,14 +63,35 @@ export function useGooglePlaceMultilingual() {
 
       const data = await res.json()
 
-      const name: string | null =
+      const rawName: string | null =
         (data.displayName && typeof data.displayName === 'object' && typeof data.displayName.text === 'string'
           ? data.displayName.text
           : null) ||
         (typeof data.displayName === 'string' ? data.displayName : null)
 
-      const address: string | null =
+      const rawAddress: string | null =
         typeof data.formattedAddress === 'string' ? data.formattedAddress : null
+
+      const removePlusCode = (text: string): string => {
+        if (!text) return ''
+        let cleaned = text.replace(/^[A-Z0-9]{4,8}\+[A-Z0-9]{2,4}\s*,?\s*/i, '').trim()
+        cleaned = cleaned.replace(/\b[A-Z0-9]{4,8}\+[A-Z0-9]{2,4}\b\s*,?\s*/gi, '').trim()
+        return cleaned.replace(/^[\s,]+|[\s,]+$/g, '')
+      }
+
+      const name = rawName ? removePlusCode(rawName) || rawName : null
+      const cleanedAddress = rawAddress ? removePlusCode(rawAddress) : null
+
+      let address: string | null = null
+      if (cleanedAddress) {
+        if (name && !cleanedAddress.toLowerCase().includes(name.toLowerCase())) {
+          address = `${name}, ${cleanedAddress}`
+        } else {
+          address = cleanedAddress
+        }
+      } else {
+        address = rawAddress
+      }
 
       return { name, address }
     } catch {
