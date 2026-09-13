@@ -9,6 +9,10 @@ export function useLocationService() {
       return api.get<Location[]>('locations')
     },
 
+    async getLocation(id: string): Promise<Location> {
+      return api.get<Location>(`locations/${id}`)
+    },
+
     async getLocationsCount(): Promise<{ count: number }> {
       return api.get<{ count: number }>('locations/count')
     },

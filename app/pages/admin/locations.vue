@@ -25,6 +25,8 @@ const locations = computed(() => Location.locations.value);
 onMounted(async () => {
   if (tag.tags.value.length === 0) {
     await tag.fetchTags();
+  }
+  if (Location.locations.value.length === 0) {
     await Location.fetchLocations();
   }
 })
@@ -47,7 +49,7 @@ function showToast(message: string, type: 'success' | 'error' = 'success') {
 
 const editingLocationTitle = computed(() => {
   if (!editingLocationId.value) return ''
-  const loc = locations.value.find(t => t.id === editingLocationId.value)
+  const loc = locations.value.find(t => String(t.id) === String(editingLocationId.value))
   return loc ? (loc.enTitle || loc.ruTitle || '') : ''
 })
 
@@ -182,7 +184,7 @@ function onFormCancel() {
       <div v-else-if="activeView === 'form'" class="animate-fade-in">
         <AdminLocationsForm
           :key="editingLocationId ?? 'new'"
-          :Location-id="editingLocationId"
+          :location-id="editingLocationId"
           @save="onFormSave"
           @cancel="onFormCancel"
         />

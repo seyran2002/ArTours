@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import BaseIcon from '~/components/ui/BaseIcon.vue'
 import BaseInput from '~/components/ui/BaseInput.vue'
 import BaseButton from '~/components/ui/BaseButton.vue'
 import GooglePlacesInput from '~/components/ui/GooglePlacesInput.vue'
 import { useLocation } from '~/composables/useLocation'
+import { useLocationService } from '~/services/location.service'
 import { useTag } from '~/composables/useTag'
 import { useBuildRoutePolyline } from '~/composables/useBuildRoutePolyline'
 import RichTextEditor from './RichTextEditor.vue'
@@ -12,6 +13,7 @@ import ImageGalleryManager from './ImageGalleryManager.vue'
 
 const props = defineProps<{
   locationId?: string | number;
+  LocationId?: string | number;
 }>();
 
 const emit = defineEmits<{
@@ -19,10 +21,15 @@ const emit = defineEmits<{
   cancel: [];
 }>();
 
-const { locations, createLocation, updateLocation } = useLocation();
+const effectiveLocationId = computed(() => props.locationId ?? props.LocationId);
+const isEditMode = computed(() => !!effectiveLocationId.value);
+
+const { locations, fetchLocations, createLocation, updateLocation } = useLocation();
+const locationService = useLocationService();
 const tagStore = useTag();
 const tags = computed(() => tagStore.tags.value);
 const { buildLocationRoutePolyline } = useBuildRoutePolyline();
+const isLoadingData = ref(false);
 
 // Form reactive state
 const fromPlaceId = ref('');
@@ -56,8 +63,6 @@ const mainImage = ref('');
 // Validation states
 const errors = ref<Record<string, string>>({});
 const isSubmitting = ref(false);
-
-const isEditMode = computed(() => !!props.locationId);
 
 // Helper to convert base64 data URL to File object
 const dataURLtoFile = (dataurl: string, filename: string): File => {
@@ -271,8 +276,8 @@ const buildFormData = (routePolyline: string | null): FormData => {
 const persistLocation = async (formData: FormData): Promise<void> => {
   let saveError: string | null = null
 
-  if (isEditMode.value && props.locationId) {
-    saveError = await updateLocation(String(props.locationId), formData)
+  if (isEditMode.value && effectiveLocationId.value) {
+    saveError = await updateLocation(String(effectiveLocationId.value), formData)
   } else {
     saveError = await createLocation(formData)
   }
@@ -306,46 +311,112 @@ const handleSave = async () => {
 }
 
 
-// Load existing data in edit mode
-onMounted(async () => {
-  await tagStore.fetchTags()
+const populateForm = (existing: any) => {
+  fromPlaceId.value = existing.fromPlaceId || '';
+  fromAddressText.value = existing.fromAddressText || '';
+  fromLat.value = existing.fromLat !== undefined ? existing.fromLat : null;
+  fromLng.value = existing.fromLng !== undefined ? existing.fromLng : null;
+  fromCity.value = existing.fromCity || null;
 
-  if (isEditMode.value) {
-    const existing = locations.value.find(t => t.id === props.locationId)
-    if (existing) {
-      fromPlaceId.value = existing.fromPlaceId || '';
-      fromAddressText.value = existing.fromAddressText || '';
-      fromLat.value = existing.fromLat !== undefined ? existing.fromLat : null;
-      fromLng.value = existing.fromLng !== undefined ? existing.fromLng : null;
-      toPlaceId.value = existing.toPlaceId || '';
-      toAddressText.value = existing.toAddressText || '';
-      toLat.value = existing.toLat !== undefined ? existing.toLat : null;
-      toLng.value = existing.toLng !== undefined ? existing.toLng : null;
-      enTitle.value = existing.enTitle || '';
-      ruTitle.value = existing.ruTitle || '';
-      hyTitle.value = existing.hyTitle || '';
-      enDescription.value = existing.enDescription || '';
-      ruDescription.value = existing.ruDescription || '';
-      hyDescription.value = existing.hyDescription || '';
-      enLongDescription.value = existing.enLongDescription || '';
-      ruLongDescription.value = existing.ruLongDescription || '';
-      hyLongDescription.value = existing.hyLongDescription || '';
-      distanceFromYerevan.value = existing.distanceFromYerevan ?? '';
-      price.value = existing.minimumPrice ?? '';
-      
-      // Since we don't have tags saved on the model directly (or if they are mapped), we use tags if present
-      selectedTags.value = existing.tags?.map((tag: any) => tag.id) || [];
-      
-      // entranceFees mapping
-      entranceFees.value = existing?.entranceFees && typeof existing.entranceFees === 'string'
-        ? JSON.parse(existing.entranceFees)
-        : existing?.entranceFees || [];
-      
-      mainImage.value = existing.mainImage || '';
-      images.value = [mainImage.value, ...(existing.images || [])];
+  toPlaceId.value = existing.toPlaceId || '';
+  toAddressText.value = existing.toAddressText || '';
+  toLat.value = existing.toLat !== undefined ? existing.toLat : null;
+  toLng.value = existing.toLng !== undefined ? existing.toLng : null;
+  toCity.value = existing.toCity || null;
+
+  enTitle.value = existing.enTitle || '';
+  ruTitle.value = existing.ruTitle || '';
+  hyTitle.value = existing.hyTitle || '';
+
+  enDescription.value = existing.enDescription || '';
+  ruDescription.value = existing.ruDescription || '';
+  hyDescription.value = existing.hyDescription || '';
+
+  enLongDescription.value = existing.enLongDescription || '';
+  ruLongDescription.value = existing.ruLongDescription || '';
+  hyLongDescription.value = existing.hyLongDescription || '';
+
+  distanceFromYerevan.value = existing.distanceFromYerevan ?? '';
+  price.value = existing.minimumPrice ?? existing.price ?? '';
+
+  selectedTags.value = existing.tags?.map((tag: any) => String(tag.id)) || [];
+
+  let parsedFees = existing?.entranceFees;
+  if (typeof parsedFees === 'string') {
+    try {
+      parsedFees = JSON.parse(parsedFees);
+    } catch {
+      parsedFees = [];
     }
   }
-})
+  entranceFees.value = Array.isArray(parsedFees)
+    ? parsedFees.map((f: any) => ({
+        enName: f.enName || '',
+        ruName: f.ruName || '',
+        hyName: f.hyName || '',
+        fee: Number(f.fee) || 0
+      }))
+    : [];
+
+  mainImage.value = existing.mainImage || '';
+  const rawImages: string[] = Array.isArray(existing.images) ? existing.images : [];
+  const allImages: string[] = [];
+  if (mainImage.value) {
+    allImages.push(mainImage.value);
+  }
+  rawImages.forEach((img: string) => {
+    if (img && !allImages.includes(img)) {
+      allImages.push(img);
+    }
+  });
+  images.value = allImages;
+}
+
+const loadLocationData = async () => {
+  if (!isEditMode.value || !effectiveLocationId.value) return;
+
+  isLoadingData.value = true;
+  try {
+    const id = String(effectiveLocationId.value);
+    let existing = locations.value.find(t => String(t.id) === id);
+
+    if (!existing) {
+      try {
+        existing = await locationService.getLocation(id);
+      } catch {
+        if (locations.value.length === 0) {
+          await fetchLocations();
+          existing = locations.value.find(t => String(t.id) === id);
+        }
+      }
+    }
+
+    if (existing) {
+      populateForm(existing);
+    }
+  } catch (e) {
+    console.error('Error loading location for edit', e);
+  } finally {
+    isLoadingData.value = false;
+  }
+}
+
+// Load existing data in edit mode
+onMounted(async () => {
+  await tagStore.fetchTags();
+  if (isEditMode.value) {
+    await loadLocationData();
+  }
+});
+
+watch(
+  () => effectiveLocationId.value,
+  async (newId) => {
+    if (newId) {
+      await loadLocationData();
+    }
+  }
+);
 </script>
 
 <template>
@@ -370,7 +441,12 @@ onMounted(async () => {
       </BaseButton>
     </div>
 
-    <form @submit.prevent="handleSave" class="space-y-8">
+    <div v-if="isLoadingData" class="flex flex-col items-center justify-center py-20 gap-3">
+      <div class="w-8 h-8 rounded-full border-2 border-primary border-t-transparent animate-spin" />
+      <span class="text-xs font-semibold text-zinc-500">Տվյալները բեռնվում են...</span>
+    </div>
+
+    <form v-else @submit.prevent="handleSave" class="space-y-8">
       
       <!-- ROUTE ROW (FROM & TO) -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -391,7 +467,6 @@ onMounted(async () => {
           />
           <p v-if="errors.from" class="text-xs text-red-500 font-medium">{{ errors.from }}</p>
         </div>
-        {{ fromCity }} 555555 {{ fromAddressText }}
 
         <!-- TO -->
         <div id="field-to" class="space-y-2">
@@ -410,7 +485,6 @@ onMounted(async () => {
           />
           <p v-if="errors.to" class="text-xs text-red-500 font-medium">{{ errors.to }}</p>
         </div>
-        {{ toCity }} 5555 {{toAddressText  }}
       </div>
 
       <!-- TITLES ROW (EN, RU & HY) -->
