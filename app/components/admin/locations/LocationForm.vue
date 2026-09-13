@@ -391,6 +391,7 @@ onMounted(async () => {
           />
           <p v-if="errors.from" class="text-xs text-red-500 font-medium">{{ errors.from }}</p>
         </div>
+        {{ fromCity }} 555555 {{ fromAddressText }}
 
         <!-- TO -->
         <div id="field-to" class="space-y-2">
@@ -409,6 +410,7 @@ onMounted(async () => {
           />
           <p v-if="errors.to" class="text-xs text-red-500 font-medium">{{ errors.to }}</p>
         </div>
+        {{ toCity }} 5555 {{toAddressText  }}
       </div>
 
       <!-- TITLES ROW (EN, RU & HY) -->
