@@ -152,7 +152,7 @@ useHead({
     </div>
 
     <!-- ── Scroll Indicator ── -->
-    <div class="absolute bottom-28 md:bottom-8 left-1/2 -translate-x-1/2 z-10 hidden min-[380px]:flex flex-col items-center gap-2 opacity-60">
+    <div class="absolute bottom-32 md:bottom-8 left-1/2 -translate-x-1/2 z-10 hidden min-[380px]:flex flex-col items-center gap-2 opacity-60">
       <span class="text-[9px] font-bold uppercase tracking-[0.2em] text-white/60">Scroll</span>
       <div class="w-5 h-8 rounded-full border-2 border-white/30 flex items-start justify-center p-1">
         <span class="w-1 h-2 rounded-full bg-white/80 animate-bounce" />
