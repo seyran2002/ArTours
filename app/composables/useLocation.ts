@@ -4,6 +4,7 @@ import { useLocationService } from '~/services/location.service'
 import type { Location } from '~/types/location'
 
 export function useLocation(id: string): {
+  location: ComputedRef<Location | null>
   Location: ComputedRef<Location | null>
   loading: Ref<boolean>
   error: Ref<any>
@@ -30,10 +31,11 @@ export function useLocation(id?: string): any {
       lazy: false
     })
 
-    const Location = computed(() => data.value)
+    const location = computed(() => data.value)
 
     return {
-      Location,
+      location,
+      Location: location,
       loading: pending,
       error,
       refresh
