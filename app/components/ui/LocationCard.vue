@@ -10,7 +10,7 @@ const { locale } = useI18n()
 
 const props = withDefaults(
   defineProps<{
-    Location?: Location
+    location?: Location
     loading?: boolean
     isPriority?: boolean
   }>(),
@@ -21,12 +21,12 @@ const props = withDefaults(
 
 
 const emit = defineEmits<{
-  edit: [Location: Location]
+  edit: [location: Location]
 }>()
 
 const mainImage = computed(() => {
-  if (!props.Location) return '/images/placeholder-Location.webp'
-  return props.Location.mainImage || (props.Location.images && props.Location.images.length > 0 ? props.Location.images[0] : '/images/placeholder-Location.webp')
+  if (!props.location) return '/images/placeholder-location.webp'
+  return props.location.mainImage || (props.location.images && props.location.images.length > 0 ? props.location.images[0] : '/images/placeholder-location.webp')
 })
 
 const isCloudinary = computed(() => {
@@ -34,16 +34,16 @@ const isCloudinary = computed(() => {
 })
 
 const cleanedImage = computed(() => {
-  if (isCloudinary.value) {
-    return mainImage.value.replace('https://res.cloudinary.com/dl8iqp69h/image/upload/', '')
+  if (isCloudinary.value && mainImage.value) {
+    return mainImage.value?.replace('https://res.cloudinary.com/dl8iqp69h/image/upload/', '')
   }
   return mainImage.value
 })
 
 const badge = computed(() => {
-  if (!props.Location) return null
+  if (!props.location) return null
   // If there's a main tag, use its name, otherwise fallback or omit
-  const mainTag = props.Location.tags?.find(t => t.isMain) || props.Location.tags?.[0]
+  const mainTag = props.location.tags?.find(t => t.isMain) || props.location.tags?.[0]
   if (mainTag) {
     return locale.value === 'ru' ? mainTag.ruName : mainTag.enName
   }
@@ -71,10 +71,10 @@ const badge = computed(() => {
           <div class="w-24 h-3 bg-zinc-200 rounded" />
         </div>
 
-        <!-- Skeleton Location Title -->
+        <!-- Skeleton location Title -->
         <div class="w-3/4 h-5 bg-zinc-200 rounded font-serif" />
 
-        <!-- Skeleton Location Description -->
+        <!-- Skeleton location Description -->
         <div class="space-y-2">
           <div class="w-full h-3 bg-zinc-200 rounded" />
           <div class="w-5/6 h-3 bg-zinc-200 rounded" />
@@ -95,8 +95,8 @@ const badge = computed(() => {
 
   <!-- Real Card -->
   <NuxtLink
-    v-else-if="Location"
-    :to="localePath(`/location/${Location.id}/${Location.slug}`)"
+    v-else-if="location"
+    :to="localePath(`/location/${location.id}/${location.slug}`)"
     class="bg-white rounded-3xl overflow-hidden  shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:shadow-[0_24px_48px_-12px_rgba(18,83,78,0.08)] hover:-translate-y-1 transition-all duration-500 flex flex-col justify-between group h-full relative"
   >
     <!-- Card Image Section -->
@@ -104,7 +104,7 @@ const badge = computed(() => {
       <NuxtImg
         :provider="isCloudinary ? 'cloudinary' : undefined"
         :src="cleanedImage"
-        :alt="Location[`${locale}Title`]"
+        :alt="location[`${locale}Title`]"
         class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
         width="400"
         height="250"
@@ -129,25 +129,24 @@ const badge = computed(() => {
       <div class="space-y-3 flex-1">
         <!-- Distance Row -->
         <div class="flex items-center justify-between text-xs font-bold tracking-tight">
-          <div class="flex items-center gap-1.5 text-primary">
-            <BaseIcon name="map-pin" size="xs" custom-class="text-primary/95 shrink-0" />
-            <span class="truncate text-zinc-500 font-semibold max-w-[150px] sm:max-w-[200px]">
-              {{ Location.distanceFromYerevan
-                ? `${Location.distanceFromYerevan} ${$t('locations.kmFromYerevan')}`
-                : ''
-              }}
-            </span>
+          <div class="flex items-center gap-1.5 text-primary h-[16px]">
+            <template v-if="location.distanceFromYerevan" >
+              <BaseIcon name="map-pin" size="xs" custom-class="text-primary/95 shrink-0" />
+              <span class="truncate text-zinc-500 font-semibold max-w-[150px] sm:max-w-[200px]">
+                {{ `${location.distanceFromYerevan} ${$t('locations.kmFromYerevan')}` }}
+              </span>
+            </template>
           </div>
         </div>
 
-        <!-- Location Title -->
+        <!-- location Title -->
         <h2 class="text-lg xs:text-xl font-bold text-zinc-900 font-serif leading-snug group-hover:text-primary transition-colors duration-300 line-clamp-1">
-          {{ Location[`${locale}Title`] }}
+          {{ location[`${locale}Title`] }}
         </h2>
 
-        <!-- Location Description -->
+        <!-- location Description -->
         <p class="text-xs sm:text-[13px] text-zinc-500 leading-relaxed line-clamp-3">
-          {{ Location[`${locale}Description`] }}
+          {{ location[`${locale}Description`] }}
         </p>
       </div>
 
@@ -156,7 +155,7 @@ const badge = computed(() => {
         <div class="shrink-0">
           <span class="text-[9px] text-zinc-500 block uppercase font-bold tracking-widest leading-none mb-1">{{ $t('locations.pricingFrom') }}</span>
           <span class="text-lg sm:text-xl lg:text-lg xl:text-xl font-extrabold text-zinc-900 font-sans tracking-tight">
-            €{{ Location.minimumPrice }}
+            €{{ location.minimumPrice }}
             <span class="text-[10px] sm:text-xs font-semibold text-zinc-500">{{ $t('locations.for3People') }}</span>
           </span>
         </div>
