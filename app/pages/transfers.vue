@@ -5,52 +5,53 @@ import type { Tour } from '~/types/tour'
 import { useTours } from '~/composables/useTours'
 import { usePagination } from '~/composables/usePagination'
 import { useTag } from '~/composables/useTag'
-import { useI18n } from '#imports'
-import ToursHeader from '~/components/tours/ToursHeader.vue'
-import ToursSearch from '~/components/tours/ToursSearch.vue'
+import { useI18n, useRoute, useRuntimeConfig } from '#imports'
+import TransfersHeader from '~/components/transfers/TransfersHeader.vue'
+import TransfersSearch from '~/components/transfers/TransfersSearch.vue'
 import ToursFilters from '~/components/tours/ToursFilters.vue'
-import ToursGrid from '~/components/tours/ToursGrid.vue'
-const { locale, t } = useI18n()
+import TransfersGrid from '~/components/transfers/TransfersGrid.vue'
+import TransfersLoadMore from '~/components/transfers/TransfersLoadMore.vue'
 import { usePageSeo } from '~/composables/usePageSeo'
 
+const { locale, t } = useI18n()
+
 usePageSeo({
-  titleKey: 'seo.tours.title',
-  descriptionKey: 'seo.tours.description',
-  keywordsKey: 'seo.tours.keywords',
-  ogTitleKey: 'seo.tours.ogTitle',
-  ogDescriptionKey: 'seo.tours.ogDescription',
-  siteNameKey: 'seo.tours.siteName',
+  titleKey: 'seo.transfers.title',
+  descriptionKey: 'seo.transfers.description',
+  keywordsKey: 'seo.transfers.keywords',
+  ogTitleKey: 'seo.transfers.ogTitle',
+  ogDescriptionKey: 'seo.transfers.ogDescription',
+  siteNameKey: 'seo.transfers.siteName',
   schemas: ['Organization', 'WebSite']
 })
 
-// Data Fetching
-const { tours, loading } = useTours('TOUR')
+// Data Fetching: send type as "TRANSFER"
+const { tours: transfers, loading } = useTours('TRANSFER')
 const tag = useTag()
 const { public: { apiUrl } } = useRuntimeConfig()
-const route = useRoute();
+const route = useRoute()
 
 // Initialize Tags
 const tagsUrl = `${apiUrl.endsWith('/') ? apiUrl : apiUrl + '/'}tags`
-const { data: fetchedTags } = await useFetch<Tag[]>(tagsUrl, { key: 'tour-tag-fetch', server: true })
+const { data: fetchedTags } = await useFetch<Tag[]>(tagsUrl, { key: 'transfer-tag-fetch', server: true })
 
 // Search & Filtering State
 const searchQuery = ref('')
 const activeCategory = ref('all')
 
 if (fetchedTags.value) {
-  tag.tags.value = fetchedTags.value;
-  activeCategory.value = route.query.tag as string || 'all';
+  tag.tags.value = fetchedTags.value
+  activeCategory.value = (route.query.tag as string) || 'all'
 }
 const tags = computed(() => tag.tags.value)
-
 
 const setSearchQuery = (query: string) => {
   searchQuery.value = query
 }
 
 // Client-side Filtering Logic
-const filteredTours = computed(() => {
-  let result = tours.value
+const filteredTransfers = computed(() => {
+  let result = transfers.value
 
   // Search filter
   if (searchQuery.value.trim()) {
@@ -76,12 +77,11 @@ const filteredTours = computed(() => {
 
 // Pagination Logic
 const {
-  paginatedItems: visibleTours,
+  paginatedItems: visibleTransfers,
   hasMore,
   visibleCount,
   loadMore
-} = usePagination(filteredTours, 8)
-
+} = usePagination(filteredTransfers, 8)
 </script>
 
 <template>
@@ -94,12 +94,12 @@ const {
 
     <div class="max-w-[1440px] mx-auto px-6 lg:px-8">
       <!-- Header -->
-      <ToursHeader />
+      <TransfersHeader />
 
       <!-- Search & Filters Bar -->
       <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 sm:items-start mb-8 sm:mb-10">
         <div class="w-full sm:max-w-sm">
-          <ToursSearch
+          <TransfersSearch
             :model-value="searchQuery"
             @update:model-value="setSearchQuery"
           />
@@ -115,17 +115,17 @@ const {
       </div>
 
       <!-- Loading State -->
-      <div v-if="loading && !tours.length" class="flex justify-center py-20">
+      <div v-if="loading && !transfers.length" class="flex justify-center py-20">
         <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
       </div>
 
-      <!-- Tours Grid -->
-      <ToursGrid v-else :tours="visibleTours" />
+      <!-- Transfers Grid -->
+      <TransfersGrid v-else :transfers="visibleTransfers" />
 
       <!-- Load More -->
-      <LazyToursLoadMore
+      <TransfersLoadMore
         :has-more="hasMore"
-        :total-filtered="filteredTours.length"
+        :total-filtered="filteredTransfers.length"
         :visible-count="visibleCount"
         @load-more="loadMore"
       />

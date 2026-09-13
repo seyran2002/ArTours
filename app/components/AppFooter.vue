@@ -44,6 +44,9 @@ const localePath = useLocalePath()
                 <NuxtLink :to="localePath('/tours')" class="hover:text-primary transition-colors focus-visible:text-primary outline-none">{{ $t('footer.links.tours') }}</NuxtLink>
               </li>
               <li>
+                <NuxtLink :to="localePath('/transfers')" class="hover:text-primary transition-colors focus-visible:text-primary outline-none">{{ $t('footer.links.transfers') }}</NuxtLink>
+              </li>
+              <li>
                 <NuxtLink :to="localePath('/about')" class="hover:text-primary transition-colors focus-visible:text-primary outline-none">{{ $t('footer.links.about') }}</NuxtLink>
               </li>
               <li>

@@ -1,4 +1,4 @@
-﻿<script setup lang="ts">
+<script setup lang="ts">
 import type { Tour } from '~/types/tour'
 import BaseButton from '~/components/ui/BaseButton.vue'
 import BaseIcon from '~/components/ui/BaseIcon.vue'
@@ -272,7 +272,7 @@ function getHourWordRu(n: number): string {
           size="sm"
           class="shadow-sm hover:shadow-primary/20 shrink-0 px-4 sm:px-5"
         >
-          {{ $t('tours.exploreTour') }}
+          {{ tour.type === 'TRANSFER' ? $t('transfers.exploreTransfer') : $t('tours.exploreTour') }}
         </BaseButton>
       </div>
     </div>
