@@ -288,7 +288,7 @@ const handleSave = async () => {
 
     // Entrance Fees
     const activeEntranceFees = entranceFees.value.filter(
-      (fee) => fee.enName.trim() !== '' || fee.ruName.trim() !== ''
+      (fee) => fee.enName.trim() !== '' || fee.ruName.trim() !== '' || fee.hyName.trim() !== ''
     )
     if (activeEntranceFees.length > 0) {
       formData.append('entranceFees', JSON.stringify(activeEntranceFees))
@@ -689,70 +689,91 @@ const handleSave = async () => {
         </div>
 
         <!-- Fees List -->
-        <div v-if="entranceFees.length" class="space-y-3">
+        <div v-if="entranceFees.length" class="space-y-4">
           <div
             v-for="(fee, index) in entranceFees"
             :key="index"
-            class="flex items-center gap-3 animate-slide-in"
+            class="bg-zinc-50/60 border border-zinc-100 rounded-2xl overflow-hidden animate-slide-in"
           >
-            <!-- English Fee Name -->
-            <div class="flex-grow flex items-center bg-white border border-zinc-200 rounded-xl transition-all duration-300 focus-within:border-primary/30">
-              <BaseInput
-                v-model="fee.enName"
-                type="text"
-                placeholder="e.g. Garni Temple Admission (EN)"
+            <!-- Card header: fee # + remove button -->
+            <div class="flex items-center justify-between px-4 py-2.5 bg-zinc-100/60 border-b border-zinc-100">
+              <span class="text-[11px] font-bold text-zinc-500 uppercase tracking-wider">
+                Մուտքավճար #{{ index + 1 }}
+              </span>
+              <BaseButton
+                type="button"
+                variant="ghost"
                 size="sm"
-                class="text-zinc-800 placeholder-zinc-400"
-              />
+                class="!text-red-500 hover:!bg-red-50 !border !border-red-100 !rounded-lg !py-1 !px-2"
+                aria-label="Remove entrance fee row"
+                @click="removeEntranceFee(index)"
+              >
+                <BaseIcon name="trash" size="xs" />
+                <span class="ml-1 text-xs font-semibold">Հեռացնել</span>
+              </BaseButton>
             </div>
 
-            <!-- Russian Fee Name -->
-            <div class="flex-grow flex items-center bg-white border border-zinc-200 rounded-xl transition-all duration-300 focus-within:border-primary/30">
-              <BaseInput
-                v-model="fee.ruName"
-                type="text"
-                placeholder="e.g. Храм Гарни Вход (RU)"
-                size="sm"
-                class="text-zinc-800 placeholder-zinc-400"
-              />
-            </div>
+            <!-- Stacked inputs -->
+            <div class="p-4 space-y-3">
+              <!-- Russian Fee Name -->
+              <div class="space-y-1">
+                <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">RU — Ռուսերեն</span>
+                <div class="flex items-center bg-white border border-zinc-200 rounded-xl transition-all duration-300 focus-within:border-primary/30 focus-within:shadow-[0_0_0_3px_rgba(18,83,78,0.06)]">
+                  <BaseInput
+                    v-model="fee.ruName"
+                    type="text"
+                    placeholder="e.g. Храм Гарни Вход"
+                    size="sm"
+                    class="text-zinc-800 placeholder-zinc-400"
+                  />
+                </div>
+              </div>
 
-            <!-- Armenian Fee Name -->
-            <div class="flex-grow flex items-center bg-white border border-zinc-200 rounded-xl transition-all duration-300 focus-within:border-primary/30">
-              <BaseInput
-                v-model="fee.hyName"
-                type="text"
-                placeholder="e.g. Գառնու տաճար մուտք (HY)"
-                size="sm"
-                class="text-zinc-800 placeholder-zinc-400"
-              />
-            </div>
+              <!-- English Fee Name -->
+              <div class="space-y-1">
+                <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">EN — Անգլերեն</span>
+                <div class="flex items-center bg-white border border-zinc-200 rounded-xl transition-all duration-300 focus-within:border-primary/30 focus-within:shadow-[0_0_0_3px_rgba(18,83,78,0.06)]">
+                  <BaseInput
+                    v-model="fee.enName"
+                    type="text"
+                    placeholder="e.g. Garni Temple Admission"
+                    size="sm"
+                    class="text-zinc-800 placeholder-zinc-400"
+                  />
+                </div>
+              </div>
 
-            <!-- Fee (Price) -->
-            <div class="w-28 shrink-0 flex items-center bg-white border border-zinc-200 rounded-xl transition-all duration-300 focus-within:border-primary/30">
-              <span class="pl-4 text-xs font-bold text-zinc-600 shrink-0">֏</span>
-              <BaseInput
-                :model-value="String(fee.fee)"
-                @update:model-value="val => fee.fee = val === '' ? 0 : Number(val)"
-                type="number"
-                placeholder="0"
-                size="sm"
-                class="text-zinc-800 placeholder-zinc-400 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                min="0"
-              />
-            </div>
+              <!-- Armenian Fee Name -->
+              <div class="space-y-1">
+                <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">HY — Հայերեն</span>
+                <div class="flex items-center bg-white border border-zinc-200 rounded-xl transition-all duration-300 focus-within:border-primary/30 focus-within:shadow-[0_0_0_3px_rgba(18,83,78,0.06)]">
+                  <BaseInput
+                    v-model="fee.hyName"
+                    type="text"
+                    placeholder="օրինակ՝ Գառնի Տաճարի Մուտք"
+                    size="sm"
+                    class="text-zinc-800 placeholder-zinc-400"
+                  />
+                </div>
+              </div>
 
-            <!-- Remove Button -->
-            <BaseButton
-              type="button"
-              variant="ghost"
-              size="sm"
-              class="!text-red-500 hover:!bg-red-50 !border !border-red-100 !rounded-xl"
-              aria-label="Remove entrance fee row"
-              @click="removeEntranceFee(index)"
-            >
-              <BaseIcon name="trash" size="xs" />
-            </BaseButton>
+              <!-- Fee Price -->
+              <div class="space-y-1">
+                <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Գին (AMD ֏)</span>
+                <div class="flex items-center bg-white border border-zinc-200 rounded-xl transition-all duration-300 focus-within:border-primary/30 focus-within:shadow-[0_0_0_3px_rgba(18,83,78,0.06)] w-full sm:w-48">
+                  <span class="pl-4 text-sm font-bold text-zinc-500 shrink-0">֏</span>
+                  <BaseInput
+                    :model-value="String(fee.fee)"
+                    @update:model-value="val => fee.fee = val === '' ? 0 : Number(val)"
+                    type="number"
+                    placeholder="0"
+                    size="sm"
+                    class="text-zinc-800 placeholder-zinc-400 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                    min="0"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 

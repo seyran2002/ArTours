@@ -91,32 +91,32 @@ function onFormCancel() {
 <template>
   <div class="space-y-6">
     <!-- Header & Stats -->
-    <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-6">
       <div>
-        <h1 class="text-3xl font-bold font-serif text-zinc-900 tracking-tight">Տուրեր/Տրանսֆերներ</h1>
+        <h1 class="text-2xl sm:text-3xl font-bold font-serif text-zinc-900 tracking-tight">Տուրեր/Տրանսֆերներ</h1>
         <p class="text-sm text-zinc-500 mt-1">Կառավարեք պատմական, մշակութային և բնությանը նվիրված տուրերն ու Տրանսֆերները, գնագոյացումը և տեգերի զտումը:</p>
       </div>
 
       <!-- Quick Stats -->
-      <div class="flex flex-wrap gap-4">
+      <div class="flex gap-3 sm:gap-4">
         <!-- Tours Stat -->
-        <div class="bg-white/70 backdrop-blur-sm border border-zinc-200/60 rounded-2xl px-5 py-3 shadow-sm flex items-center gap-3">
-          <div class="p-2.5 rounded-xl bg-primary/10 text-primary">
+        <div class="flex-1 md:flex-none bg-white/70 backdrop-blur-sm border border-zinc-200/60 rounded-2xl px-4 sm:px-5 py-3 shadow-sm flex items-center gap-3">
+          <div class="p-2 sm:p-2.5 rounded-xl bg-primary/10 text-primary shrink-0">
             <BaseIcon name="map" size="sm" />
           </div>
-          <div>
-            <span class="block text-[10px] font-bold text-zinc-450 uppercase tracking-wider">Տուրերի Քանակը</span>
+          <div class="min-w-0">
+            <span class="block text-[10px] font-bold text-zinc-450 uppercase tracking-wider leading-tight">Տուրերի Քանակը</span>
             <span class="text-xl font-extrabold text-zinc-800">{{ tours.length }}</span>
           </div>
         </div>
 
         <!-- Tags Stat -->
-        <div class="bg-white/70 backdrop-blur-sm border border-zinc-200/60 rounded-2xl px-5 py-3 shadow-sm flex items-center gap-3">
-          <div class="p-2.5 rounded-xl bg-amber-500/10 text-amber-600">
+        <div class="flex-1 md:flex-none bg-white/70 backdrop-blur-sm border border-zinc-200/60 rounded-2xl px-4 sm:px-5 py-3 shadow-sm flex items-center gap-3">
+          <div class="p-2 sm:p-2.5 rounded-xl bg-amber-500/10 text-amber-600 shrink-0">
             <BaseIcon name="tag" size="sm" />
           </div>
-          <div>
-            <span class="block text-[10px] font-bold text-zinc-450 uppercase tracking-wider">Տեգերի Քանակը</span>
+          <div class="min-w-0">
+            <span class="block text-[10px] font-bold text-zinc-450 uppercase tracking-wider leading-tight">Տեգերի Քանակը</span>
             <span class="text-xl font-extrabold text-zinc-800">{{ tags.length }}</span>
           </div>
         </div>
@@ -124,21 +124,22 @@ function onFormCancel() {
     </div>
 
     <!-- Tab Navigation -->
-    <div class="flex flex-wrap items-center justify-between gap-4 border-b border-zinc-200/85 pb-5">
+    <div class="flex flex-col gap-3 border-b border-zinc-200/85 pb-5 w-fit max-w-full">
       <div class="flex bg-zinc-200/50 p-1.5 rounded-2xl gap-1 border border-zinc-200/40 w-full sm:w-auto">
         <!-- View List Tab -->
         <button
           type="button"
           @click="activeView = 'list'"
           :class="[
-            'px-5 py-2.5 rounded-xl text-xs font-bold transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 active:scale-95 flex-1 sm:flex-initial',
+            'px-3 sm:px-5 py-2.5 rounded-xl text-xs font-bold transition-all duration-300 cursor-pointer flex items-center justify-center gap-1.5 active:scale-95 flex-1 sm:flex-initial',
             activeView === 'list'
               ? 'bg-primary text-white shadow-md shadow-primary/15'
               : 'text-zinc-500 hover:text-zinc-800 hover:bg-white/50'
           ]"
         >
           <BaseIcon name="grid" size="xs" />
-          <span>Տուրերի ցանկ</span>
+          <span class="hidden sm:inline">Տուրերի ցանկ</span>
+          <span class="sm:hidden">Ցանկ</span>
         </button>
 
         <!-- Form Tab (Create / Edit) -->
@@ -146,14 +147,15 @@ function onFormCancel() {
           type="button"
           @click="activeView = 'form'"
           :class="[
-            'px-5 py-2.5 rounded-xl text-xs font-bold transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 active:scale-95 flex-1 sm:flex-initial',
+            'px-3 sm:px-5 py-2.5 rounded-xl text-xs font-bold transition-all duration-300 cursor-pointer flex items-center justify-center gap-1.5 active:scale-95 flex-1 sm:flex-initial',
             activeView === 'form'
               ? 'bg-primary text-white shadow-md shadow-primary/15'
               : 'text-zinc-500 hover:text-zinc-800 hover:bg-white/50'
           ]"
         >
           <BaseIcon :name="editingTourId ? 'edit' : 'plus'" size="xs" />
-          <span>{{ editingTourId ? 'Խմբագրել Տուր/Տրանսֆեր' : 'Ստեղծել Տուր/Տրանսֆեր' }}</span>
+          <span class="hidden sm:inline">{{ editingTourId ? 'Խմբագրել Տուր/Տրանսֆեր' : 'Ստեղծել Տուր/Տրանսֆեր' }}</span>
+          <span class="sm:hidden">{{ editingTourId ? 'Խմբագրել' : 'Ստեղծել' }}</span>
         </button>
 
         <!-- Tags Tab -->
@@ -161,18 +163,19 @@ function onFormCancel() {
           type="button"
           @click="activeView = 'tags'"
           :class="[
-            'px-5 py-2.5 rounded-xl text-xs font-bold transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 active:scale-95 flex-1 sm:flex-initial',
+            'px-3 sm:px-5 py-2.5 rounded-xl text-xs font-bold transition-all duration-300 cursor-pointer flex items-center justify-center gap-1.5 active:scale-95 flex-1 sm:flex-initial',
             activeView === 'tags'
               ? 'bg-primary text-white shadow-md shadow-primary/15'
               : 'text-zinc-500 hover:text-zinc-800 hover:bg-white/50'
           ]"
         >
           <BaseIcon name="tag" size="xs" />
-          <span>Կառավարել Տեգերը</span>
+          <span class="hidden sm:inline">Կառավարել Տեգերը</span>
+          <span class="sm:hidden">Տեգեր</span>
         </button>
       </div>
 
-      <div v-if="activeView === 'form' && editingTourId" class="text-xs font-bold text-zinc-400 bg-zinc-100/80 px-3 py-1.5 rounded-lg border border-zinc-200/50">
+      <div v-if="activeView === 'form' && editingTourId" class="text-xs font-bold text-zinc-400 bg-zinc-100/80 px-3 py-1.5 rounded-lg border border-zinc-200/50 self-start">
         Editing: <span class="text-zinc-700">{{ editingTourTitle }}</span>
       </div>
     </div>
