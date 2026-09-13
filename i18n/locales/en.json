@@ -121,6 +121,20 @@
     "returnToTours": "Return to Tours",
     "tourItinerary": "Tour Itinerary"
   },
+  "transfers": {
+    "headerBadge": "Private & Direct",
+    "headerTitlePart1": "Reliable",
+    "headerTitlePart2": "Transfers",
+    "headerDescription": "Seamless, private transportation between Yerevan, airports, regions, and major destinations across Armenia with professional drivers.",
+    "searchPlaceholder": "Search transfers by name...",
+    "exploreTransfer": "Explore Transfer",
+    "noTransfersFound": "No transfers found",
+    "noTransfersDescription": "We couldn't find any transfers matching your criteria. Try adjusting your search or filters.",
+    "showing": "Showing",
+    "of": "of",
+    "transfersCount": "transfers",
+    "loadMore": "Load More Transfers"
+  },
   "km": "km",
   "all": "All",
   "tour": {
@@ -310,6 +324,7 @@
       "about": "About Us",
       "booking": "Booking Status",
       "tours": "Tours",
+      "transfers": "Transfers",
       "locations": "Locations",
       "contact": "Contact Us"
     },
@@ -436,6 +451,14 @@
       "keywords": "Tours in Armenia, Armenia Tours, Yerevan Tours, Private Tours in Armenia, Day Tours in Armenia, Armenia Tour Packages, Things to Do in Armenia, ArTours, artours.am",
       "ogTitle": "Tours in Armenia & Yerevan Excursions — ArTours",
       "ogDescription": "Exclusive custom tour packages and day excursions from Yerevan with certified local guides from ArTours.",
+      "siteName": "ArTours Armenia"
+    },
+    "transfers": {
+      "title": "Transfers in Armenia & Airport Transfers Yerevan — ArTours",
+      "description": "Book private and reliable transfers in Armenia with ArTours (artours.am). Zvartnots Airport transfers, intercity routes, and comfortable private rides.",
+      "keywords": "Transfers in Armenia, Airport Transfer Yerevan, Zvartnots Airport Transfer, Armenia Private Driver, Yerevan Transfer, Intercity Transfers Armenia, ArTours",
+      "ogTitle": "Transfers in Armenia & Yerevan Airport Transfers — ArTours",
+      "ogDescription": "Comfortable private transfers across Armenia and Yerevan airport pickups with certified drivers.",
       "siteName": "ArTours Armenia"
     },
     "locations": {
