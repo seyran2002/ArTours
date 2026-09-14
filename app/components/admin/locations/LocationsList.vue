@@ -13,10 +13,14 @@ const emit = defineEmits<{
   create: []
 }>()
 
-const { deleteLocation } = useLocation();
+const { deleteLocation, conflictTours, error: deleteError } = useLocation()
+
 // Search filters
 const searchQuery = ref('')
 const deleteConfirmId = ref<string | number | null>(null)
+
+// Derived conflict state (populated by deleteLocation on 409)
+const conflictMessage = ref<string | null>(null)
 
 const filteredLocations = computed(() => {
   const query = searchQuery.value.trim().toLowerCase()
@@ -36,19 +40,58 @@ function onEditCard(Location: Location) {
 }
 
 function promptDelete(id: string) {
+  conflictMessage.value = null
+  conflictTours.value = []
   deleteConfirmId.value = id
 }
 
-function confirmDelete(id: string) {
-  deleteLocation(id)
+async function confirmDelete(id: string) {
   deleteConfirmId.value = null
+  conflictMessage.value = null
+  const result = await deleteLocation(String(id))
+  if (result) {
+    // error — check if it's a 409 conflict (conflictTours will be populated)
+    conflictMessage.value = result
+  }
 }
 </script>
 
 <template>
   <div class="space-y-6">
+    <!-- Conflict Error Banner (shown when location is used by tours) -->
+    <div
+      v-if="conflictMessage"
+      class="bg-red-50 border border-red-200 rounded-2xl p-4 sm:p-5 flex gap-4"
+    >
+      <div class="shrink-0 pt-0.5 text-red-500">
+        <BaseIcon name="x" size="sm" />
+      </div>
+      <div class="flex-1 min-w-0">
+        <p class="text-sm font-semibold text-red-700 mb-2">{{ conflictMessage }}</p>
+        <ul v-if="conflictTours.length" class="space-y-1 mt-2">
+          <li
+            v-for="tour in conflictTours"
+            :key="tour.id"
+            class="text-xs font-medium text-red-600 flex items-center gap-1.5"
+          >
+            <span class="w-1.5 h-1.5 rounded-full bg-red-400 shrink-0" />
+            {{ tour.ruTitle || tour.enTitle || tour.id }}
+          </li>
+        </ul>
+      </div>
+      <button
+        type="button"
+        @click="conflictMessage = null; conflictTours.value = []"
+        class="shrink-0 text-red-400 hover:text-red-600 transition-colors"
+        aria-label="Close error"
+      >
+        <BaseIcon name="x" size="xs" />
+      </button>
+    </div>
+
     <!-- Search and Actions Bar -->
     <div class="flex flex-col sm:flex-row gap-4 items-center justify-between bg-white/70 border border-zinc-200/60 backdrop-blur-sm p-4 rounded-2xl shadow-sm">
+
       <!-- Search Input -->
       <div class="relative w-full sm:max-w-md group">
         <div class="flex items-center gap-3 bg-zinc-50 border border-zinc-200/80 px-4 py-2.5 rounded-xl transition-all duration-300 focus-within:border-primary/30 focus-within:shadow-[0_0_0_3px_rgba(18,83,78,0.06)] focus-within:bg-white hover:border-zinc-300">

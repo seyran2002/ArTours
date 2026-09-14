@@ -11,18 +11,6 @@ const props = defineProps<{
 
 const { locale } = useI18n()
 
-// Localized Title & Description
-const title = computed(() => {
-  return locale.value === 'ru' ? props.location.ruTitle : props.location.enTitle
-})
-
-const shortDescription = computed(() => {
-  return locale.value === 'ru' ? props.location.ruDescription : props.location.enDescription
-})
-
-const longDescription = computed(() => {
-  return locale.value === 'ru' ? props.location.ruLongDescription : props.location.enLongDescription
-})
 
 // Parsed Entrance Fees list
 const parsedEntranceFees = computed(() => {
@@ -53,7 +41,7 @@ const parsedEntranceFees = computed(() => {
       </div>
       
       <h1 class="text-2xl sm:text-3xl font-extrabold text-zinc-900 tracking-tight leading-tight">
-        {{ title }}
+        {{ location[`${locale}Title`] }}
       </h1>
     </div>
 
@@ -120,13 +108,13 @@ const parsedEntranceFees = computed(() => {
       <h2 class="text-sm font-bold text-zinc-800 uppercase tracking-wider">
         {{ $t('locations.locationDetail') }}
       </h2>
-      <p v-if="shortDescription" class="text-zinc-600 text-sm leading-relaxed font-medium">
-        {{ shortDescription }}
+      <p v-if="location[`${locale}Description` ]" class="text-zinc-600 text-sm leading-relaxed font-medium">
+        {{ location[`${locale}Description`] }}
       </p>
       <div
-        v-if="longDescription"
+        v-if="location[`${locale}LongDescription`]"
         class="prose prose-zinc max-w-none text-sm text-zinc-600 leading-relaxed font-normal"
-        v-html="longDescription"
+        v-html="location[`${locale}LongDescription`]"
       ></div>
     </div>
 

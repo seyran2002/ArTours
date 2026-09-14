@@ -13,15 +13,6 @@ const props = defineProps<{
 
 const { locale } = useI18n()
 
-// Localized Title & Description
-const title = computed(() => {
-  return locale.value === 'ru' ? props.tour.ruTitle : props.tour.enTitle
-})
-
-const shortDescription = computed(() => {
-  return locale.value === 'ru' ? props.tour.ruDescription : props.tour.enDescription
-})
-
 // Parsed Entrance Fees list
 const parsedEntranceFees = computed(() => {
   if (!props.tour.entranceFees) return []
@@ -65,7 +56,7 @@ const hasMeals = computed(() => {
       </div>
       
       <h1 class="text-2xl sm:text-3xl font-extrabold text-zinc-900 tracking-tight leading-tight">
-        {{ title }}
+        {{ tour[`${locale}Title`] }}
       </h1>
     </div>
 
@@ -111,8 +102,8 @@ const hasMeals = computed(() => {
       <h2 class="text-sm font-bold text-zinc-800 uppercase tracking-wider">
         {{ $t('tours.tourDetail') }}
       </h2>
-      <p v-if="shortDescription" class="text-zinc-600 text-sm leading-relaxed font-medium">
-        {{ shortDescription }}
+      <p v-if="tour[`${locale}Description` ]" class="text-zinc-600 text-sm leading-relaxed font-medium">
+        {{ tour[`${locale}Description`] }}
       </p>
     </div>
 
@@ -142,7 +133,7 @@ const hasMeals = computed(() => {
         </div>
 
         <!-- Meals -->
-        <div class="flex flex-col space-y-2">
+        <div v-if="hasMeals" class="flex flex-col space-y-2">
           <span class="text-xs font-bold text-zinc-500 uppercase tracking-wider">
             {{ $t('tour.mealOptions') }}
           </span>

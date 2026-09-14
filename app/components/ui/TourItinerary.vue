@@ -39,20 +39,20 @@ const sortedLocations = computed(() => {
         <div class="space-y-2">
           <!-- Step Title -->
           <h4 class="text-base font-bold text-zinc-800 transition-colors duration-250 group-hover:text-primary">
-            {{ locale === 'ru' ? TourLocation.location.ruTitle : TourLocation.location.enTitle }}
+            {{ TourLocation.location[`${locale}Title`] }}
           </h4>
 
           <!-- Step Long Description -->
           <div 
-            v-if="locale === 'ru' ? TourLocation.location.ruLongDescription : TourLocation.location.enLongDescription"
+            v-if="TourLocation.location[`${locale}LongDescription`]"
             class="prose prose-zinc max-w-none text-xs sm:text-sm text-zinc-600 leading-relaxed font-normal"
-            v-html="locale === 'ru' ? TourLocation.location.ruLongDescription : TourLocation.location.enLongDescription"
+            v-html="TourLocation.location[`${locale}LongDescription`]"
           ></div>
           <p 
             v-else
             class="text-xs sm:text-sm text-zinc-500 italic"
           >
-            {{ locale === 'ru' ? TourLocation.location.ruDescription : TourLocation.location.enDescription }}
+            {{ TourLocation.location[`${locale}Description`] }}
           </p>
         </div>
       </div>

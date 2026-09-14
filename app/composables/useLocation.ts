@@ -106,14 +106,25 @@ export function useLocation(id?: string): any {
     }
   }
 
+  const conflictTours = ref<{ id: string; ruTitle: string; enTitle: string; hyTitle: string }[]>([])
+
   async function deleteLocation(id: string): Promise<string | null> {
     loading.value = true
     error.value = null
+    conflictTours.value = []
     try {
       await locationService.deleteLocation(id)
       locations.value = locations.value.filter((t) => t.id !== id)
       return null
-    } catch (err) {
+    } catch (err: any) {
+      const data = err?.data ?? err?.response?.data
+      // 409 Conflict — Location is used by Tours
+      if (err?.status === 409 || err?.response?.status === 409 || err?.statusCode === 409) {
+        conflictTours.value = data?.tours ?? []
+        const message = data?.message ?? 'Ուղղությունն օգտագործվում է տուրերի կողմից:'
+        error.value = message
+        return message
+      }
       const message = extractErrorMessage(err)
       error.value = message
       return message
@@ -126,6 +137,7 @@ export function useLocation(id?: string): any {
     locations,
     loading,
     error,
+    conflictTours,
     fetchLocations,
     createLocation,
     updateLocation,
