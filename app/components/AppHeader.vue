@@ -77,17 +77,17 @@ const isTransparent = computed(() => ([
             :key="link.path"
             :to="localePath(link.path)"
             custom
-            v-slot="{ href, navigate, isExactActive }"
+            v-slot="{ href, navigate, isActive }"
           >
             <a
               :href="href ?? undefined"
               @click="navigate"
-              :aria-current="isExactActive ? 'page' : undefined"
+              :aria-current="isActive ? 'page' : undefined"
               :aria-label="link.ariaLabel"
               :class="[
                 'relative px-2 lg:px-3 xl:px-4 py-1.5 lg:py-2 rounded-full text-[11px] lg:text-xs xl:text-[13px] font-semibold tracking-[-0.01em] transition-all duration-500 outline-none select-none whitespace-nowrap',
                 'focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:ring-offset-1',
-                isExactActive
+                isActive
                   ? 'bg-white text-primary shadow-sm shadow-zinc-900/[0.04]'
                   : isTransparent
                     ? 'text-zinc-700 hover:text-zinc-900 hover:bg-white/40'
@@ -97,7 +97,7 @@ const isTransparent = computed(() => ([
               {{ t(link.labelKey) }}
               <!-- Active accent dot -->
               <span
-                v-if="isExactActive"
+                v-if="isActive"
                 class="absolute -bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-secondary"
               />
             </a>

@@ -53,7 +53,7 @@ const longDescription = computed(() => {
 
     <!-- Description -->
     <div v-if="description || longDescription" class="space-y-2">
-      <h5 class="text-xs font-bold text-zinc-500 uppercase tracking-wider">Նկարագրություն / Description</h5>
+      <h5 class="text-xs font-bold text-zinc-500 uppercase tracking-wider">Նկարագրություն</h5>
       <div 
         v-if="longDescription" 
         class="prose prose-zinc max-w-none text-sm text-zinc-600 leading-relaxed font-normal whitespace-pre-line"

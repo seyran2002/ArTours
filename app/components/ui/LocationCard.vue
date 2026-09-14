@@ -45,7 +45,7 @@ const badge = computed(() => {
   // If there's a main tag, use its name, otherwise fallback or omit
   const mainTag = props.location.tags?.find(t => t.isMain) || props.location.tags?.[0]
   if (mainTag) {
-    return locale.value === 'ru' ? mainTag.ruName : mainTag.enName
+    return locale.value === 'ru' ? mainTag.ruName : locale.value === 'hy' ? mainTag.hyName : mainTag.enName
   }
   return null
 })
