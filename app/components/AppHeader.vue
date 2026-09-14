@@ -5,11 +5,17 @@ import { useNavigation } from '~/composables/useNavigation'
 import { useI18n, useLocalePath } from '#imports'
 import BaseIcon from '~/components/ui/BaseIcon.vue'
 import LanguageSwitcher from '~/components/ui/LanguageSwitcher.vue'
+const detailPathMap: Record<string, string> = {
+    '/tours': '/tour/',
+    '/transfers': '/transfer/',
+    '/locations': '/location/',
+}
 
 const { links } = useNavigation()
 const localePath = useLocalePath()
 const route = useRoute()
 const { t } = useI18n()
+
 
 const isScrolled = ref(false)
 
@@ -87,7 +93,7 @@ const isTransparent = computed(() => ([
               :class="[
                 'relative px-2 lg:px-3 xl:px-4 py-1.5 lg:py-2 rounded-full text-[11px] lg:text-xs xl:text-[13px] font-semibold tracking-[-0.01em] transition-all duration-500 outline-none select-none whitespace-nowrap',
                 'focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:ring-offset-1',
-                isActive ||$route.path.includes(`${link.path}`)
+                isActive ||$route.path.includes(`${detailPathMap[link.path]}`)
                   ? 'bg-white text-primary shadow-sm shadow-zinc-900/[0.04]'
                   : isTransparent
                     ? 'text-zinc-700 hover:text-zinc-900 hover:bg-white/40'
