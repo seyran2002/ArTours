@@ -48,8 +48,8 @@ watch(isMapVisible, async (newVal) => {
         <span>
           {{
             isMapVisible
-              ? (locale === 'ru' ? 'Скрыть маршрут' : 'Hide route on map')
-              : (locale === 'ru' ? 'Показать маршрут на карте' : 'See route on map')
+              ? (locale === 'ru' ? 'Скрыть маршрут' : locale === 'hy' ? 'Թաքցնել երթուղին' : 'Hide route on map')
+              : $t('locations.mapButton')
           }}
         </span>
       </BaseButton>
@@ -70,7 +70,7 @@ watch(isMapVisible, async (newVal) => {
       >
         <div class="w-8 h-8 rounded-full border-4 border-primary/20 border-t-primary animate-spin"></div>
         <span class="text-xs font-bold text-zinc-600 tracking-wide uppercase">
-          {{ locale === 'ru' ? 'Загрузка карты...' : 'Loading Map...' }}
+          {{ locale === 'ru' ? 'Загрузка карты...' : locale === 'hy' ? 'Բեռնում է...' : 'Loading Map...' }}
         </span>
       </div>
 
@@ -84,7 +84,7 @@ watch(isMapVisible, async (newVal) => {
         </div>
         <div class="space-y-1">
           <p class="text-sm font-bold text-red-800">
-            {{ locale === 'ru' ? 'Ошибка загрузки карты' : 'Map Loading Failed' }}
+            {{ locale === 'ru' ? 'Ошибка загрузки карты' : locale === 'hy' ? 'Քարտեզի բեռնումը ձախողվեց' : 'Map Loading Failed' }}
           </p>
           <p class="text-xs text-red-600 max-w-sm">
             {{ mapError }}
