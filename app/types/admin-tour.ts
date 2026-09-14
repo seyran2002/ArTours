@@ -24,6 +24,7 @@ export interface AdminTour {
   tags?: Tag[];
   locations?: Location[];
   locationIds?: string[];
+  type?: 'TOUR' | 'TRANSFER';
 }
 
 export interface AdminTourEntranceFee {

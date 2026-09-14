@@ -67,7 +67,7 @@ onUnmounted(() => {
       >
         <!-- Close button -->
         <button
-          class="absolute top-5 right-5 z-10 p-2.5 rounded-full bg-white/10 hover:bg-white/25 text-white border border-white/15 transition-all duration-300 active:scale-90 cursor-pointer shadow-lg"
+          class="absolute top-5 right-5 z-10 w-[46px] p-2.5 rounded-full bg-white/10 hover:bg-white/25 text-white border border-white/15 transition-all duration-300 active:scale-90 cursor-pointer shadow-lg"
           @click.stop="emit('close')"
           aria-label="Close preview"
         >

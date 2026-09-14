@@ -493,5 +493,13 @@
       "ogDescription": "Enter your booking code to track your itinerary, guide confirmation, and travel details for your upcoming Armenia trip.",
       "siteName": "ArTours Armenia"
     }
+  },
+  "error404": {
+    "badge": "Lost in Armenia?",
+    "title": "Page Not Found",
+    "description": "The page you are looking for doesn't exist, was removed, or has been moved. Start a new journey across Armenia!",
+    "backHome": "Back to Home",
+    "exploreTours": "Explore Tours",
+    "seoTitle": "404 — ArTours"
   }
 }

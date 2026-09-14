@@ -49,7 +49,7 @@ const handleLogin = async () => {
         size="lg"
         :loading="loading"
         :disabled="loading"
-        class="w-full text-center flex items-center justify-center font-bold"
+        class="w-full text-center flex items-center justify-center font-bold shadow-sm hover:shadow-primary/20 shrink-0 px-4 sm:px-5"
         aria-label="Sign in to Admin Dashboard"
       >
         <span>{{ loading ? 'Signing in...' : 'Sign In' }}</span>

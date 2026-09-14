@@ -26,6 +26,9 @@ const tag = useTag()
 const tours = computed(() => adminTour.tours.value)
 const tags = computed(() => tag.tags.value)
 
+const toursCount = computed(() => tours.value.filter((t) => t.type !== 'TRANSFER').length)
+const transfersCount = computed(() => tours.value.filter((t) => t.type === 'TRANSFER').length)
+
 onMounted(async () => {
   const loadPromises: Promise<any>[] = []
 
@@ -98,7 +101,7 @@ function onFormCancel() {
       </div>
 
       <!-- Quick Stats -->
-      <div class="flex gap-3 sm:gap-4">
+      <div class="flex gap-3 sm:gap-4 flex-wrap sm:flex-nowrap">
         <!-- Tours Stat -->
         <div class="flex-1 md:flex-none bg-white/70 backdrop-blur-sm border border-zinc-200/60 rounded-2xl px-4 sm:px-5 py-3 shadow-sm flex items-center gap-3">
           <div class="p-2 sm:p-2.5 rounded-xl bg-primary/10 text-primary shrink-0">
@@ -106,7 +109,18 @@ function onFormCancel() {
           </div>
           <div class="min-w-0">
             <span class="block text-[10px] font-bold text-zinc-450 uppercase tracking-wider leading-tight">Տուրերի Քանակը</span>
-            <span class="text-xl font-extrabold text-zinc-800">{{ tours.length }}</span>
+            <span class="text-xl font-extrabold text-zinc-800">{{ toursCount }}</span>
+          </div>
+        </div>
+
+        <!-- Transfers Stat -->
+        <div class="flex-1 md:flex-none bg-white/70 backdrop-blur-sm border border-zinc-200/60 rounded-2xl px-4 sm:px-5 py-3 shadow-sm flex items-center gap-3">
+          <div class="p-2 sm:p-2.5 rounded-xl bg-teal-500/10 text-teal-700 shrink-0">
+            <BaseIcon name="transfers" size="sm" />
+          </div>
+          <div class="min-w-0">
+            <span class="block text-[10px] font-bold text-zinc-450 uppercase tracking-wider leading-tight">Տրանսֆերների Քանակը</span>
+            <span class="text-xl font-extrabold text-zinc-800">{{ transfersCount }}</span>
           </div>
         </div>
 
