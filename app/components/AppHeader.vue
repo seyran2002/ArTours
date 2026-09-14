@@ -88,12 +88,12 @@ const isTransparent = computed(() => ([
             <a
               :href="href ?? undefined"
               @click="navigate"
-              :aria-current="isActive ? 'page' : undefined"
+              :aria-current="isActive || $route.path.includes(`${detailPathMap[link.path]}`) ? 'page' : undefined"
               :aria-label="link.ariaLabel"
               :class="[
                 'relative px-2 lg:px-3 xl:px-4 py-1.5 lg:py-2 rounded-full text-[11px] lg:text-xs xl:text-[13px] font-semibold tracking-[-0.01em] transition-all duration-500 outline-none select-none whitespace-nowrap',
                 'focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:ring-offset-1',
-                isActive ||$route.path.includes(`${detailPathMap[link.path]}`)
+                isActive || $route.path.includes(`${detailPathMap[link.path]}`)
                   ? 'bg-white text-primary shadow-sm shadow-zinc-900/[0.04]'
                   : isTransparent
                     ? 'text-zinc-700 hover:text-zinc-900 hover:bg-white/40'
@@ -103,7 +103,7 @@ const isTransparent = computed(() => ([
               {{ t(link.labelKey) }}
               <!-- Active accent dot -->
               <span
-                v-if="isActive"
+                v-if="isActive || $route.path.includes(`${detailPathMap[link.path]}`)"
                 class="absolute -bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-secondary"
               />
             </a>
@@ -148,17 +148,17 @@ const isTransparent = computed(() => ([
         :key="link.path"
         :to="localePath(link.path)"
         custom
-        v-slot="{ href, navigate, isExactActive }"
+        v-slot="{ href, navigate, isActive }"
       >
         <a
           :href="href"
           @click="navigate"
-          :aria-current="isExactActive ? 'page' : undefined"
+          :aria-current="isActive || $route.path.includes(`${detailPathMap[link.path]}`) ? 'page' : undefined"
           :aria-label="link.ariaLabel"
           :class="[
             'relative flex-1 min-w-0 flex flex-col items-center justify-center py-1.5 px-0.5 rounded-xl transition-all duration-300 outline-none select-none',
             'active:scale-90',
-            isExactActive
+            isActive || $route.path.includes(`${detailPathMap[link.path]}`)
               ? (isTransparent ? 'text-white' : 'text-primary')
               : (isTransparent ? 'text-white/60' : 'text-zinc-500')
           ]"
@@ -170,7 +170,7 @@ const isTransparent = computed(() => ([
               :size="19"
               :custom-class="[
                 'transition-all duration-300',
-                isExactActive 
+                isActive || $route.path.includes(`${detailPathMap[link.path]}`) 
                   ? (isTransparent ? 'text-white' : 'text-primary')
                   : (isTransparent ? 'text-white/60' : 'text-zinc-500')
               ].join(' ')"
@@ -181,7 +181,7 @@ const isTransparent = computed(() => ([
           <span
             :class="[
               'text-[9px] sm:text-[10px] leading-tight font-semibold transition-colors duration-300 truncate max-w-full block w-full text-center px-0.5',
-              isExactActive 
+              isActive || $route.path.includes(`${detailPathMap[link.path]}`) 
                 ? (isTransparent ? 'text-white' : 'text-primary')
                 : (isTransparent ? 'text-white/60' : 'text-zinc-500')
             ]"
@@ -193,7 +193,7 @@ const isTransparent = computed(() => ([
           <span
             class="absolute -bottom-0.5 left-1/2 -translate-x-1/2 h-[2.5px] rounded-full transition-all duration-400 ease-out"
             :class="[
-              isExactActive ? 'w-4 opacity-100' : 'w-0 opacity-0',
+              isActive || $route.path.includes(`${detailPathMap[link.path]}`) ? 'w-4 opacity-100' : 'w-0 opacity-0',
               isTransparent ? 'bg-white' : 'bg-secondary'
             ]"
           />
