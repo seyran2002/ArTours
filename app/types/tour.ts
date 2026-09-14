@@ -39,5 +39,5 @@ interface TourLocation {
   locationId: string;
   order: number;
   createdAt: string;
-  Location: Location;
+  location: Location;
 }
