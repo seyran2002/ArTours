@@ -1,0 +1,302 @@
+<script setup lang="ts">
+import { computed, ref } from 'vue'
+import type { MapLocation } from '~/composables/useRouteMap'
+import { useRoute, useI18n, useLocalePath } from '#imports'
+import { useTour } from '~/composables/useTour'
+import { usePageSeo } from '~/composables/usePageSeo'
+import LocationImageGallery from '~/components/locations/LocationImageGallery.vue'
+import BaseIcon from '~/components/ui/BaseIcon.vue'
+import BaseButton from '~/components/ui/BaseButton.vue'
+import { BookingType } from '~/types/booking'
+
+const route = useRoute()
+const { locale } = useI18n()
+const localePath = useLocalePath()
+
+// Fetch transfer using useTour (key-based cached useFetch wrapper)
+const id = route.params.id as string
+const { tour: transfer, loading, error } = useTour(id)
+
+const showBookingModal = ref(false)
+
+// Parsed Features list
+const parsedFeatures = computed(() => {
+  if (!transfer.value?.features) return []
+  if (typeof transfer.value.features === 'string') {
+    try {
+      return JSON.parse(transfer.value.features)
+    } catch {
+      return []
+    }
+  }
+  return transfer.value.features
+})
+
+// Parsed Entrance Fees list
+const parsedEntranceFees = computed(() => {
+  if (!transfer.value?.entranceFees) return []
+  if (typeof transfer.value.entranceFees === 'string') {
+    try {
+      return JSON.parse(transfer.value.entranceFees)
+    } catch {
+      return []
+    }
+  }
+  return transfer.value.entranceFees
+})
+
+// ─── Localized fields (ru, en, hy) ───────────────────────────
+const localizedTitle = computed(() => {
+  if (!transfer.value) return ''
+  if (locale.value === 'hy') return transfer.value.hyTitle || transfer.value.enTitle || ''
+  if (locale.value === 'ru') return transfer.value.ruTitle || transfer.value.enTitle || ''
+  return transfer.value.enTitle || ''
+})
+
+const localizedDesc = computed(() => {
+  if (!transfer.value) return ''
+  if (locale.value === 'hy') return transfer.value.hyDescription || transfer.value.enDescription || ''
+  if (locale.value === 'ru') return transfer.value.ruDescription || transfer.value.enDescription || ''
+  return transfer.value.enDescription || ''
+})
+
+const pageTitle = computed(() => {
+  return localizedTitle.value
+    ? `${localizedTitle.value} — ArTours`
+    : locale.value === 'hy' ? 'Տրանսֆեր | ArTours' : locale.value === 'ru' ? 'Трансфер | ArTours' : 'Transfer | ArTours'
+})
+
+const featureImage = computed(() => transfer.value?.mainImage || '/logo.webp')
+
+// ─── Location stop locations for the route map ───────────────────
+const locationStops = computed<MapLocation[]>(() => {
+  if (!transfer.value?.locations?.length) return []
+  return transfer.value.locations
+    .filter(t => t.location?.toLat != null && t.location?.toLng != null)
+    .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+    .map(t => ({
+      lat: t.location.toLat as number,
+      lng: t.location.toLng as number,
+      name: t.location.toAddressText || t.location.enTitle || 'Stop'
+    }))
+})
+
+// ─── TouristTrip Schema JSON-LD ─────────────────────────────
+const transferSchema = computed(() => {
+  if (!transfer.value) return null
+  const t = transfer.value
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'TouristTrip',
+    '@id': `https://artours.am/transfer/${t.id}/${t.slug || ''}#trip`,
+    name: [
+      { '@language': 'ru', '@value': t.ruTitle },
+      { '@language': 'en', '@value': t.enTitle },
+      { '@language': 'hy', '@value': t.hyTitle || t.enTitle }
+    ],
+    description: [
+      { '@language': 'ru', '@value': t.ruDescription || t.ruTitle },
+      { '@language': 'en', '@value': t.enDescription || t.enTitle },
+      { '@language': 'hy', '@value': t.hyDescription || t.hyTitle || t.enTitle }
+    ],
+    image: t.mainImage ? [t.mainImage] : [],
+    url: `https://artours.am/transfer/${t.id}/${t.slug || ''}`,
+    provider: {
+      '@type': 'TravelAgency',
+      name: 'ArTours',
+      url: 'https://artours.am'
+    },
+    ...(t.minimumPrice != null && {
+      offers: {
+        '@type': 'Offer',
+        priceCurrency: 'USD',
+        price: t.minimumPrice,
+        availability: 'https://schema.org/InStock',
+        url: `https://artours.am/transfer/${t.id}/${t.slug || ''}`
+      }
+    })
+  }
+})
+
+// Combined reactive usePageSeo metadata
+usePageSeo({
+  title: pageTitle,
+  description: localizedDesc,
+  imagePath: featureImage,
+  customSchema: transferSchema
+})
+</script>
+
+<template>
+  <div class="relative pt-[90px] pb-12 sm:pt-[136px] sm:pb-16 md:pt-[160px] md:pb-20 overflow-hidden bg-zinc-50/30 min-h-screen">
+    <!-- Ambient Decor -->
+    <div class="absolute inset-0 pointer-events-none -z-10">
+      <div class="absolute top-20 -right-20 sm:right-4 md:right-30 w-[280px] h-[280px] sm:w-[400px] sm:h-[400px] lg:w-[500px] lg:h-[500px] bg-primary/20 lg:bg-secondary/10 rounded-full blur-3xl" />
+      <div class="absolute bottom-[15%] -left-20 sm:left-4 lg:left-20 w-[240px] h-[240px] sm:w-[320px] sm:h-[320px] lg:w-[400px] lg:h-[400px] bg-secondary/10 lg:bg-primary/20 rounded-full blur-3xl" />
+    </div>
+
+    <div class="max-w-[1440px] mx-auto px-5 lg:px-8">
+      <!-- Back to Transfers link -->
+      <div class="mb-6">
+        <NuxtLink
+          :to="localePath('/transfers')"
+          class="inline-flex items-center gap-2 text-zinc-500 hover:text-primary text-sm font-semibold transition-colors duration-250 group"
+        >
+          <BaseIcon name="arrow-left" size="sm" class="group-hover:-translate-x-0.5 transition-transform" />
+          <span>{{ $t('transfers.backToTransfers') || (locale === 'hy' ? 'Վերադառնալ տրանսֆերներին' : locale === 'ru' ? 'Назад к трансферам' : 'Back to Transfers') }}</span>
+        </NuxtLink>
+      </div>
+
+      <!-- Loading State -->
+      <div v-if="loading" class="flex flex-col items-center justify-center py-24 space-y-4">
+        <div class="w-10 h-10 border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>
+        <p class="text-sm font-semibold text-zinc-500">
+          {{ $t('tours.loading') }}
+        </p>
+      </div>
+
+      <!-- Error State -->
+      <div v-else-if="error" class="bg-red-50 border border-red-100 rounded-3xl p-8 text-center max-w-lg mx-auto space-y-4">
+        <div class="inline-flex p-3 rounded-2xl bg-red-100 text-red-600">
+          <BaseIcon name="alert-triangle" size="md" />
+        </div>
+        <div class="space-y-1">
+          <h2 class="text-lg font-bold text-red-800">
+            {{ $t('transfers.transferNotFound') || (locale === 'hy' ? 'Տրանսֆերը չի գտնվել' : locale === 'ru' ? 'Трансфер не найден' : 'Transfer not found') }}
+          </h2>
+          <p class="text-sm text-red-600">
+            {{ error.message || (locale === 'ru' ? 'Не удалось загрузить данные.' : 'Failed to load transfer details.') }}
+          </p>
+        </div>
+        <NuxtLink
+          :to="localePath('/transfers')"
+          class="inline-block px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white text-xs font-bold rounded-xl transition-all duration-250"
+        >
+          {{ $t('transfers.returnToTransfers') || (locale === 'hy' ? 'Վերադառնալ տրանսֆերներին' : locale === 'ru' ? 'Вернуться к трансферам' : 'Return to Transfers') }}
+        </NuxtLink>
+      </div>
+
+      <!-- Content -->
+      <div v-else-if="transfer" class="space-y-8">
+        <!-- 1. Image Gallery Component -->
+        <LocationImageGallery
+          :images="transfer.images || []"
+          :main-image="transfer.mainImage || ''"
+        />
+
+        <!-- 2. Two Column Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+          <!-- Left Main Column (Details) -->
+          <div class="lg:col-span-2 space-y-8">
+            <LazyTourInfo :tour="transfer" />
+            
+            <!-- Map Card (Only displayed if routePolyline is present) -->
+            <div v-if="transfer.routePolyline" class="bg-white border border-zinc-200/60 rounded-3xl p-6 sm:p-8 shadow-sm space-y-4">
+              <h3 class="text-sm font-bold text-zinc-800 uppercase tracking-wider">
+                {{ $t('tours.routeMap') }}
+              </h3>
+              <p class="text-xs text-zinc-500 leading-normal">
+                {{ $t('tours.routeMapDescription') }}
+              </p>
+              
+              <!-- Location Route Map Component -->
+              <LazyLocationsLocationRouteMap
+                :polyline="transfer.routePolyline"
+                :locations="locationStops"
+              />
+            </div>
+          </div>
+
+          <!-- Right Sidebar Column (Booking Info CTA Widget & Optional Entrance Fees) -->
+          <div class="lg:col-span-1 space-y-6 lg:sticky lg:top-36">
+            <!-- Booking Info CTA Widget -->
+            <div class="border border-zinc-200/60 rounded-3xl p-6 shadow-sm space-y-6 bg-white">
+              <div class="space-y-2">
+                <span class="text-[10px] font-bold text-zinc-500 uppercase tracking-wider">
+                  {{ $t('locations.cost') }}
+                </span>
+                <div class="flex items-baseline gap-1">
+                  <span class="text-4xl font-black text-zinc-900 font-sans">€{{ transfer.minimumPrice }}</span>
+                  <span class="text-xs font-medium text-zinc-500">
+                    / {{ $t('tours.for3People') }}
+                  </span>
+                </div>
+              </div>
+
+              <!-- Perks -->
+              <ul class="space-y-3 border-t border-zinc-100 pt-5">
+                <li v-for="feature in parsedFeatures" :key="feature.en" class="flex items-center gap-3 text-xs font-medium text-zinc-600">
+                  <LazyBaseIcon name="check" size="sm" class="text-primary" />
+                  <span>{{ feature[locale] }}</span>
+                </li>
+              </ul>
+
+              <div class="mt-4 flex items-start gap-4 rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/[0.06] to-primary/[0.02] p-4 shadow-brand-primary transition-all duration-300 hover:shadow-brand-primary-hover hover:border-primary/30">
+                <!-- Icon -->
+                <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-brand-gradient-primary text-base font-bold text-white shadow-brand-primary">
+                  %
+                </div>
+                <div class="min-w-0 flex-1">
+                  <!-- Title + Badge -->
+                  <div class="flex flex-wrap items-center gap-2.5">
+                    <p class="text-[15px] font-semibold text-primary leading-tight">
+                      {{ $t('tours.discountForGroups') }}
+                    </p>
+                    
+                    <span class="inline-flex items-center rounded-full bg-brand-gradient px-2.5 py-0.5 text-[11px] font-bold text-white shadow-brand">
+                      −10%
+                    </span>
+                  </div>
+
+                  <!-- Description -->
+                  <p class="mt-1.5 text-sm leading-relaxed text-primary/70">
+                    {{ $t('tours.discountForGroupsDesc') }}
+                  </p>
+                </div>
+              </div>
+
+              <!-- Book CTA Button -->
+              <BaseButton
+                variant="primary"
+                class="w-full gap-2 shadow-sm hover:shadow-primary/20"
+                @click="showBookingModal = true"
+              >
+                <BaseIcon name="ticket" />
+                {{ $t('transfers.bookTransferNow') || (locale === 'hy' ? 'Ամրագրել տրանսֆերը հիմա' : locale === 'ru' ? 'Забронировать трансфер сейчас' : 'Book Transfer Now') }}
+              </BaseButton>
+            </div>
+
+            <!-- Optional Entrance Fees Section (Desktop) -->
+            <div v-if="parsedEntranceFees.length > 0" class="hidden lg:block border border-zinc-200/60 rounded-3xl p-6 shadow-sm space-y-4 bg-white">
+              <h2 class="text-sm font-bold text-zinc-800 uppercase tracking-wider">
+                {{ $t('locations.entranceFees') }}
+              </h2>
+              <div class="space-y-2.5">
+                <div
+                  v-for="(fee, index) in parsedEntranceFees"
+                  :key="index"
+                  class="flex items-center justify-between p-3.5 bg-zinc-50/50 hover:bg-zinc-50 border border-zinc-100 rounded-xl transition-colors duration-200"
+                >
+                  <span class="text-xs font-semibold text-zinc-700">
+                    {{ fee[`${locale}Name`] || fee.enName || fee.ruName }}
+                  </span>
+                  <span class="text-xs font-bold text-zinc-900 font-sans">֏{{ fee.fee }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Booking Modal -->
+    <LazyBookingModal
+      v-if="transfer"
+      v-model="showBookingModal"
+      :type="BookingType.TRANSFER"
+      :entity-id="transfer.id || ''"
+      :entity-title="locale === 'ru' ? (transfer.ruTitle || transfer.enTitle) : transfer.enTitle"
+      :price="transfer.minimumPrice || 0"
+    />
+  </div>
+</template>

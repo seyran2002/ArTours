@@ -137,7 +137,7 @@ function getHourWordRu(n: number): string {
   <!-- Real Card -->
   <NuxtLink
     v-else-if="tour"
-    :to="localePath(`/tour/${tour.id}/${tour.slug}`)"
+    :to="localePath(`${tour.type === 'TRANSFER' ? '/transfer' : '/tour'}/${tour.id}/${tour.slug || ''}`)"
     class="bg-white rounded-3xl overflow-hidden  shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_24px_48px_-12px_rgba(18,83,78,0.12)] hover:-translate-y-1 transition-all duration-500 flex flex-col justify-between group h-full relative"
   >
     <!-- Card Image Section -->
