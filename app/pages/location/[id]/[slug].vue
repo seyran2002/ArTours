@@ -39,7 +39,7 @@ const parsedFeatures = computed(() => {
       return []
     }
   }
-  return location.value.entranceFees
+  return location.value.features;
 })
 
 // ─── Localized field helpers ─────────────────────────────────────────────────
