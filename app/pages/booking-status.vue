@@ -208,7 +208,7 @@ const telegramLink = computed(() => {
 </script>
 
 <template>
-  <div class="relative pt-[120px] pb-12 sm:pt-[136px] sm:pb-16 md:pt-[160px] md:pb-20 overflow-hidden">
+  <div class="relative pt-[90px] pb-12 sm:pt-[136px] sm:pb-16 md:pt-[160px] md:pb-20 overflow-hidden">
 
     <!-- Main Container -->
     <div class="max-w-4xl mx-auto px-6 relative">
