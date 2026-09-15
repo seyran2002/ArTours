@@ -16,6 +16,19 @@ const { location, loading, error } = useLocation(id)
 
 const showBookingModal = ref(false)
 
+// Parsed Entrance Fees list
+const parsedEntranceFees = computed(() => {
+  if (!location.value?.entranceFees) return []
+  if (typeof location.value.entranceFees === 'string') {
+    try {
+      return JSON.parse(location.value.entranceFees)
+    } catch {
+      return []
+    }
+  }
+  return location.value.entranceFees
+})
+
 // ─── Localized field helpers ─────────────────────────────────────────────────
 const ruTitle = computed(() => location.value?.ruTitle ?? '')
 const enTitle = computed(() => location.value?.enTitle ?? '')
@@ -228,45 +241,67 @@ useHead(() => {
             </div>
           </div>
 
-          <!-- Right Sidebar Column (Booking Info CTA Widget) -->
-          <div class="lg:col-span-1 border border-zinc-200/60 rounded-3xl p-6 shadow-sm space-y-6 lg:sticky lg:top-36">
-            <div class="space-y-2">
-              <span class="text-xs font-bold text-zinc-500 uppercase tracking-wider">
-                {{ $t('locations.cost') }}
-              </span>
-              <div class="flex items-baseline gap-1">
-                <span class="text-4xl font-black text-zinc-900 font-sans">€{{ location.minimumPrice }}</span>
-                <span class="text-xs font-medium text-zinc-500">
-                  {{ $t('locations.for3People') }}
+          <!-- Right Sidebar Column (Booking Info CTA Widget & Optional Entrance Fees) -->
+          <div class="lg:col-span-1 space-y-6 lg:sticky lg:top-36">
+            <!-- Booking Info CTA Widget -->
+            <div class="border border-zinc-200/60 rounded-3xl p-6 shadow-sm space-y-6 bg-white">
+              <div class="space-y-2">
+                <span class="text-xs font-bold text-zinc-500 uppercase tracking-wider">
+                  {{ $t('locations.cost') }}
                 </span>
+                <div class="flex items-baseline gap-1">
+                  <span class="text-4xl font-black text-zinc-900 font-sans">€{{ location.minimumPrice }}</span>
+                  <span class="text-xs font-medium text-zinc-500">
+                    {{ $t('locations.for3People') }}
+                  </span>
+                </div>
               </div>
+
+              <!-- Perks -->
+              <ul class="space-y-3 border-t border-zinc-100 pt-5">
+                <li class="flex items-center gap-3 text-xs font-medium text-zinc-600">
+                  <LazyBaseIcon name="check" size="sm" class="text-primary" />
+                  <span>{{ $t('locations.perk1') }}</span>
+                </li>
+                <li class="flex items-center gap-3 text-xs font-medium text-zinc-600">
+                  <LazyBaseIcon name="check" size="sm" class="text-primary" />
+                  <span>{{ $t('locations.perk2') }}</span>
+                </li>
+                <li class="flex items-center gap-3 text-xs font-medium text-zinc-600">
+                  <LazyBaseIcon name="check" size="sm" class="text-primary" />
+                  <span>{{ $t('locations.perk3') }}</span>
+                </li>
+              </ul>
+
+              <!-- Book CTA Button -->
+              <LazyBaseButton
+                variant="primary"
+                class="w-full gap-2 shadow-sm hover:shadow-primary/20"
+                @click="showBookingModal = true"
+              >
+                <LazyBaseIcon name="ticket" />
+                {{ $t('locations.bookRideNow') }}
+              </LazyBaseButton>
             </div>
 
-            <!-- Perks -->
-            <ul class="space-y-3 border-t border-zinc-100 pt-5">
-              <li class="flex items-center gap-3 text-xs font-medium text-zinc-600">
-                <LazyBaseIcon name="check" size="sm" class="text-primary" />
-                <span>{{ $t('locations.perk1') }}</span>
-              </li>
-              <li class="flex items-center gap-3 text-xs font-medium text-zinc-600">
-                <LazyBaseIcon name="check" size="sm" class="text-primary" />
-                <span>{{ $t('locations.perk2') }}</span>
-              </li>
-              <li class="flex items-center gap-3 text-xs font-medium text-zinc-600">
-                <LazyBaseIcon name="check" size="sm" class="text-primary" />
-                <span>{{ $t('locations.perk3') }}</span>
-              </li>
-            </ul>
-
-            <!-- Book CTA Button -->
-            <LazyBaseButton
-              variant="primary"
-              class="w-full gap-2 shadow-sm hover:shadow-primary/20"
-              @click="showBookingModal = true"
-            >
-              <LazyBaseIcon name="ticket" />
-              {{ $t('locations.bookRideNow') }}
-            </LazyBaseButton>
+            <!-- Optional Entrance Fees Section (Desktop) -->
+            <div v-if="parsedEntranceFees.length > 0" class="hidden lg:block border border-zinc-200/60 rounded-3xl p-6 shadow-sm space-y-4 bg-white">
+              <h2 class="text-sm font-bold text-zinc-800 uppercase tracking-wider">
+                {{ $t('locations.entranceFees') }}
+              </h2>
+              <div class="space-y-2.5">
+                <div
+                  v-for="(fee, index) in parsedEntranceFees"
+                  :key="index"
+                  class="flex items-center justify-between p-3.5 bg-zinc-50/50 hover:bg-zinc-50 border border-zinc-100 rounded-xl transition-colors duration-200"
+                >
+                  <span class="text-xs font-semibold text-zinc-700">
+                    {{ fee[`${locale}Name`] || fee.enName || fee.ruName }}
+                  </span>
+                  <span class="text-xs font-bold text-zinc-900 font-sans">֏{{ fee.fee }}</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

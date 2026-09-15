@@ -119,7 +119,7 @@ const parsedEntranceFees = computed(() => {
     </div>
 
     <!-- Optional Entrance Fees -->
-    <div v-if="parsedEntranceFees.length > 0" class="space-y-4 border-t border-zinc-100 pt-6">
+    <div v-if="parsedEntranceFees.length > 0" class="lg:hidden space-y-4 border-t border-zinc-100 pt-6">
       <h2 class="text-sm font-bold text-zinc-800 uppercase tracking-wider">
         {{ $t('locations.entranceFees') }}
       </h2>

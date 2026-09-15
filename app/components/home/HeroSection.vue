@@ -22,13 +22,13 @@ const img = useImage()
 
 const mobileSrcset = computed(() => {
   return [412, 450, 480, 570, 640, 750, 1024]
-    .map(w => `${img('v1780058739/hero-mobile_fdtg24', { width: w, quality: 35, c: 'fill', gravity: 'auto', f: 'webp' }, { provider: 'cloudinary' })} ${w}w`)
+    .map(w => `${img('v1789404257/hero-new_duwhxq', { width: w, quality: 35, c: 'fill', gravity: 'auto', f: 'webp' }, { provider: 'cloudinary' })} ${w}w`)
     .join(', ')
 })
 
 const desktopSrcset = computed(() => {
   return [1280, 1366, 1440, 1600, 1920]
-    .map(w => `${img('v1780058739/hero_xugvjz', { width: w, quality: 35, c: 'fill', gravity: 'auto', f: 'webp' }, { provider: 'cloudinary' })} ${w}w`)
+    .map(w => `${img('v1789404257/hero-new_duwhxq', { width: w, quality: 35, c: 'fill', gravity: 'auto', f: 'webp' }, { provider: 'cloudinary' })} ${w}w`)
     .join(', ')
 })
 
@@ -75,7 +75,7 @@ useHead({
 
       <NuxtImg
         provider="cloudinary"
-        src="v1780058739/hero_xugvjz"
+        src="v1789404257/hero-new_duwhxq"
         width="1280"
         height="720"
         quality="35"
