@@ -27,7 +27,7 @@ defineProps<{
     <div class="flex items-center justify-between text-sm">
       <span class="text-zinc-400 font-medium">{{ $t('booking.form.summary.travelers') }}</span>
       <span class="font-bold text-white bg-white/10 px-3 py-0.5 rounded-full">
-        {{ peopleCount }} {{ $t('booking.form.summary.pax') }}
+        {{ Number(peopleCount) < 4 ?'1-3' : peopleCount }} {{ $t('booking.form.summary.pax') }}
       </span>
     </div>
 
