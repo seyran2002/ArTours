@@ -29,6 +29,19 @@ const parsedEntranceFees = computed(() => {
   return location.value.entranceFees
 })
 
+// Parsed Features list
+const parsedFeatures = computed(() => {
+  if (!location.value?.features) return []
+  if (typeof location.value.features === 'string') {
+    try {
+      return JSON.parse(location.value.features)
+    } catch {
+      return []
+    }
+  }
+  return location.value.entranceFees
+})
+
 // ─── Localized field helpers ─────────────────────────────────────────────────
 const ruTitle = computed(() => location.value?.ruTitle ?? '')
 const enTitle = computed(() => location.value?.enTitle ?? '')
@@ -259,18 +272,18 @@ useHead(() => {
 
               <!-- Perks -->
               <ul class="space-y-3 border-t border-zinc-100 pt-5">
-                <li class="flex items-center gap-3 text-xs font-medium text-zinc-600">
+                <li v-for="feature in parsedFeatures" :key="feature.en" class="flex items-center gap-3 text-xs font-medium text-zinc-600">
                   <LazyBaseIcon name="check" size="sm" class="text-primary" />
-                  <span>{{ $t('locations.perk1') }}</span>
+                  <span>{{ feature[locale] }}</span>
                 </li>
-                <li class="flex items-center gap-3 text-xs font-medium text-zinc-600">
+                <!-- <li class="flex items-center gap-3 text-xs font-medium text-zinc-600">
                   <LazyBaseIcon name="check" size="sm" class="text-primary" />
                   <span>{{ $t('locations.perk2') }}</span>
                 </li>
                 <li class="flex items-center gap-3 text-xs font-medium text-zinc-600">
                   <LazyBaseIcon name="check" size="sm" class="text-primary" />
                   <span>{{ $t('locations.perk3') }}</span>
-                </li>
+                </li> -->
               </ul>
 
               

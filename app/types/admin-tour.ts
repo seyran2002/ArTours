@@ -1,5 +1,5 @@
 import type { Tag } from './tag'
-import type { Location } from './location'
+import type { Location, Feature } from './location'
 
 export interface AdminTour {
   id: string;
@@ -15,6 +15,7 @@ export interface AdminTour {
   minimumPrice?: number;
   duration?: TourDuration;
   entranceFees?: AdminTourEntranceFee[];
+  features?: Feature[];
   isOvernight?: boolean;
   starRating?: number;
   mealOptions?: { breakfast: boolean; lunch: boolean; dinner: boolean };

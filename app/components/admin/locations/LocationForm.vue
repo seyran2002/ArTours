@@ -62,6 +62,7 @@ const distanceFromYerevan = ref<number | ''>('');
 const price = ref<number | ''>('');
 const selectedTags = ref<string[]>([]);
 const entranceFees = ref<{ enName: string; ruName: string; hyName: string; fee: number }[]>([]);
+const features = ref<{ icon?: string; ru: string; en: string; hy: string }[]>([]);
 const images = ref<string[]>([]);
 const mainImage = ref('');
 
@@ -125,6 +126,15 @@ const addEntranceFee = () => {
 
 const removeEntranceFee = (index: number) => {
   entranceFees.value.splice(index, 1)
+}
+
+// Features logic
+const addFeature = () => {
+  features.value.push({ icon: '', ru: '', en: '', hy: '' })
+}
+
+const removeFeature = (index: number) => {
+  features.value.splice(index, 1)
 }
 
 // Validation
@@ -318,6 +328,12 @@ const buildFormData = (routePolyline: string | null): FormData => {
     formData.append('entranceFees', JSON.stringify(activeEntranceFees))
   }
 
+  // Features
+  const activeFeatures = features.value.filter(
+    f => f.ru.trim() !== '' || f.en.trim() !== '' || f.hy.trim() !== ''
+  )
+  formData.append('features', JSON.stringify(activeFeatures))
+
   // Route polyline (may be null when coordinates were unavailable)
   if (routePolyline) {
     formData.append('routePolyline', routePolyline)
@@ -409,6 +425,23 @@ const populateForm = (existing: any) => {
         ruName: f.ruName || '',
         hyName: f.hyName || '',
         fee: Number(f.fee) || 0
+      }))
+    : [];
+
+  let parsedFeatures = existing?.features;
+  if (typeof parsedFeatures === 'string') {
+    try {
+      parsedFeatures = JSON.parse(parsedFeatures);
+    } catch {
+      parsedFeatures = [];
+    }
+  }
+  features.value = Array.isArray(parsedFeatures)
+    ? parsedFeatures.map((f: any) => ({
+        icon: f.icon || '',
+        ru: f.ru || f.ruName || '',
+        en: f.en || f.enName || '',
+        hy: f.hy || f.hyName || ''
       }))
     : [];
 
@@ -900,7 +933,102 @@ watch(
         </div>
 
         <div v-else class="text-center py-6 border border-zinc-100 rounded-2xl bg-zinc-50/20 text-zinc-400 text-xs font-medium">
-          Այս պահին մուտքավճարներ չեն ավելացվել։ Ավելացնելու համար սեղմեք «Ավելացնել տող» կոճակը։
+          Այս պահին մուտքավճարներ չեն ավելացվել։ Ավելացնելու համար սեղմեք «Ավելացնել» կոճակը։
+        </div>
+      </div>
+
+      <!-- DYNAMIC FEATURES -->
+      <div class="space-y-3">
+        <div class="flex items-center justify-between border-t border-zinc-100 pt-6">
+          <div>
+            <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Առանձնահատկություններ (Features)</label>
+            <p class="text-[10px] text-zinc-400 mt-0.5">Ավելացրեք ուղղության առանձնահատկությունները (Ռուսերեն, Անգլերեն, Հայերեն)</p>
+          </div>
+          <BaseButton
+            type="button"
+            variant="secondary"
+            size="sm"
+            @click="addFeature"
+          >
+            <BaseIcon name="plus" size="xs" />
+            <span>Ավելացնել</span>
+          </BaseButton>
+        </div>
+
+        <!-- Features List -->
+        <div v-if="features.length" class="space-y-4">
+          <div
+            v-for="(feature, index) in features"
+            :key="index"
+            class="bg-zinc-50/60 border border-zinc-100 rounded-2xl overflow-hidden animate-slide-in"
+          >
+            <!-- Card header: feature # + remove button -->
+            <div class="flex items-center justify-between px-4 py-2.5 bg-zinc-100/60 border-b border-zinc-100">
+              <span class="text-[11px] font-bold text-zinc-500 uppercase tracking-wider">
+                Առանձնահատկություն #{{ index + 1 }}
+              </span>
+              <BaseButton
+                type="button"
+                variant="ghost"
+                size="sm"
+                class="!text-red-500 hover:!bg-red-50 !border !border-red-100 !rounded-lg !py-1 !px-2"
+                aria-label="Remove feature row"
+                @click="removeFeature(index)"
+              >
+                <BaseIcon name="trash" size="xs" />
+                <span class="ml-1 text-xs font-semibold">Հեռացնել</span>
+              </BaseButton>
+            </div>
+
+            <!-- Stacked inputs -->
+            <div class="p-4 space-y-3">
+              <!-- Russian Feature -->
+              <div class="space-y-1">
+                <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">RU — Ռուսերեն</span>
+                <div class="flex items-center bg-white border border-zinc-200 rounded-xl transition-all duration-300 focus-within:border-primary/30 focus-within:shadow-[0_0_0_3px_rgba(18,83,78,0.06)]">
+                  <BaseInput
+                    v-model="feature.ru"
+                    type="text"
+                    placeholder="e.g. Профессиональный гид"
+                    size="sm"
+                    class="text-zinc-800 placeholder-zinc-400"
+                  />
+                </div>
+              </div>
+
+              <!-- English Feature -->
+              <div class="space-y-1">
+                <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">EN — Անգլերեն</span>
+                <div class="flex items-center bg-white border border-zinc-200 rounded-xl transition-all duration-300 focus-within:border-primary/30 focus-within:shadow-[0_0_0_3px_rgba(18,83,78,0.06)]">
+                  <BaseInput
+                    v-model="feature.en"
+                    type="text"
+                    placeholder="e.g. Professional guide"
+                    size="sm"
+                    class="text-zinc-800 placeholder-zinc-400"
+                  />
+                </div>
+              </div>
+
+              <!-- Armenian Feature -->
+              <div class="space-y-1">
+                <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">HY — Հայերեն</span>
+                <div class="flex items-center bg-white border border-zinc-200 rounded-xl transition-all duration-300 focus-within:border-primary/30 focus-within:shadow-[0_0_0_3px_rgba(18,83,78,0.06)]">
+                  <BaseInput
+                    v-model="feature.hy"
+                    type="text"
+                    placeholder="օրինակ՝ Պրոֆեսիոնալ զբոսավար"
+                    size="sm"
+                    class="text-zinc-800 placeholder-zinc-400"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div v-else class="text-center py-6 border border-zinc-100 rounded-2xl bg-zinc-50/20 text-zinc-400 text-xs font-medium">
+          Այս պահին առանձնահատկություններ չեն ավելացվել։ Ավելացնելու համար սեղմեք «Ավելացնել» կոճակը։
         </div>
       </div>
 

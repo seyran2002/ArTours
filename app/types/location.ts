@@ -7,6 +7,13 @@ export interface EntranceFee {
     fee: number;
 }
 
+export interface Feature {
+    icon?: string;
+    ru: string;
+    en: string;
+    hy: string;
+}
+
 export interface Location {
     id: string;
     slug?: string;
@@ -24,6 +31,7 @@ export interface Location {
     distanceFromYerevan?: number;
     minimumPrice?: number;
     entranceFees?: EntranceFee[];
+    features?: Feature[];
     fromPlaceId?: string;
     fromAddressText?: string;
     enFromAddress?: string;
