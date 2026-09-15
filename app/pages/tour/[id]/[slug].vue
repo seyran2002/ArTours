@@ -19,6 +19,19 @@ const { tour, loading, error } = useTour(id)
 
 const showBookingModal = ref(false)
 
+// Parsed Features list
+const parsedFeatures = computed(() => {
+  if (!tour.value?.features) return []
+  if (typeof tour.value.features === 'string') {
+    try {
+      return JSON.parse(tour.value.features)
+    } catch {
+      return []
+    }
+  }
+  return tour.value.features;
+})
+
 // Parsed Entrance Fees list
 const parsedEntranceFees = computed(() => {
   if (!tour.value?.entranceFees) return []
@@ -212,17 +225,9 @@ usePageSeo({
 
               <!-- Perks -->
               <ul class="space-y-3 border-t border-zinc-100 pt-5">
-                <li class="flex items-center gap-3 text-xs font-medium text-zinc-600">
-                  <BaseIcon name="check" size="sm" class="text-primary" />
-                  <span>{{ $t('tours.perk1') }}</span>
-                </li>
-                <li class="flex items-center gap-3 text-xs font-medium text-zinc-600">
-                  <BaseIcon name="check" size="sm" class="text-primary" />
-                  <span>{{ $t('tours.perk2') }}</span>
-                </li>
-                <li class="flex items-center gap-3 text-xs font-medium text-zinc-600">
-                  <BaseIcon name="check" size="sm" class="text-primary" />
-                  <span>{{ $t('tours.perk3') }}</span>
+                <li v-for="feature in parsedFeatures" :key="feature.en" class="flex items-center gap-3 text-xs font-medium text-zinc-600">
+                  <LazyBaseIcon name="check" size="sm" class="text-primary" />
+                  <span>{{ feature[locale] }}</span>
                 </li>
               </ul>
 

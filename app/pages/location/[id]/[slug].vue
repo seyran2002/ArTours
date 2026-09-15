@@ -276,14 +276,6 @@ useHead(() => {
                   <LazyBaseIcon name="check" size="sm" class="text-primary" />
                   <span>{{ feature[locale] }}</span>
                 </li>
-                <!-- <li class="flex items-center gap-3 text-xs font-medium text-zinc-600">
-                  <LazyBaseIcon name="check" size="sm" class="text-primary" />
-                  <span>{{ $t('locations.perk2') }}</span>
-                </li>
-                <li class="flex items-center gap-3 text-xs font-medium text-zinc-600">
-                  <LazyBaseIcon name="check" size="sm" class="text-primary" />
-                  <span>{{ $t('locations.perk3') }}</span>
-                </li> -->
               </ul>
 
               
