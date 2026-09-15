@@ -273,6 +273,31 @@ useHead(() => {
                 </li>
               </ul>
 
+              
+              <div class="mt-4 flex items-start gap-4 rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/[0.06] to-primary/[0.02] p-4 shadow-brand-primary transition-all duration-300 hover:shadow-brand-primary-hover hover:border-primary/30">
+                <!-- Icon -->
+                <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-brand-gradient-primary text-base font-bold text-white shadow-brand-primary">
+                  %
+                </div>
+                <div class="min-w-0 flex-1">
+                  <!-- Title + Badge -->
+                  <div class="flex flex-wrap items-center gap-2.5">
+                    <p class="text-[15px] font-semibold text-primary leading-tight">
+                      {{ $t('tours.discountForGroups') }}
+                    </p>
+                    
+                    <span class="inline-flex items-center rounded-full bg-brand-gradient px-2.5 py-0.5 text-[11px] font-bold text-white shadow-brand">
+                      −10%
+                    </span>
+                  </div>
+
+                  <!-- Description -->
+                  <p class="mt-1.5 text-sm leading-relaxed text-primary/70">
+                    {{ $t('tours.discountForGroupsDesc') }}
+                  </p>
+                </div>
+              </div>
+
               <!-- Book CTA Button -->
               <LazyBaseButton
                 variant="primary"
