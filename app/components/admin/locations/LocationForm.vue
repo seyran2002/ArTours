@@ -130,7 +130,7 @@ const removeEntranceFee = (index: number) => {
 
 // Features logic
 const addFeature = () => {
-  features.value.push({ icon: '', ru: '', en: '', hy: '' })
+  features.value.push({ ru: '', en: '', hy: '' })
 }
 
 const removeFeature = (index: number) => {
@@ -324,9 +324,7 @@ const buildFormData = (routePolyline: string | null): FormData => {
   const activeEntranceFees = entranceFees.value.filter(
     fee => fee.enName.trim() !== '' || fee.ruName.trim() !== '' || fee.hyName.trim() !== ''
   )
-  if (activeEntranceFees.length > 0) {
-    formData.append('entranceFees', JSON.stringify(activeEntranceFees))
-  }
+  formData.append('entranceFees', JSON.stringify(activeEntranceFees))
 
   // Features
   const activeFeatures = features.value.filter(

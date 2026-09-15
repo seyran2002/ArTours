@@ -195,7 +195,7 @@ function removeEntranceFee(index: number) {
 
 // ─── Features ────────────────────────────────────────────────────────────────
 function addFeature() {
-  features.value.push({ icon: '', ru: '', en: '', hy: '' })
+  features.value.push({ ru: '', en: '', hy: '' })
 }
 
 function removeFeature(index: number) {

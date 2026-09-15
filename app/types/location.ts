@@ -8,7 +8,6 @@ export interface EntranceFee {
 }
 
 export interface Feature {
-    icon?: string;
     ru: string;
     en: string;
     hy: string;
