@@ -135,7 +135,9 @@
     "showing": "Showing",
     "of": "of",
     "transfersCount": "transfers",
-    "loadMore": "Load More Transfers"
+    "loadMore": "Load More Transfers",
+    "bookTransferNow": "Book Transfer Now",
+    "returnToTransfers": "Return to Transfers"
   },
   "km": "km",
   "all": "All",

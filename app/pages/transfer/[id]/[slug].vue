@@ -172,7 +172,7 @@ usePageSeo({
           :to="localePath('/transfers')"
           class="inline-block px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white text-xs font-bold rounded-xl transition-all duration-250"
         >
-          {{ $t('transfers.returnToTransfers') || (locale === 'hy' ? 'Վերադառնալ տրանսֆերներին' : locale === 'ru' ? 'Вернуться к трансферам' : 'Return to Transfers') }}
+          {{ $t('transfers.returnToTransfers') }}
         </NuxtLink>
       </div>
 
@@ -262,7 +262,7 @@ usePageSeo({
                 @click="showBookingModal = true"
               >
                 <BaseIcon name="ticket" />
-                {{ $t('transfers.bookTransferNow') || (locale === 'hy' ? 'Ամրագրել տրանսֆերը հիմա' : locale === 'ru' ? 'Забронировать трансфер сейчас' : 'Book Transfer Now') }}
+                {{ $t('transfers.bookTransferNow') }}
               </BaseButton>
             </div>
 
