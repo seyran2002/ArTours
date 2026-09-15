@@ -137,7 +137,8 @@
     "transfersCount": "трансферов",
     "loadMore": "Загрузить ещё",
     "bookTransferNow": "Забронировать трансфер",
-    "returnToTransfers": "Вернуться к трансферам"
+    "returnToTransfers": "Вернуться к трансферам",
+    "transferNotFound": "Трансфер не найден"
   },
   "km": "км",
   "all": "Все",

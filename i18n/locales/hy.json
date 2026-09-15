@@ -137,7 +137,8 @@
         "transfersCount": "տրանսֆեր",
         "loadMore": "Բեռնել ավելին",
         "bookTransferNow": "Ամրագրել տրանսֆերը",
-        "returnToTransfers": "Վերադառնալ տրանսֆերներին"
+        "returnToTransfers": "Վերադառնալ տրանսֆերներին",
+        "transferNotFound": "Տրանսֆերը չի գտնվել"
     },
     "km": "կմ",
     "all": "Բոլորը",

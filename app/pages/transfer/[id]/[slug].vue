@@ -143,7 +143,7 @@ usePageSeo({
           class="inline-flex items-center gap-2 text-zinc-500 hover:text-primary text-sm font-semibold transition-colors duration-250 group"
         >
           <BaseIcon name="arrow-left" size="sm" class="group-hover:-translate-x-0.5 transition-transform" />
-          <span>{{ $t('transfers.backToTransfers') || (locale === 'hy' ? 'Վերադառնալ տրանսֆերներին' : locale === 'ru' ? 'Назад к трансферам' : 'Back to Transfers') }}</span>
+          <span>{{ $t('transfers.returnToTransfers') }}</span>
         </NuxtLink>
       </div>
 
@@ -162,7 +162,7 @@ usePageSeo({
         </div>
         <div class="space-y-1">
           <h2 class="text-lg font-bold text-red-800">
-            {{ $t('transfers.transferNotFound') || (locale === 'hy' ? 'Տրանսֆերը չի գտնվել' : locale === 'ru' ? 'Трансфер не найден' : 'Transfer not found') }}
+            {{ $t('transfers.transferNotFound') }}
           </h2>
           <p class="text-sm text-red-600">
             {{ error.message || (locale === 'ru' ? 'Не удалось загрузить данные.' : 'Failed to load transfer details.') }}
