@@ -52,7 +52,7 @@ usePageSeo({
     <!-- Hero Section (Luxury Layout) -->
     <HeroSection />
     <LazyHomePopularPlacesSection
-      :popular-locations="popularLocations || []"
+      :popular-locations="popularLocations || []" 
       :loading="locationsStatus === 'pending' || !popularLocations"
     />
     <LazyHomeTopToursSection

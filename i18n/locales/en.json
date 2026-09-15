@@ -116,6 +116,8 @@
     "perk2": "Comfortable transportation",
     "perk3": "Handcrafted custom itinerary",
     "bookTourNow": "Book Tour Now",
+    "discountForGroups": "Discount for groups",
+    "discountForGroupsDesc": "Receive a 10% discount when booking for 4 or more people.",
     "loading": "Loading tour details...",
     "tourNotFound": "Tour not found",
     "returnToTours": "Return to Tours",
