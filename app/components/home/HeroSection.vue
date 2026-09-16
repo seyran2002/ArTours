@@ -132,27 +132,20 @@ useHead({
       <LazySearchSelect />
 
       <!-- ── Quick Stats ── -->
-      <div 
-        :class="[
-          'mt-10 sm:mt-12 flex items-center justify-center',
-          { 'gap-8 sm:gap-12': locale === 'en' },
-          { 'gap-4 sm:gap-8': locale === 'hy' },
-          { 'gap-6 sm:gap-10': locale === 'ru' }
-        ]"
-      >
-        <div class="text-center">
+      <div class="mt-10 sm:mt-12 mx-auto w-full max-w-md sm:max-w-lg flex items-center justify-center">
+        <div class="flex-1 text-center px-1 sm:px-2">
           <span class="block text-2xl sm:text-3xl font-extrabold text-white tracking-tight">{{ destinationCount }}</span>
-          <span class="text-[10px] sm:text-xs font-semibold uppercase tracking-widest text-white/50">{{ $t('home.hero.destinations') }}</span>
+          <span class="text-[10px] sm:text-xs font-semibold uppercase tracking-widest text-white/50 block truncate">{{ $t('home.hero.destinations') }}</span>
         </div>
-        <div class="w-px h-8 bg-white/15" />
-        <div class="text-center">
+        <div class="w-px h-8 bg-white/15 flex-shrink-0" />
+        <div class="flex-1 text-center px-1 sm:px-2">
           <span class="block text-2xl sm:text-3xl font-extrabold text-white tracking-tight">12K+</span>
-          <span class="text-[10px] sm:text-xs font-semibold uppercase tracking-widest text-white/50">{{ $t('home.hero.travelers') }}</span>
+          <span class="text-[10px] sm:text-xs font-semibold uppercase tracking-widest text-white/50 block truncate">{{ $t('home.hero.travelers') }}</span>
         </div>
-        <div class="w-px h-8 bg-white/15" />
-        <div class="text-center">
+        <div class="w-px h-8 bg-white/15 flex-shrink-0" />
+        <div class="flex-1 text-center px-1 sm:px-2">
           <span class="block text-2xl sm:text-3xl font-extrabold text-white tracking-tight">{{ years }}+</span>
-          <span class="text-[10px] sm:text-xs font-semibold uppercase tracking-widest text-white/50">{{ $t('home.hero.years') }}</span>
+          <span class="text-[10px] sm:text-xs font-semibold uppercase tracking-widest text-white/50 block truncate">{{ $t('home.hero.years') }}</span>
         </div>
       </div>
 
