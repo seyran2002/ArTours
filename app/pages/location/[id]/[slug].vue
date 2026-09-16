@@ -321,7 +321,7 @@ useHead(() => {
                         {{ $t('booking.sidebar.discountApplied') }}
                       </span>
                     </div>
-                    <p class="text-[11px] text-zinc-500">
+                    <p class="text-xs text-zinc-500">
                       €{{ sidebarBreakdown.perPerson.toFixed(0) }} {{ $t('booking.sidebar.perPerson') }} × {{ peopleCount }}
                     </p>
                   </div>

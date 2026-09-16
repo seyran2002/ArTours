@@ -261,6 +261,11 @@ const styleAttr = computed(() => {
       <line x1="5" y1="12" x2="19" y2="12" />
     </template>
 
+    <!-- Minus Icon -->
+    <template v-else-if="name === 'minus'">
+      <line x1="5" y1="12" x2="19" y2="12" />
+    </template>
+
     <!-- Trash Icon -->
     <template v-else-if="name === 'trash'">
       <polyline points="3 6 5 6 21 6" />
