@@ -223,13 +223,29 @@ usePageSeo({
                 </div>
               </div>
 
-              <!-- Perks -->
-              <ul class="space-y-3 border-t border-zinc-100 pt-5">
-                <li v-for="feature in parsedFeatures" :key="feature.en" class="flex items-center gap-3 text-xs font-medium text-zinc-600">
-                  <LazyBaseIcon name="check" size="sm" class="text-primary" />
-                  <span>{{ feature[locale] }}</span>
-                </li>
-              </ul>
+              <!-- Features -->
+              <div class="pt-5 space-y-3">
+                <div class="h-px bg-gradient-to-r from-primary/30 via-secondary/20 to-transparent" />
+                <ul class="space-y-2">
+                  <li
+                    v-for="(feature, index) in parsedFeatures"
+                    :key="feature.en"
+                    class="group flex items-center gap-3 rounded-xl px-3 py-2.5 transition-all duration-300 hover:bg-primary/[0.04] hover:shadow-sm hover:translate-x-0.5 cursor-default"
+                  >
+                    <span
+                      class="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg transition-all duration-300 group-hover:scale-110 group-hover:shadow-md"
+                      :class="index % 2 === 0
+                        ? 'bg-primary/10 text-primary group-hover:bg-primary/20 group-hover:shadow-primary/15'
+                        : 'bg-secondary/10 text-secondary group-hover:bg-secondary/20 group-hover:shadow-secondary/15'"
+                    >
+                      <LazyBaseIcon name="check" size="sm" />
+                    </span>
+                    <span class="text-[13px] font-medium text-zinc-700 transition-colors duration-300 group-hover:text-zinc-900">
+                      {{ feature[locale] }}
+                    </span>
+                  </li>
+                </ul>
+              </div>
 
               <div class="mt-4 flex items-start gap-4 rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/[0.06] to-primary/[0.02] p-4 shadow-brand-primary transition-all duration-300 hover:shadow-brand-primary-hover hover:border-primary/30">
                 <!-- Icon -->
