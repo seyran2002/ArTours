@@ -45,7 +45,7 @@ watch(
 </script>
 
 <template>
-  <AdminDetailModal v-if="open" title="Տուրի Մանրամասներ / Tour Details" @close="emit('close')">
+  <AdminDetailModal v-if="open" title="Տուրի Մանրամասներ" @close="emit('close')">
     <div v-if="loading" class="flex flex-col items-center justify-center py-12 gap-3 text-zinc-500">
       <BaseIcon name="clock" size="lg" class="animate-spin text-primary" />
       <span class="text-sm font-medium">Բեռնվում է... / Loading...</span>

@@ -19,10 +19,10 @@ const hovered = ref(false)
 const isExpanded = computed(() => hovered.value || props.mobileMenuOpen)
 
 const navLinks = [
-  { label: 'Dashboard',  to: '/admin',           icon: 'grid'     },
-  { label: 'locations',  to: '/admin/locations',  icon: 'Location' },
-  { label: 'Tours',      to: '/admin/tours',      icon: 'tours'    },
-  { label: 'Bookings',   to: '/admin/bookings',   icon: 'booking'  },
+  { label: 'Վահանակ',    to: '/admin',            icon: 'grid'     },
+  { label: 'Վայրեր',     to: '/admin/locations',  icon: 'Location' },
+  { label: 'Տուրեր/Տրանս.', to: '/admin/tours', icon: 'tours' },
+  { label: 'Ամրագրումներ', to: '/admin/bookings', icon: 'booking'  },
 ]
 
 function isActive(path: string): boolean {
@@ -119,7 +119,7 @@ function handleLogout() {
           class="text-zinc-400 group-hover:text-red-500 transition-colors duration-200 shrink-0"
         />
         <Transition name="label">
-          <span v-if="isExpanded" class="whitespace-nowrap overflow-hidden">Logout</span>
+          <span v-if="isExpanded" class="whitespace-nowrap overflow-hidden">Ելք</span>
         </Transition>
       </button>
     </nav>
