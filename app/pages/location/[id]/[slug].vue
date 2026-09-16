@@ -329,7 +329,7 @@ useHead(() => {
                   <!-- Normal pricing -->
                   <div v-else>
                     <div class="flex items-baseline gap-1">
-                      <span class="text-4xl font-black text-zinc-900 font-sans">€{{ sidebarBreakdown.original.toFixed(0) }}</span>
+                      <span class="text-3xl font-black text-primary font-sans">€{{ sidebarBreakdown.original.toFixed(0) }}</span>
                       <span class="text-xs font-medium text-zinc-500">
                         / {{ $t('locations.for3People') }}
                       </span>
