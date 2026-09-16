@@ -5,7 +5,16 @@ import { useLocationService } from '~/services/location.service'
 
 const years = new Date().getFullYear() - 2017
 
-const { locale } = useI18n()
+const { locale, t } = useI18n()
+
+const formattedTitle = computed(() => {
+  const titleText = t('home.hero.title')
+  if (!titleText) return ''
+  return titleText.replace(
+    'ArTours',
+    '<span class="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-amber-300">ArTours</span>'
+  )
+})
 
 const locationService = useLocationService()
 const { data: countData } = useAsyncData<{ count: number }>(
@@ -98,10 +107,10 @@ useHead({
     <div class="absolute inset-x-0 top-0 h-48 z-[1] bg-gradient-to-b from-white/95 via-white/50 to-transparent pointer-events-none" />
 
     <!-- ── Hero Content ── -->
-    <div class="relative z-10 w-full max-w-3xl mx-auto px-6 text-center hero-content -translate-y-8 min-width-[380px]:-translate-y-16 md:translate-y-0">
+    <div class="relative z-10 w-full max-w-4xl lg:max-w-5xl mx-auto px-4 sm:px-6 text-center hero-content -translate-y-4 sm:-translate-y-8 md:translate-y-0">
 
       <!-- Badge -->
-      <div class="hidden min-[380px]:inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-sm border border-white/15 mb-8">
+      <div class="hidden min-[380px]:inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-sm border border-white/15 mb-6 sm:mb-8">
         <span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse" />
         <span class="text-[11px] font-bold uppercase tracking-[0.18em] text-white/90">
           {{ $t('home.hero.exploreArmenia') }}
@@ -109,15 +118,13 @@ useHead({
       </div>
 
       <!-- Title -->
-      <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.08] mb-6">
-        {{ $t('home.hero.title') }}
-        <span class="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-amber-300">
-          ArTours
-        </span>
-      </h1>
+      <h1 
+        class="text-3xl min-[380px]:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.12] mb-5 sm:mb-6 break-words"
+        v-html="formattedTitle"
+      />
 
       <!-- Subtitle -->
-      <p class="text-base sm:text-lg md:text-xl text-white/75 font-medium leading-relaxed max-w-xl mx-auto mb-12">
+      <p class="text-sm sm:text-base md:text-lg lg:text-xl text-white/80 font-medium leading-relaxed max-w-2xl lg:max-w-3xl mx-auto mb-8 sm:mb-10">
         {{ $t('home.hero.subtitle') }}
       </p>
 
@@ -127,7 +134,7 @@ useHead({
       <!-- ── Quick Stats ── -->
       <div 
         :class="[
-          'mt-14 flex items-center justify-center',
+          'mt-10 sm:mt-12 flex items-center justify-center',
           { 'gap-8 sm:gap-12': locale === 'en' },
           { 'gap-4 sm:gap-8': locale === 'hy' },
           { 'gap-6 sm:gap-10': locale === 'ru' }
