@@ -16,21 +16,32 @@ const emit = defineEmits<{
 
 const { deleteTour } = useAdminTour()
 
-// Search filters
+// Search and type filters
 const searchQuery = ref('')
+const tourType = ref<'ALL' | 'TOUR' | 'TRANSFER'>('ALL')
 const deleteConfirmId = ref<string | null>(null)
 
 const filteredTours = computed(() => {
-  const query = searchQuery.value.trim().toLowerCase()
-  if (!query) return props.tours
-  return props.tours.filter((t) =>
-    t.ruTitle?.toLowerCase().includes(query) ||
-    t.enTitle?.toLowerCase().includes(query) ||
-    t.hyTitle?.toLowerCase().includes(query) ||
-    t.ruDescription?.toLowerCase().includes(query) ||
-    t.enDescription?.toLowerCase().includes(query) ||
-    t.hyDescription?.toLowerCase().includes(query)
-  )
+  return props.tours.filter((t) => {
+    // Filter by type
+    if (tourType.value !== 'ALL') {
+      const itemType = t.type || 'TOUR'
+      if (itemType !== tourType.value) return false
+    }
+
+    // Filter by search query
+    const query = searchQuery.value.trim().toLowerCase()
+    if (!query) return true
+
+    return (
+      t.ruTitle?.toLowerCase().includes(query) ||
+      t.enTitle?.toLowerCase().includes(query) ||
+      t.hyTitle?.toLowerCase().includes(query) ||
+      t.ruDescription?.toLowerCase().includes(query) ||
+      t.enDescription?.toLowerCase().includes(query) ||
+      t.hyDescription?.toLowerCase().includes(query)
+    )
+  })
 })
 
 function onEditCard(tour: AdminTour) {
@@ -50,9 +61,9 @@ function confirmDelete(id: string) {
 <template>
   <div class="space-y-6">
     <!-- Search and Actions Bar -->
-    <div class="flex flex-col sm:flex-row gap-4 items-center justify-between bg-white/70 border border-zinc-200/60 backdrop-blur-sm p-4 rounded-2xl shadow-sm">
+    <div class="flex flex-col lg:flex-row gap-4 items-center justify-between bg-white/70 border border-zinc-200/60 backdrop-blur-sm p-4 rounded-2xl shadow-sm">
       <!-- Search Input -->
-      <div class="relative w-full sm:max-w-md group">
+      <div class="relative w-full lg:max-w-md group">
         <div class="flex items-center gap-3 bg-zinc-50 border border-zinc-200/80 px-4 py-2.5 rounded-xl transition-all duration-300 focus-within:border-primary/30 focus-within:shadow-[0_0_0_3px_rgba(18,83,78,0.06)] focus-within:bg-white hover:border-zinc-300">
           <BaseIcon name="search" size="sm" class="text-zinc-400 group-focus-within:text-primary transition-colors duration-300 shrink-0" />
           <input
@@ -71,11 +82,54 @@ function confirmDelete(id: string) {
         </div>
       </div>
 
+      <!-- Filter Buttons -->
+      <div class="inline-flex items-center gap-1 p-1 bg-zinc-100 border border-zinc-200 rounded-2xl">
+        <button
+          type="button"
+          id="tour-type-all"
+          :class="[
+            'flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 cursor-pointer',
+            tourType === 'ALL'
+              ? 'bg-white text-primary shadow-sm border border-primary/20'
+              : 'text-zinc-500 hover:text-zinc-700'
+          ]"
+          @click="tourType = 'ALL'"
+        >
+          <span>🌐</span> Բոլորը
+        </button>
+        <button
+          type="button"
+          id="tour-type-tour"
+          :class="[
+            'flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 cursor-pointer',
+            tourType === 'TOUR'
+              ? 'bg-white text-primary shadow-sm border border-primary/20'
+              : 'text-zinc-500 hover:text-zinc-700'
+          ]"
+          @click="tourType = 'TOUR'"
+        >
+          <span>🗺️</span> Տուր
+        </button>
+        <button
+          type="button"
+          id="tour-type-transfer"
+          :class="[
+            'flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 cursor-pointer',
+            tourType === 'TRANSFER'
+              ? 'bg-white text-primary shadow-sm border border-primary/20'
+              : 'text-zinc-500 hover:text-zinc-700'
+          ]"
+          @click="tourType = 'TRANSFER'"
+        >
+          <span>🚐</span> Տրանսֆեր
+        </button>
+      </div>
+
       <!-- Add New Tour Button -->
       <button
         type="button"
         @click="emit('create')"
-        class="w-full sm:w-auto px-5 py-2.5 text-sm font-semibold bg-primary hover:bg-primary-dark text-white rounded-xl transition-all duration-300 cursor-pointer hover:shadow-lg shadow-primary/10 active:scale-95 flex items-center justify-center gap-2"
+        class="w-full lg:w-auto px-5 py-2.5 text-sm font-semibold bg-primary hover:bg-primary-dark text-white rounded-xl transition-all duration-300 cursor-pointer hover:shadow-lg shadow-primary/10 active:scale-95 flex items-center justify-center gap-2"
       >
         <BaseIcon name="plus" size="sm" />
         <span>Ստեղծել Տուր/Տրանսֆեր</span>
@@ -143,20 +197,20 @@ function confirmDelete(id: string) {
       <BaseIcon name="search" size="lg" class="text-zinc-300 mb-4 mx-auto block" />
       <h3 class="text-lg font-bold text-zinc-800">Չգտնվեց ոչ մի տուր</h3>
       <p class="text-sm text-zinc-400 mt-1 max-w-sm mx-auto">
-        <template v-if="searchQuery">
-          Չգտնվեց ոչ մի տուր, որը համապատասխանում է "{{ searchQuery }}"։ Փոփոխեք ձեր որոնման բառը կամ ստեղծեք նոր տուր։
+        <template v-if="searchQuery || tourType !== 'ALL'">
+          Չգտնվեց ոչ մի տուր, որը համապատասխանում է ձեր ֆիլտրի պայմաններին։ Փոփոխեք ձեր որոնումը կամ ֆիլտրը։
         </template>
         <template v-else>
           Դեռևս տուրեր չեն ստեղծվել։ Սեղմեք "Ստեղծել Տուր/Տրանսֆեր" կոճակը՝ ձեր առաջին տուրն ավելացնելու համար։
         </template>
       </p>
       <button
-        v-if="searchQuery"
+        v-if="searchQuery || tourType !== 'ALL'"
         type="button"
-        @click="searchQuery = ''"
+        @click="searchQuery = ''; tourType = 'ALL'"
         class="mt-4 px-4 py-2 border border-zinc-200 text-xs font-bold text-zinc-600 hover:text-zinc-800 hover:bg-zinc-50 rounded-xl cursor-pointer"
       >
-        Clear Search
+        Մաքրել ֆիլտրերը
       </button>
     </div>
   </div>

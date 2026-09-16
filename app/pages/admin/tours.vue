@@ -152,7 +152,7 @@ function onFormCancel() {
           ]"
         >
           <BaseIcon name="grid" size="xs" />
-          <span class="hidden sm:inline">Տուրերի ցանկ</span>
+          <span class="hidden sm:inline">Տուրերի/Տրանսֆերների ցանկ</span>
           <span class="sm:hidden">Ցանկ</span>
         </button>
 
