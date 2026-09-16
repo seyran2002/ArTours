@@ -83,7 +83,7 @@ function confirmDelete(id: string) {
       </div>
 
       <!-- Filter Buttons -->
-      <div class="inline-flex items-center gap-1 p-1 bg-zinc-100 border border-zinc-200 rounded-2xl">
+      <div class="inline-flex items-center min-w-[373px] max-w-[373px] gap-1 p-1 bg-zinc-100 border border-zinc-200 rounded-2xl">
         <button
           type="button"
           id="tour-type-all"
