@@ -107,7 +107,7 @@ useHead({
     <div class="absolute inset-x-0 top-0 h-48 z-[1] bg-gradient-to-b from-white/95 via-white/50 to-transparent pointer-events-none" />
 
     <!-- ── Hero Content ── -->
-    <div class="relative z-10 w-full max-w-4xl lg:max-w-5xl mx-auto px-4 sm:px-6 text-center hero-content -translate-y-4 sm:-translate-y-8 md:translate-y-0">
+    <div class="relative z-10 w-full max-w-4xl lg:max-w-5xl mx-auto px-4 sm:px-6 text-center hero-content -translate-y-16 sm:-translate-y-24 md:translate-y-8">
 
       <!-- Badge -->
       <div class="hidden min-[380px]:inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-sm border border-white/15 mb-6 sm:mb-8">
