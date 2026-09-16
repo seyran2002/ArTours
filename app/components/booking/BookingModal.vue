@@ -3,13 +3,16 @@ import { watch, nextTick } from 'vue'
 import type { BookingType, BookingResponse } from '~/types/booking'
 import BaseIcon from '~/components/ui/BaseIcon.vue'
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   modelValue: boolean
   type: BookingType
   entityId: string
   entityTitle: string
   price: number
-}>()
+  peopleCount?: number
+}>(), {
+  peopleCount: 3,
+})
 
 const emit = defineEmits<{
   'update:modelValue': [val: boolean]
@@ -67,6 +70,9 @@ watch(
               <h2 class="text-lg font-bold text-zinc-900 leading-tight line-clamp-1">
                 {{ entityTitle }}
               </h2>
+              <p v-if="peopleCount" class="text-xs font-medium text-primary mt-0.5">
+                {{ peopleCount }} {{ peopleCount === 1 ? 'traveler' : 'travelers' }}
+              </p>
             </div>
             <button
               id="booking-modal-close"
@@ -85,6 +91,7 @@ watch(
               :entity-id="entityId"
               :entity-title="entityTitle"
               :price="price"
+              :initial-people-count="peopleCount"
               @success="onSuccess"
             />
           </div>

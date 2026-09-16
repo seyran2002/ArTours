@@ -4,6 +4,7 @@ import { useRoute, useHead, useSeoMeta, useI18n, useLocalePath, useRequestURL } 
 import { useLocation } from '~/composables/useLocation'
 import LocationImageGallery from '~/components/locations/LocationImageGallery.vue'
 import { BookingType } from '~/types/booking'
+import { computePrice } from '~/composables/useBooking'
 
 const route = useRoute()
 const { locale } = useI18n()
@@ -15,6 +16,15 @@ const id = route.params.id as string
 const { location, loading, error } = useLocation(id)
 
 const showBookingModal = ref(false)
+
+// ─── People count & dynamic pricing ──────────────────────────
+const peopleCount = ref(3)
+const sidebarBreakdown = computed(() => {
+  const base = location.value?.minimumPrice || 0
+  return computePrice(base, peopleCount.value)
+})
+function increment() { if (peopleCount.value < 50) peopleCount.value++ }
+function decrement() { if (peopleCount.value > 1) peopleCount.value-- }
 
 // Parsed Entrance Fees list
 const parsedEntranceFees = computed(() => {
@@ -258,25 +268,99 @@ useHead(() => {
           <div class="lg:col-span-1 space-y-6 lg:sticky lg:top-36">
             <!-- Booking Info CTA Widget -->
             <div class="border border-zinc-200/60 rounded-3xl p-6 shadow-sm space-y-6 bg-white">
-              <div class="space-y-2">
-                <span class="text-xs font-bold text-zinc-500 uppercase tracking-wider">
-                  {{ $t('locations.cost') }}
-                </span>
-                <div class="flex items-baseline gap-1">
-                  <span class="text-4xl font-black text-zinc-900 font-sans">€{{ location.minimumPrice }}</span>
-                  <span class="text-xs font-medium text-zinc-500">
-                    {{ $t('locations.for3People') }}
+              <!-- People Count Stepper -->
+              <div class="space-y-4">
+                <div class="space-y-2">
+                  <span class="text-[10px] font-bold text-zinc-500 uppercase tracking-wider">
+                    {{ $t('booking.sidebar.travelers') }}
                   </span>
+                  <div class="flex items-center gap-3">
+                    <button
+                      type="button"
+                      class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-zinc-200 bg-zinc-50 text-zinc-600 transition-all duration-200 hover:bg-primary/10 hover:border-primary/30 hover:text-primary active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed"
+                      :disabled="peopleCount <= 1"
+                      @click="decrement"
+                    >
+                      <LazyBaseIcon name="minus" size="sm" />
+                    </button>
+                    <div class="flex-1 text-center">
+                      <span class="text-2xl font-black text-zinc-900 tabular-nums">{{ peopleCount }}</span>
+                      <p class="text-[10px] font-medium text-zinc-400 mt-0.5">
+                        {{ peopleCount === 1 ? $t('booking.sidebar.person') : $t('booking.sidebar.people') }}
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-zinc-200 bg-zinc-50 text-zinc-600 transition-all duration-200 hover:bg-primary/10 hover:border-primary/30 hover:text-primary active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed"
+                      :disabled="peopleCount >= 50"
+                      @click="increment"
+                    >
+                      <LazyBaseIcon name="plus" size="sm" />
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Dynamic Price Display -->
+                <div class="space-y-1.5 border-t border-zinc-100 pt-4">
+                  <span class="text-[10px] font-bold text-zinc-500 uppercase tracking-wider">
+                    {{ $t('locations.cost') }}
+                  </span>
+
+                  <!-- Discounted pricing -->
+                  <div v-if="sidebarBreakdown.groupTierApplied" class="space-y-1">
+                    <div class="flex items-baseline gap-2">
+                      <span class="text-lg font-bold text-zinc-400 line-through font-sans">€{{ sidebarBreakdown.original.toFixed(0) }}</span>
+                      <span class="text-3xl font-black text-primary font-sans">€{{ sidebarBreakdown.discounted.toFixed(0) }}</span>
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                      <span class="inline-flex items-center gap-1 rounded-full bg-brand-gradient px-2.5 py-0.5 text-[10px] font-bold text-white shadow-brand">
+                        <LazyBaseIcon name="check" size="xs" />
+                        −10%
+                      </span>
+                      <span class="text-[11px] font-medium text-primary/70">
+                        {{ $t('booking.sidebar.discountApplied') }}
+                      </span>
+                    </div>
+                    <p class="text-[11px] text-zinc-500">
+                      €{{ sidebarBreakdown.perPerson.toFixed(0) }} {{ $t('booking.sidebar.perPerson') }} × {{ peopleCount }}
+                    </p>
+                  </div>
+
+                  <!-- Normal pricing -->
+                  <div v-else>
+                    <div class="flex items-baseline gap-1">
+                      <span class="text-4xl font-black text-zinc-900 font-sans">€{{ sidebarBreakdown.original.toFixed(0) }}</span>
+                      <span class="text-xs font-medium text-zinc-500">
+                        / {{ $t('locations.for3People') }}
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <!-- Perks -->
-              <ul class="space-y-3 border-t border-zinc-100 pt-5">
-                <li v-for="feature in parsedFeatures" :key="feature.en" class="flex items-center gap-3 text-xs font-medium text-zinc-600">
-                  <LazyBaseIcon name="check" size="sm" class="text-primary" />
-                  <span>{{ feature[locale] }}</span>
-                </li>
-              </ul>
+              <!-- Features -->
+              <div class="pt-5 space-y-3">
+                <div class="h-px bg-gradient-to-r from-primary/30 via-secondary/20 to-transparent" />
+                <ul class="space-y-2">
+                  <li
+                    v-for="(feature, index) in parsedFeatures"
+                    :key="feature.en"
+                    class="group flex items-center gap-3 rounded-xl px-3 py-2.5 transition-all duration-300 hover:bg-primary/[0.04] hover:shadow-sm hover:translate-x-0.5 cursor-default"
+                  >
+                    <span
+                      class="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg transition-all duration-300 group-hover:scale-110 group-hover:shadow-md"
+                      :class="Number(index) % 2 === 0
+                        ? 'bg-primary/10 text-primary group-hover:bg-primary/20 group-hover:shadow-primary/15'
+                        : 'bg-secondary/10 text-secondary group-hover:bg-secondary/20 group-hover:shadow-secondary/15'"
+                    >
+                      <LazyBaseIcon name="check" size="sm" />
+                    </span>
+                    <span class="text-[13px] font-medium text-zinc-700 transition-colors duration-300 group-hover:text-zinc-900">
+                      {{ feature[locale] }}
+                    </span>
+                  </li>
+                </ul>
+              </div>
 
               
               <div class="mt-4 flex items-start gap-4 rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/[0.06] to-primary/[0.02] p-4 shadow-brand-primary transition-all duration-300 hover:shadow-brand-primary-hover hover:border-primary/30">
@@ -345,6 +429,7 @@ useHead(() => {
       :entity-id="location.id"
       :entity-title="locale === 'ru' ? (location.ruTitle || location.enTitle) : location.enTitle"
       :price="location.minimumPrice || 0"
+      :people-count="peopleCount"
     />
   </div>
 </template>

@@ -1,5 +1,5 @@
-﻿<script setup lang="ts">
-import { computed, ref } from 'vue'
+<script setup lang="ts">
+import { computed, ref, watch } from 'vue'
 import { useBooking, computePrice } from '~/composables/useBooking'
 import type { BookingType, BookingResponse, BookingStatus } from '~/types/booking'
 import BaseButton from '~/components/ui/BaseButton.vue'
@@ -8,18 +8,26 @@ import BaseInput from '~/components/ui/BaseInput.vue'
 
 const { locale, t } = useI18n();
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   type: BookingType
   entityId: string
   entityTitle: string
   price: number
-}>()
+  initialPeopleCount?: number
+}>(), {
+  initialPeopleCount: 3,
+})
 
 const emit = defineEmits<{
   success: [booking: BookingResponse]
 }>()
 
 const { form, isSubmitting, submitError, submitSuccess, bookingResult, submitBooking } = useBooking()
+
+// Sync initial people count from sidebar selector
+watch(() => props.initialPeopleCount, (val) => {
+  if (val && val >= 1) form.peopleCount = val
+}, { immediate: true })
 
 // ─── Validation ───────────────────────────────────────────────────────────────
 const errors = ref<Record<string, string>>({})

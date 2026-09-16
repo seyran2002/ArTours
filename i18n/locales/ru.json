@@ -157,6 +157,15 @@
     "overnight": "С ночевкой"
   },
   "booking": {
+    "sidebar": {
+      "travelers": "Путешественники",
+      "person": "человек",
+      "people": "человек",
+      "perPerson": "за человека",
+      "discountApplied": "Скидка 10% для группы применена!",
+      "originalPrice": "Было",
+      "totalPrice": "Итого"
+    },
     "badge": "Портал бронирования",
     "title1": "Проверить статус",
     "title2": "бронирования",

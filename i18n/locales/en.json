@@ -157,6 +157,15 @@
     "overnight": "Overnight"
   },
   "booking": {
+    "sidebar": {
+      "travelers": "Travelers",
+      "person": "person",
+      "people": "people",
+      "perPerson": "per person",
+      "discountApplied": "10% group discount applied!",
+      "originalPrice": "Original",
+      "totalPrice": "Total"
+    },
     "badge": "Reservation Portal",
     "title1": "Check",
     "title2": "Booking Status",
