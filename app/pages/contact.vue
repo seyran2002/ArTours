@@ -21,7 +21,7 @@ usePageSeo({
 </script>
 
 <template>
-  <div class="relative pt-[90px] pb-12 sm:pt-[136px] sm:pb-16 md:pt-[160px] md:pb-20 overflow-hidden">
+  <div class="relative pt-[90px] pb-12 sm:pt-[120px] sm:pb-16 md:pb-20 overflow-hidden">
     <!-- Ambient Backdrop Decorative Lights -->
     <div class="absolute inset-0 overflow-hidden pointer-events-none -z-10">
       <div class="absolute top-[10%] -left-20 w-[280px] h-[280px] sm:w-[450px] sm:h-[450px] md:w-[600px] md:h-[600px] bg-primary/10 rounded-full blur-3xl" />

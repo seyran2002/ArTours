@@ -85,7 +85,7 @@ const {
 </script>
 
 <template>
-  <section class="relative pt-[90px] pb-12 sm:pt-[136px] sm:pb-16 md:pt-[160px] md:pb-20 overflow-hidden">
+  <section class="relative pt-[90px] pb-12 sm:pt-[120px] sm:pb-16 md:pb-20 overflow-hidden">
     <!-- Ambient Decorative Blobs -->
     <div class="absolute inset-0 pointer-events-none -z-10">
       <div class="absolute top-20 -right-20 sm:right-4 md:right-30 w-[280px] h-[280px] sm:w-[400px] sm:h-[400px] lg:w-[500px] lg:h-[500px] bg-primary/30 lg:bg-secondary/20 rounded-full blur-3xl" />
