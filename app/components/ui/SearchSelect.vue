@@ -16,17 +16,28 @@ const searchSelectRef = ref<HTMLElement | null>(null)
 const listRef = ref<HTMLElement | null>(null)
 const dropdownMaxHeight = ref('380px')
 
-// Dynamically calculate max height for search dropdown based on remaining viewport height
+// Dynamically calculate max height for search dropdown based on containing section layout
 const updateMaxHeight = () => {
   if (!searchSelectRef.value) return
-  const rect = searchSelectRef.value.getBoundingClientRect()
-  const viewportHeight = window.innerHeight
+  const el = searchSelectRef.value
+  const rect = el.getBoundingClientRect()
+  const section = el.closest('section') || el.closest('.hero-section')
+  
   // Reserve space for mobile floating nav bar on mobile (<768px) vs standard bottom padding on desktop
   const isMobile = window.innerWidth < 768
   const bottomPadding = isMobile ? 80 : 24
-  const availableSpace = viewportHeight - rect.bottom - bottomPadding
+
+  let availableSpace: number
+  if (section) {
+    const sectionRect = section.getBoundingClientRect()
+    // Distance from bottom of search input to bottom of section (scroll-invariant)
+    availableSpace = sectionRect.bottom - rect.bottom - bottomPadding
+  } else {
+    availableSpace = window.innerHeight - rect.bottom - bottomPadding
+  }
+
   const maxAllowed = Math.max(100, availableSpace)
-  const calculated = Math.min(maxAllowed, 520)
+  const calculated = Math.min(maxAllowed, 380)
   dropdownMaxHeight.value = `${calculated}px`
 }
 
