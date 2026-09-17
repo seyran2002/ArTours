@@ -1,44 +1,86 @@
 <script setup lang="ts">
-import { computed } from 'vue';
-import { useI18n } from 'vue-i18n';
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+type BookingStatus = 'CONFIRMED' | 'PENDING' | 'CANCELLED' | 'COMPLETED'
 
 const props = defineProps<{
-  status: 'CONFIRMED' | 'PENDING' | 'CANCELLED' | 'COMPLETED'
+  status: BookingStatus
   email: string
 }>()
 
-const { t } = useI18n();
+const { t } = useI18n()
 
+// 1. Milestone steps per booking status
 const steps = computed(() => {
-  if (props.status === 'CANCELLED') {
-    return [
-      { name: t('booking.steps.booking_received'), desc: t('booking.steps.reservation_entered'), status: 'complete' },
-      { name: t('booking.steps.cancelled'), desc: t('booking.steps.booking_voided'), status: 'error' }
-    ]
+  switch (props.status) {
+    case 'CANCELLED':
+      return [
+        { name: t('booking.steps.booking_received'), desc: t('booking.steps.reservation_entered'), status: 'complete' },
+        { name: t('booking.steps.cancelled'), desc: t('booking.steps.booking_voided'), status: 'error' }
+      ]
+    case 'PENDING':
+      return [
+        { name: t('booking.steps.received'), desc: t('booking.steps.booking_submitted'), status: 'complete' },
+        { name: t('booking.steps.confirmation'), desc: t('booking.steps.awaiting_guide'), status: 'current' },
+        { name: t('booking.steps.travelDay'), desc: t('booking.steps.readyCheckin'), status: 'upcoming' },
+        { name: t('booking.steps.completed'), desc: t('booking.steps.seeYouNext'), status: 'upcoming' }
+      ]
+    case 'COMPLETED':
+      return [
+        { name: t('booking.steps.received'), desc: t('booking.steps.booking_submitted'), status: 'complete' },
+        { name: t('booking.steps.confirmed'), desc: t('booking.steps.reservationLocked'), status: 'complete' },
+        { name: t('booking.steps.travelDay'), desc: t('booking.steps.readyDeparture'), status: 'complete' },
+        { name: t('booking.steps.completed'), desc: t('booking.steps.seeYouNext'), status: 'complete' }
+      ]
+    case 'CONFIRMED':
+    default:
+      return [
+        { name: t('booking.steps.received'), desc: t('booking.steps.booking_submitted'), status: 'complete' },
+        { name: t('booking.steps.confirmed'), desc: t('booking.steps.reservationLocked'), status: 'complete' },
+        { name: t('booking.steps.travelDay'), desc: t('booking.steps.readyDeparture'), status: 'current' },
+        { name: t('booking.steps.completed'), desc: t('booking.steps.seeYouNext'), status: 'upcoming' }
+      ]
   }
-  if (props.status === 'PENDING') {
-    return [
-      { name: t('booking.steps.received'), desc: t('booking.steps.booking_submitted'), status: 'complete' },
-      { name: t('booking.steps.confirmation'), desc: t('booking.steps.awaiting_guide'), status: 'current' },
-      { name: t('booking.steps.travelDay'), desc: t('booking.steps.readyCheckin'), status: 'upcoming' },
-      { name: t('booking.steps.completed'), desc: t('booking.steps.seeYouNext'), status: 'upcoming' }
-    ]
+})
+
+// 2. Status notice banner styling and configuration
+const statusBanner = computed(() => {
+  const configs: Record<BookingStatus, {
+    icon: string
+    isEmojiBadge: boolean
+    wrapperClass: string
+    textClass?: string
+    messageKey: string
+  }> = {
+    COMPLETED: {
+      icon: '🎉',
+      isEmojiBadge: true,
+      wrapperClass: 'bg-gradient-to-r from-emerald-500/10 via-teal-500/10 to-emerald-500/5 border-emerald-200/80 text-emerald-950 shadow-sm shadow-emerald-900/5',
+      textClass: 'text-emerald-700 font-extrabold',
+      messageKey: 'booking.steps.completedStr'
+    },
+    CONFIRMED: {
+      icon: '✨',
+      isEmojiBadge: false,
+      wrapperClass: 'bg-teal-50/50 border-teal-100/50 text-teal-800',
+      messageKey: 'booking.steps.confirmedStr'
+    },
+    PENDING: {
+      icon: '⏳',
+      isEmojiBadge: false,
+      wrapperClass: 'bg-amber-50/50 border-amber-100/50 text-amber-800',
+      messageKey: 'booking.steps.pendingStr'
+    },
+    CANCELLED: {
+      icon: '⚠️',
+      isEmojiBadge: false,
+      wrapperClass: 'bg-red-50/50 border-red-100/50 text-red-800',
+      messageKey: 'booking.steps.cancellationStr'
+    }
   }
-  if (props.status === 'COMPLETED') {
-    return [
-      { name: t('booking.steps.received'), desc: t('booking.steps.booking_submitted'), status: 'complete' },
-      { name: t('booking.steps.confirmed'), desc: t('booking.steps.reservationLocked'), status: 'complete' },
-      { name: t('booking.steps.travelDay'), desc: t('booking.steps.readyDeparture'), status: 'current' },
-      { name: t('booking.steps.completed'), desc: t('booking.steps.seeYouNext'), status: 'complete' }
-    ]
-  }
-  // Default/CONFIRMED state
-  return [
-    { name: t('booking.steps.received'), desc: t('booking.steps.booking_submitted'), status: 'complete' },
-    { name: t('booking.steps.confirmed'), desc: t('booking.steps.reservationLocked'), status: 'complete' },
-    { name: t('booking.steps.travelDay'), desc: t('booking.steps.readyDeparture'), status: 'current' },
-    { name: t('booking.steps.completed'), desc: t('booking.steps.seeYouNext'), status: 'upcoming' }
-  ]
+
+  return configs[props.status] || configs.CONFIRMED
 })
 </script>
 
@@ -96,28 +138,28 @@ const steps = computed(() => {
     <!-- Custom status-specific notice banner -->
     <div 
       :class="[
-        'mt-8 p-4 sm:p-5 rounded-2xl border text-xs sm:text-sm font-medium flex items-start gap-3',
-        status === 'CONFIRMED' 
-          ? 'bg-teal-50/50 border-teal-100/50 text-teal-800' 
-          : status === 'PENDING'
-            ? 'bg-amber-50/50 border-amber-100/50 text-amber-800'
-            : 'bg-red-50/50 border-red-100/50 text-red-800'
+        'mt-8 p-4 sm:p-5 rounded-2xl border text-xs sm:text-sm font-medium flex items-center gap-3.5 transition-all duration-300',
+        statusBanner.wrapperClass
       ]"
     >
-      <span class="text-base shrink-0 select-none">
-        {{ status === 'CONFIRMED' ? '✨' : status === 'PENDING' ? '⏳' : '⚠️' }}
+      <div 
+        v-if="statusBanner.isEmojiBadge" 
+        class="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0 shadow-md shadow-emerald-600/25 text-base select-none"
+      >
+        {{ statusBanner.icon }}
+      </div>
+      <span v-else class="text-base shrink-0 select-none">
+        {{ statusBanner.icon }}
       </span>
+
       <p class="leading-relaxed">
         <span class="font-bold text-zinc-900"> 
-          {{ $t('booking.statusStr') }}: {{ $t(`booking.status.${status}`) }} — 
+          {{ $t('booking.statusStr') }}: 
+          <span :class="statusBanner.textClass">
+            {{ $t(`booking.status.${status}`) }}
+          </span> — 
         </span>
-        {{ 
-          status === 'CONFIRMED' 
-            ? $t('booking.steps.confirmedStr') 
-            : status === 'PENDING'
-              ? $t('booking.steps.pendingStr') 
-              : $t('booking.steps.cancellationStr')
-        }}
+        {{ $t(statusBanner.messageKey) }}
       </p>
     </div>
   </div>
