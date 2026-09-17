@@ -144,7 +144,7 @@ const statusBanner = computed(() => {
     >
       <div 
         v-if="statusBanner.isEmojiBadge" 
-        class="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0 shadow-md shadow-emerald-600/25 text-base select-none"
+        class="w-8 h-8 rounded-xl bg-emerald-300 text-white flex items-center justify-center shrink-0 shadow-md shadow-emerald-600/25 text-base select-none"
       >
         {{ statusBanner.icon }}
       </div>
