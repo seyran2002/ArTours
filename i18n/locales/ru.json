@@ -21,7 +21,10 @@
       "travelers": "Путешественники",
       "exploreArmenia": "Исследуйте Армению",
       "noResults": "Результатов не найдено",
-      "years": "Опыт в туризме"
+      "years": "Опыт в туризме",
+      "tour": "Тур",
+      "transfer": "Трансфер",
+      "location": "Локация"
     },
     "popularDestinations": {
       "titlePart1": "Популярные",

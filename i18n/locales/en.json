@@ -21,7 +21,10 @@
       "travelers": "Travelers",
       "exploreArmenia": "Explore Armenia",
       "noResults": "No results found for your search",
-      "years": "Experience"
+      "years": "Experience",
+      "tour": "Tour",
+      "transfer": "Transfer",
+      "location": "Location"
     },
     "popularDestinations": {
       "titlePart1": "Popular",

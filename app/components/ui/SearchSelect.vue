@@ -275,7 +275,7 @@ onUnmounted(() => {
                     :class="item.type === 'tour' ? 'bg-emerald-50 text-emerald-700 border border-emerald-100' : 'bg-amber-50 text-amber-700 border border-amber-100'"
                   >
                     <span class="w-1 h-1 rounded-full" :class="item.type === 'tour' ? 'bg-emerald-500' : 'bg-amber-500'" />
-                    {{ item.type === 'tour' ? 'Tour' : item.type === 'transfer' ? 'Transfer' : 'Location' }}
+                    {{ item.type === 'tour' ? $t('home.hero.tour') : item.type === 'transfer' ? $t('home.hero.transfer') : $t('home.hero.location') }}
                   </span>
                 </div>
               </div>

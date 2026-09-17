@@ -21,7 +21,10 @@
             "travelers": "Ճանապարհորդներ",
             "exploreArmenia": "Բացահայտել Հայաստանը",
             "noResults": "Ձեր որոնմամբ արդյունքներ չեն գտնվել",
-            "years": "Փորձառություն"
+            "years": "Փորձառություն",
+            "tour": "Տուր",
+            "transfer": "Տրանսֆեր",
+            "location": "Վայր"
         },
         "popularDestinations": {
             "titlePart1": "Հանրահայտ",
