@@ -30,13 +30,13 @@ const updateMaxHeight = () => {
   dropdownMaxHeight.value = `${calculated}px`
 }
 
-watch([isOpen, results], () => {
-  if (isOpen.value) {
+watch(isOpen, (newVal) => {
+  if (newVal) {
     nextTick(updateMaxHeight)
   }
 })
 
-const handleResizeOrScroll = () => {
+const handleResize = () => {
   if (isOpen.value) {
     updateMaxHeight()
   }
@@ -138,14 +138,12 @@ const handleClickOutside = (event: MouseEvent) => {
 
 onMounted(() => {
   document.addEventListener('click', handleClickOutside)
-  window.addEventListener('resize', handleResizeOrScroll)
-  window.addEventListener('scroll', handleResizeOrScroll, { passive: true })
+  window.addEventListener('resize', handleResize)
 })
 
 onUnmounted(() => {
   document.removeEventListener('click', handleClickOutside)
-  window.removeEventListener('resize', handleResizeOrScroll)
-  window.removeEventListener('scroll', handleResizeOrScroll)
+  window.removeEventListener('resize', handleResize)
 })
 </script>
 
