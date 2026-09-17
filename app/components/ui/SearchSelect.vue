@@ -1,5 +1,5 @@
-﻿<script setup lang="ts">
-import { ref, onMounted, onUnmounted, nextTick } from 'vue'
+<script setup lang="ts">
+import { ref, onMounted, onUnmounted, nextTick, watch } from 'vue'
 import { useRouter, useI18n } from '#imports'
 import { useSearch } from '~/composables/useSearch'
 import type { SearchResult } from '~/types/search'
@@ -14,6 +14,33 @@ const isOpen = ref(false)
 const focusedIndex = ref(-1)
 const searchSelectRef = ref<HTMLElement | null>(null)
 const listRef = ref<HTMLElement | null>(null)
+const dropdownMaxHeight = ref('380px')
+
+// Dynamically calculate max height for search dropdown based on remaining viewport height
+const updateMaxHeight = () => {
+  if (!searchSelectRef.value) return
+  const rect = searchSelectRef.value.getBoundingClientRect()
+  const viewportHeight = window.innerHeight
+  // Reserve space for mobile floating nav bar on mobile (<768px) vs standard bottom padding on desktop
+  const isMobile = window.innerWidth < 768
+  const bottomPadding = isMobile ? 80 : 24
+  const availableSpace = viewportHeight - rect.bottom - bottomPadding
+  const maxAllowed = Math.max(100, availableSpace)
+  const calculated = Math.min(maxAllowed, 520)
+  dropdownMaxHeight.value = `${calculated}px`
+}
+
+watch([isOpen, results], () => {
+  if (isOpen.value) {
+    nextTick(updateMaxHeight)
+  }
+})
+
+const handleResizeOrScroll = () => {
+  if (isOpen.value) {
+    updateMaxHeight()
+  }
+}
 
 // Selection handler
 const selectItem = (item: SearchResult) => {
@@ -111,10 +138,14 @@ const handleClickOutside = (event: MouseEvent) => {
 
 onMounted(() => {
   document.addEventListener('click', handleClickOutside)
+  window.addEventListener('resize', handleResizeOrScroll)
+  window.addEventListener('scroll', handleResizeOrScroll, { passive: true })
 })
 
 onUnmounted(() => {
   document.removeEventListener('click', handleClickOutside)
+  window.removeEventListener('resize', handleResizeOrScroll)
+  window.removeEventListener('scroll', handleResizeOrScroll)
 })
 </script>
 
@@ -137,7 +168,7 @@ onUnmounted(() => {
           size="lg"
           aria-label="Search destinations"
           class="flex-1 text-zinc-800 placeholder-zinc-400"
-          @focus="isOpen = true"
+          @focus="isOpen = true; nextTick(updateMaxHeight)"
           @keydown.down.prevent="onKeyDown"
           @keydown.up.prevent="onKeyUp"
           @keydown.enter.prevent="onKeyEnter"
@@ -179,7 +210,8 @@ onUnmounted(() => {
     >
       <div
         v-if="isOpen && query.trim().length >= 2"
-        class="absolute left-0 right-0 mt-3 z-50 bg-white backdrop-blur-md rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.18)] border border-zinc-100 overflow-hidden flex flex-col max-h-[380px]"
+        class="absolute left-0 right-0 mt-3 z-50 bg-white backdrop-blur-md rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.18)] border border-zinc-100 overflow-hidden flex flex-col"
+        :style="{ maxHeight: dropdownMaxHeight }"
       >
         <!-- Dropdown Container -->
         <div

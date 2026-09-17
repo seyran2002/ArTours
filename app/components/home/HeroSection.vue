@@ -64,7 +64,7 @@ useHead({
 </script>
 
 <template>
-  <section class="relative w-full min-h-screen flex items-center justify-center overflow-hidden">
+  <section class="hero-section relative w-full min-h-screen flex flex-col items-center overflow-hidden">
 
     <!-- ── Background Image (Cloudinary-optimized) ── -->
     <picture class="absolute inset-0 z-0">
@@ -107,7 +107,7 @@ useHead({
     <div class="absolute inset-x-0 top-0 h-48 z-[1] bg-gradient-to-b from-white/95 via-white/50 to-transparent pointer-events-none" />
 
     <!-- ── Hero Content ── -->
-    <div class="relative z-10 w-full max-w-4xl lg:max-w-5xl mx-auto px-4 sm:px-6 text-center hero-content -translate-y-16 sm:-translate-y-24 md:translate-y-8">
+    <div class="relative z-10 w-full max-w-4xl lg:max-w-5xl mx-auto px-4 sm:px-6 text-center hero-content">
 
       <!-- Badge -->
       <div class="hidden min-[380px]:inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-sm border border-white/15 mb-6 sm:mb-8">
@@ -163,6 +163,29 @@ useHead({
 </template>
 
 <style scoped>
+/* Responsive hero top spacing / vertical alignment */
+.hero-section {
+  justify-content: flex-start;
+  padding-top: 90px;
+  padding-bottom: 4rem;
+}
+
+@media (min-width: 768px) {
+  @media (max-height: 899px) {
+    .hero-section {
+      justify-content: flex-start;
+      padding-top: 120px;
+    }
+  }
+
+  @media (min-height: 900px) {
+    .hero-section {
+      justify-content: center;
+      padding-top: 0;
+    }
+  }
+}
+
 /* Staggered fade-in animation for hero content children */
 .hero-content > * {
   animation: heroFadeUp 0.8s ease-out both;
