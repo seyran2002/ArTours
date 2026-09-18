@@ -139,7 +139,7 @@ function onFormCancel() {
 
     <!-- Tab Navigation -->
     <div class="flex flex-col gap-3 border-b border-zinc-200/85 pb-5 w-full max-w-full min-w-0">
-      <div class="flex bg-zinc-200/50 p-1.5 rounded-2xl gap-1 border border-zinc-200/40 w-full sm:w-auto max-w-full overflow-x-auto min-w-0">
+      <div class="flex bg-zinc-200/50 p-1.5 rounded-2xl gap-1 border border-zinc-200/40 w-full sm:w-fit max-w-full overflow-x-auto min-w-0">
         <!-- View List Tab -->
         <button
           type="button"
