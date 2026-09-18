@@ -363,14 +363,14 @@ const handleSave = async () => {
 </script>
 
 <template>
-  <div class="bg-white border border-zinc-200/60 rounded-3xl p-6 sm:p-8 shadow-sm max-w-6xl mx-auto animate-fade-in">
+  <div class="bg-white border border-zinc-200/60 rounded-2xl sm:rounded-3xl p-4 sm:p-8 shadow-sm max-w-6xl mx-auto animate-fade-in">
     <!-- Form Header -->
-    <div class="flex items-center justify-between border-b border-zinc-100 pb-4 mb-6">
+    <div class="flex flex-row items-start sm:items-center justify-between gap-3 border-b border-zinc-100 pb-4 mb-5 sm:mb-6">
       <div>
-        <h2 class="text-xl font-bold text-zinc-900">
+        <h2 class="text-lg sm:text-xl font-bold text-zinc-900">
           {{ isEditMode ? 'Խմբագրել Տուր/Տրանսֆեր' : 'Ստեղծել Տուր/Տրանսֆեր' }}
         </h2>
-        <p class="text-xs text-zinc-500 mt-1">
+        <p class="text-xs text-zinc-500 mt-0.5 sm:mt-1">
           Լրացրեք ստորև նշված դաշտերը ըստ Ձեր տուրի:
         </p>
       </div>
@@ -379,13 +379,14 @@ const handleSave = async () => {
         type="button"
         variant="outline"
         size="sm"
+        class="shrink-0"
         @click="emit('cancel')"
       >
         Չեղարկել
       </BaseButton>
     </div>
 
-    <form @submit.prevent="handleSave" class="space-y-8">
+    <form @submit.prevent="handleSave" class="space-y-6 sm:space-y-8">
 
       <!-- ── TOUR TYPE SELECTOR ── -->
       <div id="tour-field-tourType" class="space-y-2">
@@ -393,12 +394,12 @@ const handleSave = async () => {
           Տեսակ (Type) <span class="text-red-500">*</span>
         </label>
         <p class="text-[10px] text-zinc-400 -mt-0.5">Ընտրեք՝ սա Տուր է, թե Տրանսֆեր</p>
-        <div class="inline-flex items-center gap-1 p-1 bg-zinc-100 border border-zinc-200 rounded-2xl">
+        <div class="flex items-center gap-1 p-1 bg-zinc-100 border border-zinc-200 rounded-2xl w-full sm:w-auto">
           <button
             type="button"
             id="tour-type-tour"
             :class="[
-              'flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200',
+              'flex-1 sm:flex-initial flex items-center justify-center gap-2 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 whitespace-nowrap',
               tourType === 'TOUR'
                 ? 'bg-white text-primary shadow-sm border border-primary/20'
                 : 'text-zinc-500 hover:text-zinc-700'
@@ -411,7 +412,7 @@ const handleSave = async () => {
             type="button"
             id="tour-type-transfer"
             :class="[
-              'flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200',
+              'flex-1 sm:flex-initial flex items-center justify-center gap-2 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 whitespace-nowrap',
               tourType === 'TRANSFER'
                 ? 'bg-white text-primary shadow-sm border border-primary/20'
                 : 'text-zinc-500 hover:text-zinc-700'
@@ -424,11 +425,11 @@ const handleSave = async () => {
         <p v-if="errors.tourType" class="text-xs text-red-500 font-medium">{{ errors.tourType }}</p>
       </div>
 
-      <!-- ── TITLES ROW (EN & RU) ── -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- ── TITLES ROW (RU, EN, HY) ── -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
         
         <!-- RU TITLE -->
-        <div id="tour-field-ruTitle" class="space-y-2">
+        <div id="tour-field-ruTitle" class="space-y-1.5 sm:space-y-2">
           <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Ռուսերեն Վերնագիր (Title RU) <span class="text-red-500">*</span></label>
           <div
             :class="[
@@ -448,8 +449,9 @@ const handleSave = async () => {
           </div>
           <p v-if="errors.ruTitle" class="text-xs text-red-500 font-medium">{{ errors.ruTitle }}</p>
         </div>
+
         <!-- EN TITLE -->
-        <div id="tour-field-enTitle" class="space-y-2">
+        <div id="tour-field-enTitle" class="space-y-1.5 sm:space-y-2">
           <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Անգլերեն Վերնագիր (Title EN) <span class="text-red-500">*</span></label>
           <div
             :class="[
@@ -471,7 +473,7 @@ const handleSave = async () => {
         </div>
         
         <!-- HY TITLE -->
-        <div id="tour-field-hyTitle" class="space-y-2">
+        <div id="tour-field-hyTitle" class="space-y-1.5 sm:space-y-2">
           <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Հայերեն Վերնագիր (Title HY) <span class="text-red-500">*</span></label>
           <div
             :class="[
@@ -494,9 +496,9 @@ const handleSave = async () => {
       </div>
 
       <!-- ── PRICE + DURATION ROW ── -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
         <!-- MINIMUM PRICE -->
-        <div id="tour-field-price" class="flex flex-col space-y-2 md:space-y-2.5">
+        <div id="tour-field-price" class="flex flex-col space-y-1.5 sm:space-y-2">
           <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Մինիմալ գինը ($) <span class="text-red-500">*</span></label>
           <p class="text-[10px] text-zinc-400 mt-0.5">Նշեք տուրի նվազագույն գինը նախատեսված 3 հոգու համար</p>
           <div class="space-y-1.5">
@@ -508,7 +510,7 @@ const handleSave = async () => {
                   : 'border-zinc-200 focus-within:border-primary/30'
               ]"
             >
-              <span class="pl-5 text-xs font-bold text-zinc-600 shrink-0">€</span>
+              <span class="pl-4 sm:pl-5 text-xs font-bold text-zinc-600 shrink-0">€</span>
               <BaseInput
                 :model-value="price === '' ? '' : String(price)"
                 @update:model-value="val => price = val === '' ? '' : Number(val)"
@@ -524,17 +526,17 @@ const handleSave = async () => {
         </div>
 
         <!-- DURATION -->
-        <div class="space-y-2">
+        <div class="space-y-1.5 sm:space-y-2">
           <div>
             <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Տեվողություն (Duration)</label>
             <p class="text-[10px] text-zinc-400 mt-0.5">Նշեք տուրի տևողությունը օրերով և ժամերով</p>
           </div>
-          <div class="grid grid-cols-2 gap-3">
+          <div class="grid grid-cols-2 gap-2.5 sm:gap-3">
             <!-- Days -->
-            <div class="space-y-1.5">
+            <div class="space-y-1">
               <label class="block text-[11px] font-semibold text-zinc-500 uppercase tracking-wider">Օր / Days</label>
               <div class="flex items-center bg-white border border-zinc-200 rounded-xl transition-all duration-300 focus-within:border-primary/30 focus-within:shadow-[0_0_0_3px_rgba(18,83,78,0.06)]">
-                <span class="pl-4 text-xs font-bold text-zinc-400 shrink-0 select-none">☀</span>
+                <span class="pl-3 sm:pl-4 text-xs font-bold text-zinc-400 shrink-0 select-none">☀</span>
                 <BaseInput
                   :model-value="String(duration.days)"
                   @update:model-value="val => duration.days = val === '' ? 0 : Math.max(0, Number(val))"
@@ -547,10 +549,10 @@ const handleSave = async () => {
               </div>
             </div>
             <!-- Hours -->
-            <div class="space-y-1.5">
+            <div class="space-y-1">
               <label class="block text-[11px] font-semibold text-zinc-500 uppercase tracking-wider">Ժամ / Hours</label>
               <div class="flex items-center bg-white border border-zinc-200 rounded-xl transition-all duration-300 focus-within:border-primary/30 focus-within:shadow-[0_0_0_3px_rgba(18,83,78,0.06)]">
-                <span class="pl-4 text-xs font-bold text-zinc-400 shrink-0 select-none">⏱</span>
+                <span class="pl-3 sm:pl-4 text-xs font-bold text-zinc-400 shrink-0 select-none">⏱</span>
                 <BaseInput
                   :model-value="String(duration.hours)"
                   @update:model-value="val => duration.hours = val === '' ? 0 : Math.min(23, Math.max(0, Number(val)))"
@@ -567,7 +569,7 @@ const handleSave = async () => {
           <!-- Preview chip -->
           <div
             v-if="duration.days > 0 || duration.hours > 0"
-            class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-primary/5 border border-primary/20 rounded-xl text-xs font-semibold text-primary"
+            class="inline-flex items-center gap-1.5 px-3 py-1 bg-primary/5 border border-primary/20 rounded-xl text-xs font-semibold text-primary"
           >
             <span>⏱</span>
             <span>
@@ -588,15 +590,15 @@ const handleSave = async () => {
         leave-from-class="transform scale-100 opacity-100 translate-y-0"
         leave-to-class="transform scale-95 opacity-0 -translate-y-2"
       >
-        <div v-if="isOvernight" class="border border-zinc-200/60 rounded-3xl p-6 bg-zinc-50/20 space-y-6">
+        <div v-if="isOvernight" class="border border-zinc-200/60 rounded-2xl sm:rounded-3xl p-4 sm:p-6 bg-zinc-50/20 space-y-4 sm:space-y-6">
           <div class="flex items-center gap-2 pb-3 border-b border-zinc-100">
-            <span class="text-lg">🏨</span>
-            <h3 class="text-sm font-bold text-zinc-800 uppercase tracking-wider">
+            <span class="text-base sm:text-lg">🏨</span>
+            <h3 class="text-xs sm:text-sm font-bold text-zinc-800 uppercase tracking-wider">
               Հյուրանոցի Կարգավորումներ / Hotel Settings
             </h3>
           </div>
           
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 items-start md:items-center">
             <div class="space-y-1.5 md:col-span-1">
               <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">
                 Հյուրանոցի աստղեր / Star Rating
@@ -615,42 +617,42 @@ const handleSave = async () => {
         </div>
       </Transition>
 
-      <!-- ── SHORT DESCRIPTIONS ROW ── -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- ── SHORT DESCRIPTIONS ROW (RU, EN, HY) ── -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
         <!-- RU SHORT DESC -->
-        <div id="tour-field-ruDescription" class="space-y-2">
+        <div id="tour-field-ruDescription" class="space-y-1.5 sm:space-y-2">
           <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Ռուսերեն Հակիրճ նկարագրություն <span class="text-red-500">*</span></label>
           <textarea
             v-model="ruDescription"
             rows="3"
             placeholder="Краткое описание на русском..."
-            class="w-full px-5 py-3 text-sm bg-white border border-zinc-200 rounded-2xl outline-none focus:border-primary/30 focus:shadow-[0_0_0_3px_rgba(18,83,78,0.06)] transition-all duration-300 font-medium text-zinc-800 placeholder-zinc-400 resize-none"
+            class="w-full px-4 sm:px-5 py-2.5 sm:py-3 text-xs sm:text-sm bg-white border border-zinc-200 rounded-xl sm:rounded-2xl outline-none focus:border-primary/30 focus:shadow-[0_0_0_3px_rgba(18,83,78,0.06)] transition-all duration-300 font-medium text-zinc-800 placeholder-zinc-400 resize-none"
             :class="{ 'border-red-500 focus:border-red-500': errors.ruDescription }"
           />
           <p v-if="errors.ruDescription" class="text-xs text-red-500 font-medium">{{ errors.ruDescription }}</p>
         </div>
 
         <!-- EN SHORT DESC -->
-        <div id="tour-field-enDescription" class="space-y-2">
+        <div id="tour-field-enDescription" class="space-y-1.5 sm:space-y-2">
           <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Անգլերեն Հակիրճ նկարագրություն <span class="text-red-500">*</span></label>
           <textarea
             v-model="enDescription"
             rows="3"
             placeholder="Short description in English..."
-            class="w-full px-5 py-3 text-sm bg-white border border-zinc-200 rounded-2xl outline-none focus:border-primary/30 focus:shadow-[0_0_0_3px_rgba(18,83,78,0.06)] transition-all duration-300 font-medium text-zinc-800 placeholder-zinc-400 resize-none"
+            class="w-full px-4 sm:px-5 py-2.5 sm:py-3 text-xs sm:text-sm bg-white border border-zinc-200 rounded-xl sm:rounded-2xl outline-none focus:border-primary/30 focus:shadow-[0_0_0_3px_rgba(18,83,78,0.06)] transition-all duration-300 font-medium text-zinc-800 placeholder-zinc-400 resize-none"
             :class="{ 'border-red-500 focus:border-red-500': errors.enDescription }"
           />
           <p v-if="errors.enDescription" class="text-xs text-red-500 font-medium">{{ errors.enDescription }}</p>
         </div>
         
         <!-- HY SHORT DESC -->
-        <div id="tour-field-hyDescription" class="space-y-2">
+        <div id="tour-field-hyDescription" class="space-y-1.5 sm:space-y-2">
           <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Հայերեն Հակիրճ նկարագրություն <span class="text-red-500">*</span></label>
           <textarea
             v-model="hyDescription"
             rows="3"
             placeholder="Հակիրճ նկարագրություն հայերենով..."
-            class="w-full px-5 py-3 text-sm bg-white border border-zinc-200 rounded-2xl outline-none focus:border-primary/30 focus:shadow-[0_0_0_3px_rgba(18,83,78,0.06)] transition-all duration-300 font-medium text-zinc-800 placeholder-zinc-400 resize-none"
+            class="w-full px-4 sm:px-5 py-2.5 sm:py-3 text-xs sm:text-sm bg-white border border-zinc-200 rounded-xl sm:rounded-2xl outline-none focus:border-primary/30 focus:shadow-[0_0_0_3px_rgba(18,83,78,0.06)] transition-all duration-300 font-medium text-zinc-800 placeholder-zinc-400 resize-none"
             :class="{ 'border-red-500 focus:border-red-500': errors.hyDescription }"
           />
           <p v-if="errors.hyDescription" class="text-xs text-red-500 font-medium">{{ errors.hyDescription }}</p>
@@ -660,14 +662,14 @@ const handleSave = async () => {
       <!-- ── TAGS MULTISELECT ── -->
       <div id="tour-field-tags" class="space-y-2">
         <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Ընտրել Տեգ/Տեգեր</label>
-        <div class="flex flex-wrap gap-2 p-4 border border-zinc-200 bg-zinc-50/30 rounded-2xl">
+        <div class="flex flex-wrap gap-1.5 sm:gap-2 p-3 sm:p-4 border border-zinc-200 bg-zinc-50/30 rounded-xl sm:rounded-2xl">
           <BaseButton
             v-for="tag in tags"
             :key="tag.id"
             type="button"
             :variant="selectedTags.includes(tag.id) ? 'primary' : 'outline'"
             size="sm"
-            class="shadow-sm hover:shadow-primary/20"
+            class="shadow-sm hover:shadow-primary/20 text-xs py-1.5 px-3"
             @click="toggleTag(tag.id)"
           >
             {{ tag.ruName }} / {{ tag.enName }}
@@ -676,7 +678,7 @@ const handleSave = async () => {
         </div>
       </div>
 
-      <!-- ── RELATED locations MULTISELECT ── -->
+      <!-- ── RELATED LOCATIONS MULTISELECT ── -->
       <div id="tour-field-locations" class="space-y-2">
         <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Կապված Ուղղություններ (Related Locations)</label>
         <p class="text-[11px] text-zinc-400 -mt-0.5">Select locations to associate with this tour. Displayed in Russian.</p>
@@ -705,7 +707,7 @@ const handleSave = async () => {
 
       <!-- ── DYNAMIC ENTRANCE FEES ── -->
       <div class="space-y-3">
-        <div class="flex items-center justify-between border-t border-zinc-100 pt-6">
+        <div class="flex items-center justify-between gap-2 border-t border-zinc-100 pt-5 sm:pt-6">
           <div>
             <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Մուտքավճարներ (Ոչ պարտադիր)</label>
             <p class="text-[10px] text-zinc-400 mt-0.5">Նշեք տեսարժան վայրերի մուտքավճարները</p>
@@ -714,6 +716,7 @@ const handleSave = async () => {
             type="button"
             variant="secondary"
             size="sm"
+            class="shrink-0"
             @click="addEntranceFee"
           >
             <BaseIcon name="plus" size="xs" />
@@ -722,14 +725,14 @@ const handleSave = async () => {
         </div>
 
         <!-- Fees List -->
-        <div v-if="entranceFees.length" class="space-y-4">
+        <div v-if="entranceFees.length" class="space-y-3 sm:space-y-4">
           <div
             v-for="(fee, index) in entranceFees"
             :key="index"
             class="bg-zinc-50/60 border border-zinc-100 rounded-2xl overflow-hidden animate-slide-in"
           >
             <!-- Card header: fee # + remove button -->
-            <div class="flex items-center justify-between px-4 py-2.5 bg-zinc-100/60 border-b border-zinc-100">
+            <div class="flex items-center justify-between px-3.5 sm:px-4 py-2 sm:py-2.5 bg-zinc-100/60 border-b border-zinc-100">
               <span class="text-[11px] font-bold text-zinc-500 uppercase tracking-wider">
                 Մուտքավճար #{{ index + 1 }}
               </span>
@@ -747,7 +750,7 @@ const handleSave = async () => {
             </div>
 
             <!-- Stacked inputs -->
-            <div class="p-4 space-y-3">
+            <div class="p-3.5 sm:p-4 space-y-3">
               <!-- Russian Fee Name -->
               <div class="space-y-1">
                 <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">RU — Ռուսերեն</span>
@@ -810,14 +813,14 @@ const handleSave = async () => {
           </div>
         </div>
 
-        <div v-else class="text-center py-6 border border-zinc-100 rounded-2xl bg-zinc-50/20 text-zinc-400 text-xs font-medium">
+        <div v-else class="text-center py-5 sm:py-6 border border-zinc-100 rounded-2xl bg-zinc-50/20 text-zinc-400 text-xs font-medium">
           Այս պահին մուտքավճարներ չեն ավելացվել։ Ավելացնելու համար սեղմեք «Ավելացնել» կոճակը։
         </div>
       </div>
 
       <!-- ── DYNAMIC FEATURES ── -->
       <div class="space-y-3">
-        <div class="flex items-center justify-between border-t border-zinc-100 pt-6">
+        <div class="flex items-center justify-between gap-2 border-t border-zinc-100 pt-5 sm:pt-6">
           <div>
             <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider">Առանձնահատկություններ (Features)</label>
             <p class="text-[10px] text-zinc-400 mt-0.5">Ավելացրեք տուրի առանձնահատկությունները (Ռուսերեն, Անգլերեն, Հայերեն)</p>
@@ -826,6 +829,7 @@ const handleSave = async () => {
             type="button"
             variant="secondary"
             size="sm"
+            class="shrink-0"
             @click="addFeature"
           >
             <BaseIcon name="plus" size="xs" />
@@ -834,14 +838,14 @@ const handleSave = async () => {
         </div>
 
         <!-- Features List -->
-        <div v-if="features.length" class="space-y-4">
+        <div v-if="features.length" class="space-y-3 sm:space-y-4">
           <div
             v-for="(feature, index) in features"
             :key="index"
             class="bg-zinc-50/60 border border-zinc-100 rounded-2xl overflow-hidden animate-slide-in"
           >
             <!-- Card header: feature # + remove button -->
-            <div class="flex items-center justify-between px-4 py-2.5 bg-zinc-100/60 border-b border-zinc-100">
+            <div class="flex items-center justify-between px-3.5 sm:px-4 py-2 sm:py-2.5 bg-zinc-100/60 border-b border-zinc-100">
               <span class="text-[11px] font-bold text-zinc-500 uppercase tracking-wider">
                 Առանձնահատկություն #{{ index + 1 }}
               </span>
@@ -859,7 +863,7 @@ const handleSave = async () => {
             </div>
 
             <!-- Stacked inputs -->
-            <div class="p-4 space-y-3">
+            <div class="p-3.5 sm:p-4 space-y-3">
               <!-- Russian Feature -->
               <div class="space-y-1">
                 <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">RU — Ռուսերեն</span>
@@ -905,19 +909,19 @@ const handleSave = async () => {
           </div>
         </div>
 
-        <div v-else class="text-center py-6 border border-zinc-100 rounded-2xl bg-zinc-50/20 text-zinc-400 text-xs font-medium">
+        <div v-else class="text-center py-5 sm:py-6 border border-zinc-100 rounded-2xl bg-zinc-50/20 text-zinc-400 text-xs font-medium">
           Այս պահին առանձնահատկություններ չեն ավելացվել։ Ավելացնելու համար սեղմեք «Ավելացնել» կոճակը։
         </div>
       </div>
 
       <!-- ── FORM ERROR / ACTIONS ── -->
-      <div class="border-t border-zinc-100 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="border-t border-zinc-100 pt-5 sm:pt-6 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
         <p v-if="errors.submit" class="text-xs font-semibold text-red-500">{{ errors.submit }}</p>
         <div v-else class="text-xs text-zinc-600">
           Այն դաշտերը, որոնք նշված են <span class="text-red-500">*</span> նշանով, պարտադիր են։
         </div>
 
-        <div class="flex gap-3 w-full sm:w-auto">
+        <div class="flex gap-2 sm:gap-3 w-full sm:w-auto">
           <BaseButton
             type="button"
             variant="outline"
@@ -933,7 +937,7 @@ const handleSave = async () => {
             size="md"
             :loading="isSubmitting"
             :disabled="isSubmitting"
-            class="flex-grow sm:flex-initial shadow-sm hover:shadow-primary/20"
+            class="flex-1 sm:flex-initial shadow-sm hover:shadow-primary/20"
           >
             <span v-if="isSubmitting">Բեռնվում է...</span>
             <span v-else>Պահպանել</span>
