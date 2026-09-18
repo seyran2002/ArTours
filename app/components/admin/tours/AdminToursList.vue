@@ -61,16 +61,16 @@ function confirmDelete(id: string) {
 <template>
   <div class="space-y-6">
     <!-- Search and Actions Bar -->
-    <div class="flex flex-col lg:flex-row gap-4 items-center justify-between bg-white/70 border border-zinc-200/60 backdrop-blur-sm p-4 rounded-2xl shadow-sm">
+    <div class="flex flex-col lg:flex-row gap-3 sm:gap-4 items-stretch lg:items-center justify-between bg-white/70 border border-zinc-200/60 backdrop-blur-sm p-3.5 sm:p-4 rounded-2xl shadow-sm">
       <!-- Search Input -->
       <div class="relative w-full lg:max-w-md group">
-        <div class="flex items-center gap-3 bg-zinc-50 border border-zinc-200/80 px-4 py-2.5 rounded-xl transition-all duration-300 focus-within:border-primary/30 focus-within:shadow-[0_0_0_3px_rgba(18,83,78,0.06)] focus-within:bg-white hover:border-zinc-300">
+        <div class="flex items-center gap-2.5 sm:gap-3 bg-zinc-50 border border-zinc-200/80 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl transition-all duration-300 focus-within:border-primary/30 focus-within:shadow-[0_0_0_3px_rgba(18,83,78,0.06)] focus-within:bg-white hover:border-zinc-300">
           <BaseIcon name="search" size="sm" class="text-zinc-400 group-focus-within:text-primary transition-colors duration-300 shrink-0" />
           <input
             v-model="searchQuery"
             type="text"
-            placeholder="Փնտրել տուրեր վերնագրով կամ նկարագրությամբ..."
-            class="w-full bg-transparent text-sm font-medium text-zinc-800 placeholder-zinc-400 outline-none border-none"
+            placeholder="Փնտրել տուրեր..."
+            class="w-full bg-transparent text-xs sm:text-sm font-medium text-zinc-800 placeholder-zinc-400 outline-none border-none min-w-0"
           />
           <button
             v-if="searchQuery"
@@ -83,12 +83,12 @@ function confirmDelete(id: string) {
       </div>
 
       <!-- Filter Buttons -->
-      <div class="inline-flex items-center min-w-[373px] max-w-[373px] gap-1 p-1 bg-zinc-100 border border-zinc-200 rounded-2xl">
+      <div class="flex items-center w-full lg:w-auto min-w-0 gap-1 p-1 bg-zinc-100 border border-zinc-200 rounded-2xl max-w-full overflow-x-auto">
         <button
           type="button"
           id="tour-type-all"
           :class="[
-            'flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 cursor-pointer',
+            'flex-1 sm:flex-initial flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer whitespace-nowrap',
             tourType === 'ALL'
               ? 'bg-white text-primary shadow-sm border border-primary/20'
               : 'text-zinc-500 hover:text-zinc-700'
@@ -101,7 +101,7 @@ function confirmDelete(id: string) {
           type="button"
           id="tour-type-tour"
           :class="[
-            'flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 cursor-pointer',
+            'flex-1 sm:flex-initial flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer whitespace-nowrap',
             tourType === 'TOUR'
               ? 'bg-white text-primary shadow-sm border border-primary/20'
               : 'text-zinc-500 hover:text-zinc-700'
@@ -114,7 +114,7 @@ function confirmDelete(id: string) {
           type="button"
           id="tour-type-transfer"
           :class="[
-            'flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 cursor-pointer',
+            'flex-1 sm:flex-initial flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer whitespace-nowrap',
             tourType === 'TRANSFER'
               ? 'bg-white text-primary shadow-sm border border-primary/20'
               : 'text-zinc-500 hover:text-zinc-700'
@@ -129,7 +129,7 @@ function confirmDelete(id: string) {
       <button
         type="button"
         @click="emit('create')"
-        class="w-full lg:w-auto px-5 py-2.5 text-sm font-semibold bg-primary hover:bg-primary-dark text-white rounded-xl transition-all duration-300 cursor-pointer hover:shadow-lg shadow-primary/10 active:scale-95 flex items-center justify-center gap-2"
+        class="w-full lg:w-auto px-4 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold bg-primary hover:bg-primary-dark text-white rounded-xl transition-all duration-300 cursor-pointer hover:shadow-lg shadow-primary/10 active:scale-95 flex items-center justify-center gap-2 shrink-0"
       >
         <BaseIcon name="plus" size="sm" />
         <span>Ստեղծել Տուր/Տրանսֆեր</span>
@@ -139,7 +139,7 @@ function confirmDelete(id: string) {
     <!-- Cards Grid -->
     <div
       v-if="filteredTours.length"
-      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6"
     >
       <div
         v-for="tour in filteredTours"
@@ -154,7 +154,7 @@ function confirmDelete(id: string) {
         />
 
         <!-- Overlay Delete Button (Corner trash can) -->
-        <div class="absolute top-4 right-4 z-20 flex gap-2">
+        <div class="absolute top-3 right-3 sm:top-4 sm:right-4 z-20 flex gap-2">
           <button
             v-if="deleteConfirmId !== tour.id"
             type="button"
@@ -173,14 +173,14 @@ function confirmDelete(id: string) {
             <button
               type="button"
               @click="confirmDelete(tour.id)"
-              class="px-2.5 py-0.5 text-xs font-extrabold bg-white text-red-600 rounded-lg hover:bg-zinc-100 transition-all active:scale-95 cursor-pointer"
+              class="px-2 sm:px-2.5 py-0.5 text-[11px] sm:text-xs font-extrabold bg-white text-red-600 rounded-lg hover:bg-zinc-100 transition-all active:scale-95 cursor-pointer whitespace-nowrap"
             >
               Ջնջել
             </button>
             <button
               type="button"
               @click="deleteConfirmId = null"
-              class="px-2 py-0.5 text-xs font-bold text-white/95 hover:text-white transition-all cursor-pointer"
+              class="px-1.5 sm:px-2 py-0.5 text-[11px] sm:text-xs font-bold text-white/95 hover:text-white transition-all cursor-pointer whitespace-nowrap"
             >
               Չեղարկել
             </button>

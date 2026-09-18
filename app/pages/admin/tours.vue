@@ -97,55 +97,55 @@ function onFormCancel() {
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-6">
       <div>
         <h1 class="text-2xl sm:text-3xl font-bold font-serif text-zinc-900 tracking-tight">Տուրեր/Տրանսֆերներ</h1>
-        <p class="text-sm text-zinc-500 mt-1">Կառավարեք պատմական, մշակութային և բնությանը նվիրված տուրերն ու Տրանսֆերները, գնագոյացումը և տեգերի զտումը:</p>
+        <p class="text-xs sm:text-sm text-zinc-500 mt-1">Կառավարեք պատմական, մշակութային և բնությանը նվիրված տուրերն ու Տրանսֆերները, գնագոյացումը և տեգերի զտումը:</p>
       </div>
 
       <!-- Quick Stats -->
-      <div class="flex gap-3 sm:gap-4 flex-wrap sm:flex-nowrap">
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-4 w-full md:w-auto">
         <!-- Tours Stat -->
-        <div class="flex-1 md:flex-none bg-white/70 backdrop-blur-sm border border-zinc-200/60 rounded-2xl px-4 sm:px-5 py-3 shadow-sm flex items-center gap-3">
+        <div class="bg-white/70 backdrop-blur-sm border border-zinc-200/60 rounded-2xl px-3.5 sm:px-5 py-2.5 sm:py-3 shadow-sm flex items-center gap-3">
           <div class="p-2 sm:p-2.5 rounded-xl bg-primary/10 text-primary shrink-0">
             <BaseIcon name="map" size="sm" />
           </div>
           <div class="min-w-0">
-            <span class="block text-[10px] font-bold text-zinc-450 uppercase tracking-wider leading-tight">Տուրերի Քանակը</span>
-            <span class="text-xl font-extrabold text-zinc-800">{{ toursCount }}</span>
+            <span class="block text-[10px] font-bold text-zinc-450 uppercase tracking-wider leading-tight truncate">Տուրերի Քանակը</span>
+            <span class="text-lg sm:text-xl font-extrabold text-zinc-800">{{ toursCount }}</span>
           </div>
         </div>
 
         <!-- Transfers Stat -->
-        <div class="flex-1 md:flex-none bg-white/70 backdrop-blur-sm border border-zinc-200/60 rounded-2xl px-4 sm:px-5 py-3 shadow-sm flex items-center gap-3">
+        <div class="bg-white/70 backdrop-blur-sm border border-zinc-200/60 rounded-2xl px-3.5 sm:px-5 py-2.5 sm:py-3 shadow-sm flex items-center gap-3">
           <div class="p-2 sm:p-2.5 rounded-xl bg-teal-500/10 text-teal-700 shrink-0">
             <BaseIcon name="transfers" size="sm" />
           </div>
           <div class="min-w-0">
-            <span class="block text-[10px] font-bold text-zinc-450 uppercase tracking-wider leading-tight">Տրանսֆերների Քանակը</span>
-            <span class="text-xl font-extrabold text-zinc-800">{{ transfersCount }}</span>
+            <span class="block text-[10px] font-bold text-zinc-450 uppercase tracking-wider leading-tight truncate">Տրանսֆերների Քանակը</span>
+            <span class="text-lg sm:text-xl font-extrabold text-zinc-800">{{ transfersCount }}</span>
           </div>
         </div>
 
         <!-- Tags Stat -->
-        <div class="flex-1 md:flex-none bg-white/70 backdrop-blur-sm border border-zinc-200/60 rounded-2xl px-4 sm:px-5 py-3 shadow-sm flex items-center gap-3">
+        <div class="bg-white/70 backdrop-blur-sm border border-zinc-200/60 rounded-2xl px-3.5 sm:px-5 py-2.5 sm:py-3 shadow-sm flex items-center gap-3">
           <div class="p-2 sm:p-2.5 rounded-xl bg-amber-500/10 text-amber-600 shrink-0">
             <BaseIcon name="tag" size="sm" />
           </div>
           <div class="min-w-0">
-            <span class="block text-[10px] font-bold text-zinc-450 uppercase tracking-wider leading-tight">Տեգերի Քանակը</span>
-            <span class="text-xl font-extrabold text-zinc-800">{{ tags.length }}</span>
+            <span class="block text-[10px] font-bold text-zinc-450 uppercase tracking-wider leading-tight truncate">Տեգերի Քանակը</span>
+            <span class="text-lg sm:text-xl font-extrabold text-zinc-800">{{ tags.length }}</span>
           </div>
         </div>
       </div>
     </div>
 
     <!-- Tab Navigation -->
-    <div class="flex flex-col gap-3 border-b border-zinc-200/85 pb-5 w-fit max-w-full">
-      <div class="flex bg-zinc-200/50 p-1.5 rounded-2xl gap-1 border border-zinc-200/40 w-full sm:w-auto">
+    <div class="flex flex-col gap-3 border-b border-zinc-200/85 pb-5 w-full max-w-full">
+      <div class="flex bg-zinc-200/50 p-1.5 rounded-2xl gap-1 border border-zinc-200/40 w-full sm:w-auto max-w-full overflow-x-auto">
         <!-- View List Tab -->
         <button
           type="button"
           @click="activeView = 'list'"
           :class="[
-            'px-3 sm:px-5 py-2.5 rounded-xl text-xs font-bold transition-all duration-300 cursor-pointer flex items-center justify-center gap-1.5 active:scale-95 flex-1 sm:flex-initial',
+            'px-3 sm:px-5 py-2 sm:py-2.5 rounded-xl text-xs font-bold transition-all duration-300 cursor-pointer flex items-center justify-center gap-1.5 active:scale-95 flex-1 sm:flex-initial whitespace-nowrap',
             activeView === 'list'
               ? 'bg-primary text-white shadow-md shadow-primary/15'
               : 'text-zinc-500 hover:text-zinc-800 hover:bg-white/50'
@@ -161,7 +161,7 @@ function onFormCancel() {
           type="button"
           @click="activeView = 'form'"
           :class="[
-            'px-3 sm:px-5 py-2.5 rounded-xl text-xs font-bold transition-all duration-300 cursor-pointer flex items-center justify-center gap-1.5 active:scale-95 flex-1 sm:flex-initial',
+            'px-3 sm:px-5 py-2 sm:py-2.5 rounded-xl text-xs font-bold transition-all duration-300 cursor-pointer flex items-center justify-center gap-1.5 active:scale-95 flex-1 sm:flex-initial whitespace-nowrap',
             activeView === 'form'
               ? 'bg-primary text-white shadow-md shadow-primary/15'
               : 'text-zinc-500 hover:text-zinc-800 hover:bg-white/50'
@@ -177,7 +177,7 @@ function onFormCancel() {
           type="button"
           @click="activeView = 'tags'"
           :class="[
-            'px-3 sm:px-5 py-2.5 rounded-xl text-xs font-bold transition-all duration-300 cursor-pointer flex items-center justify-center gap-1.5 active:scale-95 flex-1 sm:flex-initial',
+            'px-3 sm:px-5 py-2 sm:py-2.5 rounded-xl text-xs font-bold transition-all duration-300 cursor-pointer flex items-center justify-center gap-1.5 active:scale-95 flex-1 sm:flex-initial whitespace-nowrap',
             activeView === 'tags'
               ? 'bg-primary text-white shadow-md shadow-primary/15'
               : 'text-zinc-500 hover:text-zinc-800 hover:bg-white/50'
@@ -189,7 +189,7 @@ function onFormCancel() {
         </button>
       </div>
 
-      <div v-if="activeView === 'form' && editingTourId" class="text-xs font-bold text-zinc-400 bg-zinc-100/80 px-3 py-1.5 rounded-lg border border-zinc-200/50 self-start">
+      <div v-if="activeView === 'form' && editingTourId" class="text-xs font-bold text-zinc-400 bg-zinc-100/80 px-3 py-1.5 rounded-lg border border-zinc-200/50 self-start max-w-full truncate">
         Editing: <span class="text-zinc-700">{{ editingTourTitle }}</span>
       </div>
     </div>
@@ -225,19 +225,19 @@ function onFormCancel() {
     <Transition name="toast">
       <div
         v-if="toast"
-        class="fixed bottom-6 right-6 z-50 flex items-center gap-3 px-5 py-4 rounded-2xl shadow-xl border backdrop-blur-md transition-all duration-300 animate-slide-in-toast"
+        class="fixed bottom-4 sm:bottom-6 left-4 sm:left-auto right-4 sm:right-6 max-w-[calc(100vw-2rem)] z-50 flex items-center gap-3 px-4 sm:px-5 py-3 sm:py-4 rounded-2xl shadow-xl border backdrop-blur-md transition-all duration-300 animate-slide-in-toast"
         :class="[
           toast.type === 'success'
             ? 'bg-emerald-50/90 border-emerald-200 text-emerald-800 shadow-emerald-500/10'
             : 'bg-red-50/90 border-red-200 text-red-800 shadow-red-500/10'
         ]"
       >
-        <BaseIcon :name="toast.type === 'success' ? 'check-circle' : 'alert-circle'" size="sm" />
-        <span class="text-xs font-semibold">{{ toast.message }}</span>
+        <BaseIcon :name="toast.type === 'success' ? 'check-circle' : 'alert-circle'" size="sm" class="shrink-0" />
+        <span class="text-xs font-semibold leading-tight">{{ toast.message }}</span>
         <button
           type="button"
           @click="toast = null"
-          class="ml-3 text-zinc-400 hover:text-zinc-600"
+          class="ml-auto text-zinc-400 hover:text-zinc-600 shrink-0 p-1"
         >
           <BaseIcon name="x" size="xs" />
         </button>
