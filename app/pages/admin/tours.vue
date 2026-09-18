@@ -92,18 +92,18 @@ function onFormCancel() {
 </script>
 
 <template>
-  <div class="space-y-6">
+  <div class="space-y-6 w-full min-w-0 overflow-x-hidden">
     <!-- Header & Stats -->
-    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-6">
-      <div>
-        <h1 class="text-2xl sm:text-3xl font-bold font-serif text-zinc-900 tracking-tight">Տուրեր/Տրանսֆերներ</h1>
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-6 min-w-0">
+      <div class="min-w-0">
+        <h1 class="text-2xl sm:text-3xl font-bold font-serif text-zinc-900 tracking-tight truncate">Տուրեր/Տրանսֆերներ</h1>
         <p class="text-xs sm:text-sm text-zinc-500 mt-1">Կառավարեք պատմական, մշակութային և բնությանը նվիրված տուրերն ու Տրանսֆերները, գնագոյացումը և տեգերի զտումը:</p>
       </div>
 
       <!-- Quick Stats -->
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-4 w-full md:w-auto">
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-4 w-full md:w-auto min-w-0">
         <!-- Tours Stat -->
-        <div class="bg-white/70 backdrop-blur-sm border border-zinc-200/60 rounded-2xl px-3.5 sm:px-5 py-2.5 sm:py-3 shadow-sm flex items-center gap-3">
+        <div class="bg-white/70 backdrop-blur-sm border border-zinc-200/60 rounded-2xl px-3.5 sm:px-5 py-2.5 sm:py-3 shadow-sm flex items-center gap-3 min-w-0">
           <div class="p-2 sm:p-2.5 rounded-xl bg-primary/10 text-primary shrink-0">
             <BaseIcon name="map" size="sm" />
           </div>
@@ -114,7 +114,7 @@ function onFormCancel() {
         </div>
 
         <!-- Transfers Stat -->
-        <div class="bg-white/70 backdrop-blur-sm border border-zinc-200/60 rounded-2xl px-3.5 sm:px-5 py-2.5 sm:py-3 shadow-sm flex items-center gap-3">
+        <div class="bg-white/70 backdrop-blur-sm border border-zinc-200/60 rounded-2xl px-3.5 sm:px-5 py-2.5 sm:py-3 shadow-sm flex items-center gap-3 min-w-0">
           <div class="p-2 sm:p-2.5 rounded-xl bg-teal-500/10 text-teal-700 shrink-0">
             <BaseIcon name="transfers" size="sm" />
           </div>
@@ -125,7 +125,7 @@ function onFormCancel() {
         </div>
 
         <!-- Tags Stat -->
-        <div class="bg-white/70 backdrop-blur-sm border border-zinc-200/60 rounded-2xl px-3.5 sm:px-5 py-2.5 sm:py-3 shadow-sm flex items-center gap-3">
+        <div class="bg-white/70 backdrop-blur-sm border border-zinc-200/60 rounded-2xl px-3.5 sm:px-5 py-2.5 sm:py-3 shadow-sm flex items-center gap-3 min-w-0">
           <div class="p-2 sm:p-2.5 rounded-xl bg-amber-500/10 text-amber-600 shrink-0">
             <BaseIcon name="tag" size="sm" />
           </div>
@@ -138,8 +138,8 @@ function onFormCancel() {
     </div>
 
     <!-- Tab Navigation -->
-    <div class="flex flex-col gap-3 border-b border-zinc-200/85 pb-5 w-full max-w-full">
-      <div class="flex bg-zinc-200/50 p-1.5 rounded-2xl gap-1 border border-zinc-200/40 w-full sm:w-auto max-w-full overflow-x-auto">
+    <div class="flex flex-col gap-3 border-b border-zinc-200/85 pb-5 w-full max-w-full min-w-0">
+      <div class="flex bg-zinc-200/50 p-1.5 rounded-2xl gap-1 border border-zinc-200/40 w-full sm:w-auto max-w-full overflow-x-auto min-w-0">
         <!-- View List Tab -->
         <button
           type="button"
@@ -195,9 +195,9 @@ function onFormCancel() {
     </div>
 
     <!-- View Rendering -->
-    <div class="relative min-h-[300px]">
+    <div class="relative min-h-[300px] w-full min-w-0">
       <!-- 1. TOURS LIST -->
-      <div v-if="activeView === 'list'" class="animate-fade-in">
+      <div v-if="activeView === 'list'" class="animate-fade-in w-full min-w-0">
         <AdminToursList
           :tours="tours"
           @edit="onEdit"
@@ -206,7 +206,7 @@ function onFormCancel() {
       </div>
 
       <!-- 2. TOUR FORM -->
-      <div v-else-if="activeView === 'form'" class="animate-fade-in">
+      <div v-else-if="activeView === 'form'" class="animate-fade-in w-full min-w-0">
         <AdminTourForm
           :key="editingTourId ?? 'new'"
           :tour-id="editingTourId"
@@ -216,7 +216,7 @@ function onFormCancel() {
       </div>
 
       <!-- 3. TAGS MANAGEMENT -->
-      <div v-else-if="activeView === 'tags'" class="animate-fade-in">
+      <div v-else-if="activeView === 'tags'" class="animate-fade-in w-full min-w-0">
         <AdminLocationsTagsManagement />
       </div>
     </div>
