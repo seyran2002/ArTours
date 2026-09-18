@@ -195,7 +195,7 @@ function onFormCancel() {
     </div>
 
     <!-- View Rendering -->
-    <div class="relative min-h-[300px] w-full min-w-0">
+    <div class="relative min-h-[300px] w-full min-w-0 max-w-[calc(100vw-48px)] md:max-w-full">
       <!-- 1. TOURS LIST -->
       <div v-if="activeView === 'list'" class="animate-fade-in w-full min-w-0">
         <AdminToursList
