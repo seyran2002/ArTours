@@ -40,11 +40,11 @@ function toggleMeal(key: keyof MealOptions) {
 </script>
 
 <template>
-  <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-4">
     <div
       v-for="meal in meals"
       :key="meal.key"
-      class="relative flex items-center justify-between p-4 border rounded-2xl cursor-pointer select-none transition-all duration-300"
+      class="relative flex items-center justify-between p-3 sm:p-4 border rounded-xl sm:rounded-2xl cursor-pointer select-none transition-all duration-300 min-w-0"
       :class="[
         modelValue[meal.key]
           ? 'border-primary bg-primary/[0.03] shadow-sm'
@@ -53,10 +53,10 @@ function toggleMeal(key: keyof MealOptions) {
       ]"
       @click="toggleMeal(meal.key)"
     >
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2.5 sm:gap-3 min-w-0">
         <!-- Status Indicator Dot -->
         <span
-          class="flex items-center justify-center w-5.5 h-5.5 rounded-lg border-2 transition-all duration-200 shrink-0"
+          class="flex items-center justify-center w-5 h-5 sm:w-5.5 sm:h-5.5 rounded-lg border-2 transition-all duration-200 shrink-0"
           :class="[
             modelValue[meal.key]
               ? 'border-primary bg-primary text-white scale-100'
@@ -65,11 +65,11 @@ function toggleMeal(key: keyof MealOptions) {
         >
           <BaseIcon v-if="modelValue[meal.key]" name="check" size="xs" />
         </span>
-        <div class="flex flex-col">
-          <span class="text-sm font-bold text-zinc-800 capitalize">
+        <div class="flex flex-col min-w-0">
+          <span class="text-xs sm:text-sm font-bold text-zinc-800 capitalize truncate">
             {{ t(`tour.${meal.key}`) }}
           </span>
-          <span class="text-[10px] text-zinc-400">
+          <span class="text-[10px] text-zinc-400 truncate">
             {{ t(`tour.${meal.key}Desc`, meal.key === 'breakfast' ? 'Morning fuel' : meal.key === 'lunch' ? 'Midday feast' : 'Evening delight') }}
           </span>
         </div>

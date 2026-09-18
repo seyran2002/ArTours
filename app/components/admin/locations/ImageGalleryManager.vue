@@ -116,7 +116,7 @@ function triggerFileInput() {
     <!-- Gallery Grid -->
     <div
       v-if="modelValue.length"
-      class="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-4 border border-zinc-150 rounded-2xl p-4 bg-zinc-50/50"
+      class="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-2.5 sm:gap-4 border border-zinc-150 rounded-xl sm:rounded-2xl p-2.5 sm:p-4 bg-zinc-50/50"
     >
       <div
         v-for="(image, index) in modelValue"
@@ -131,17 +131,17 @@ function triggerFileInput() {
           @click="openPreview(index)"
         />
 
-        <!-- Hover Actions Overlay -->
-        <div class="absolute inset-x-0 bottom-0 p-1.5 flex justify-between gap-1 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <!-- Actions Overlay (Always accessible on touch, hover on desktop) -->
+        <div class="absolute inset-x-0 bottom-0 p-1 sm:p-1.5 flex justify-between items-center gap-1 bg-gradient-to-t from-black/80 via-black/40 to-transparent sm:opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <!-- Main Button -->
           <button
             type="button"
-            @click="selectMain(image)"
+            @click.stop="selectMain(image)"
             :class="[
-              'px-2 py-0.5 text-[10px] font-bold rounded-lg cursor-pointer transition-all duration-200',
+              'px-1.5 sm:px-2 py-0.5 text-[9px] sm:text-[10px] font-bold rounded-md sm:rounded-lg cursor-pointer transition-all duration-200 truncate',
               mainImage === image
                 ? 'bg-emerald-500 text-white shadow-sm'
-                : 'bg-white/80 hover:bg-white text-zinc-800'
+                : 'bg-white/90 hover:bg-white text-zinc-800'
             ]"
           >
             {{ mainImage === image ? 'Գլխավոր' : 'Ընտրել' }}
@@ -150,8 +150,8 @@ function triggerFileInput() {
           <!-- Delete Button -->
           <button
             type="button"
-            @click="removeImage(index)"
-            class="p-1 rounded-lg bg-red-500/90 hover:bg-red-500 text-white hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer"
+            @click.stop="removeImage(index)"
+            class="p-1 rounded-md sm:rounded-lg bg-red-500/90 hover:bg-red-500 text-white hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer shrink-0"
             title="Ջնջել"
           >
             <BaseIcon name="trash" size="xs" />
@@ -161,7 +161,7 @@ function triggerFileInput() {
         <!-- Main Cover Badge (always visible if main) -->
         <div
           v-if="mainImage === image"
-          class="absolute top-2 left-2 z-10 px-2 py-0.5 text-[9px] font-bold tracking-wider uppercase text-white bg-emerald-500 rounded-md shadow"
+          class="absolute top-1.5 left-1.5 sm:top-2 sm:left-2 z-10 px-1.5 sm:px-2 py-0.5 text-[8px] sm:text-[9px] font-bold tracking-wider uppercase text-white bg-emerald-500 rounded-md shadow"
         >
           Գլխավոր
         </div>
