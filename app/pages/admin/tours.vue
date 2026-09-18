@@ -92,7 +92,7 @@ function onFormCancel() {
 </script>
 
 <template>
-  <div class="space-y-6 w-full min-w-0 overflow-x-hidden">
+  <div class="space-y-6 w-full min-w-0  max-w-[calc(100vw-48px)] overflow-x-hidden">
     <!-- Header & Stats -->
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-6 min-w-0">
       <div class="min-w-0">
@@ -195,7 +195,7 @@ function onFormCancel() {
     </div>
 
     <!-- View Rendering -->
-    <div class="relative min-h-[300px] w-full min-w-0 max-w-[calc(100vw-48px)] md:max-w-full">
+    <div class="relative min-h-[300px] w-full min-w-0 md:max-w-full">
       <!-- 1. TOURS LIST -->
       <div v-if="activeView === 'list'" class="animate-fade-in w-full min-w-0">
         <AdminToursList
