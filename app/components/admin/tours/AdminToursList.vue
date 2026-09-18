@@ -83,7 +83,7 @@ function confirmDelete(id: string) {
       </div>
 
       <!-- Filter Buttons -->
-      <div class="flex items-center w-full lg:w-auto min-w-0 gap-1 p-1 bg-zinc-100 border border-zinc-200 rounded-2xl max-w-full overflow-x-auto">
+      <div class="flex items-center w-full lg:w-auto min-w-0 gap-1 p-1 bg-zinc-100 border border-zinc-200 min-w-full max-w-full sm:min-w-[372px] sm:max-w-[372px] rounded-2xl">
         <button
           type="button"
           id="tour-type-all"
