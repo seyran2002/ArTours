@@ -277,7 +277,7 @@
                 "duration": "Տևողություն"
             }
         },
-        "milestone": "Փուլերի հետևում",
+        "milestone": "Փուլերի հետեվում",
         "steps": {
             "booking_received": "Ամրագրումը ստացված է",
             "reservation_entered": "Ամրագրումը գրանցված է",
