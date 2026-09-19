@@ -296,7 +296,7 @@
       "readyDeparture": "Ready for departure",
       "confirmedStr": "Your reservation is fully confirmed. Pack your bags and get ready for an unforgettable journey!",
       "pendingStr": "We are verifying your deposit details and coordinator schedules. You will receive a final receipt within a few hours.",
-      "cancellationStr": "This booking has been cancelled. Please check your email for cancellation details or reach out to client assistance.",
+      "cancellationStr": "This booking has been cancelled. Please check Telegram for cancellation details or reach out to client assistance.",
       "completedStr": "Your trip is complete! Thank you for traveling with us. We hope to see you again soon!"
     }
   },

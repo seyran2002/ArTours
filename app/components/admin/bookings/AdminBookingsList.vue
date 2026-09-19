@@ -125,7 +125,7 @@ function formatDate(iso: string | undefined): string {
 
 function formatPrice(price: number | undefined): string {
   if (price == null) return '—'
-  return new Intl.NumberFormat('hy-AM', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(price)
+  return new Intl.NumberFormat('hy-AM', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(price)
 }
 
 const statusOptions: { value: BookingStatus; label: string }[] = [
