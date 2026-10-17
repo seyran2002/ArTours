@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
+import { useLocalePath } from '#imports'
 import { useBooking, computePrice } from '~/composables/useBooking'
 import type { BookingType, BookingResponse, BookingStatus } from '~/types/booking'
 import BaseButton from '~/components/ui/BaseButton.vue'
 import BaseIcon from '~/components/ui/BaseIcon.vue'
 import BaseInput from '~/components/ui/BaseInput.vue'
 
+const localePath = useLocalePath()
 const { locale, t } = useI18n();
 
 const props = withDefaults(defineProps<{
@@ -31,6 +33,13 @@ watch(() => props.initialPeopleCount, (val) => {
 
 // ─── Validation ───────────────────────────────────────────────────────────────
 const errors = ref<Record<string, string>>({})
+const agreedToTerms = ref(false)
+
+watch(agreedToTerms, (val) => {
+  if (val && errors.value.terms) {
+    delete errors.value.terms
+  }
+})
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const phoneRegex = /^[+\d\s\-()]{6,20}$/
@@ -60,6 +69,9 @@ function validate(): boolean {
     if (selected <= today) {
       e.travelDate = t('booking.validation.travelDate2')
     }
+  }
+  if (!agreedToTerms.value) {
+    e.terms = t('booking.validation.termsRequired')
   }
   errors.value = e
   return Object.keys(e).length === 0
@@ -110,6 +122,7 @@ const bookingDisplayData = computed(() => {
       : 'Armenia',
     enTravelDate: enTravelDateFormatted,
     ruTravelDate: ruTravelDateFormatted,
+    hyTravelDate: ruTravelDateFormatted,
     date: new Date(r.createdAt).toLocaleDateString('en-US', {
       month: 'short',
       day: 'numeric',
@@ -336,6 +349,44 @@ const telegramLink = computed(() => {
         />
       </div>
 
+      <!-- Required Consent Checkbox -->
+      <div class="space-y-1.5 pt-1">
+        <label class="flex items-start gap-2.5 cursor-pointer select-none group">
+          <input
+            id="book-terms-consent"
+            type="checkbox"
+            v-model="agreedToTerms"
+            class="mt-0.5 h-4 w-4 rounded border-zinc-300 text-primary focus:ring-primary/20 accent-[#12534E] cursor-pointer shrink-0"
+          />
+          <span class="text-xs text-zinc-600 leading-relaxed">
+            {{ $t('booking.form.consentPrefix') }}
+            <NuxtLink
+              :to="localePath('/terms')"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-primary font-semibold underline underline-offset-2 hover:text-teal-900 transition-colors"
+              @click.stop
+            >
+              {{ $t('booking.form.termsAndConditions') }}
+            </NuxtLink>
+            {{ $t('booking.form.and') }}
+            <NuxtLink
+              :to="localePath('/privacy')"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-primary font-semibold underline underline-offset-2 hover:text-teal-900 transition-colors"
+              @click.stop
+            >
+              {{ $t('booking.form.privacyPolicy') }}
+            </NuxtLink>
+            <span class="text-red-500 ml-0.5">*</span>
+          </span>
+        </label>
+        <p v-if="errors.terms" class="text-xs text-red-500 pl-6 flex items-center gap-1">
+          <span>⚠</span> {{ errors.terms }}
+        </p>
+      </div>
+
       <!-- API Error -->
       <div
         v-if="submitError"
@@ -351,6 +402,7 @@ const telegramLink = computed(() => {
         variant="primary"
         size="lg"
         :loading="isSubmitting"
+        :disabled="!agreedToTerms || isSubmitting"
         class="w-full shadow-sm hover:shadow-primary/20"
       >
         <BaseIcon v-if="!isSubmitting" name="ticket" custom-class="mr-2" />

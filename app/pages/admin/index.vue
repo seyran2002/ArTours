@@ -33,6 +33,20 @@ onMounted(fetchStats)
 
     <!-- Stats cards grid -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+      
+      <!-- Pending comments -->
+      <div class="bg-white/70 backdrop-blur-sm border border-zinc-200/60 rounded-2xl px-5 py-4 shadow-sm hover:shadow transition-shadow duration-200 flex items-center gap-4">
+        <div class="p-2.5 rounded-xl bg-amber-500/10 text-amber-600 shrink-0">
+          <BaseIcon name="comments" size="sm" />
+        </div>
+        <div class="min-w-0">
+          <p class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider leading-tight mb-0.5">Չհաստատված մեկնաբանություններ</p>
+          <p class="text-2xl font-extrabold text-zinc-800">
+            <span v-if="loading" class="inline-block w-8 h-6 bg-zinc-200 animate-pulse rounded" />
+            <span v-else>{{ stats?.pendingCommentsCount ?? '—' }}</span>
+          </p>
+        </div>
+      </div>
 
       <!-- Active Bookings -->
       <div class="bg-white/70 backdrop-blur-sm border border-zinc-200/60 rounded-2xl px-5 py-4 shadow-sm hover:shadow transition-shadow duration-200 flex items-center gap-4">

@@ -61,7 +61,72 @@
       "badge": "Traveler Voices",
       "titlePart1": "What Our",
       "titlePart2": "Travelers Say",
-      "description": "These are real stories from real travelers who have explored Armenia with us. Their words reflect the heart of our journeys."
+      "description": "These are real stories from real travelers who have explored Armenia with us. Their words reflect the heart of our journeys.",
+      "viewAll": "View all reviews ({count})",
+      "collapse": "Collapse to carousel",
+      "previous": "Previous review",
+      "next": "Next review",
+      "loading": "Loading traveler testimonials…",
+      "error": "Failed to load testimonials",
+      "retry": "Try again",
+      "emptyTitle": "No reviews yet",
+      "emptyDesc": "Be the first traveler to share your journey experience with ArTours!",
+      "verifiedTraveler": "Verified Traveler",
+      "photos": "photos",
+      "viewPhotos": "View photos ({count})",
+      "photoGallery": "Traveler Photos",
+      "slideIndicator": "Page {current} of {total}",
+      "readMore": "Read more",
+      "showLess": "Show less",
+      "modal": {
+        "openButton": "Share your experience",
+        "title": "Share Your Experience",
+        "subtitle": "Traveler Review",
+        "close": "Close modal",
+        "errorTitle": "Submission failed",
+        "error": "Something went wrong. Please try again.",
+        "form": {
+          "name": "First Name",
+          "namePlaceholder": "e.g. Anna",
+          "surname": "Last Name",
+          "surnamePlaceholder": "e.g. Smith",
+          "rating": "Your Rating",
+          "comment": "Your Review",
+          "commentPlaceholder": "Share your experience with ArTours…",
+          "commentHint": "Minimum 10 characters",
+          "images": "Photos",
+          "optional": "optional",
+          "submit": "Submit Review",
+          "submitting": "Submitting…",
+          "moderationNote": "Your review will be visible after moderation by our team.",
+          "consentPrefix": "I agree to the",
+          "termsAndConditions": "Terms and Conditions",
+          "and": "and",
+          "privacyPolicy": "Privacy Policy"
+        },
+        "images": {
+          "upload": "Choose Photos",
+          "hint": "PNG, JPG, WEBP — up to {max} images",
+          "count": "{count} / {max} photos",
+          "remove": "Remove photo",
+          "full": "Maximum photos reached",
+          "maxReached": "Limit reached"
+        },
+        "validation": {
+          "name": "First name is required",
+          "surname": "Last name is required",
+          "rating": "Please select a rating",
+          "comment": "Review text is required",
+          "commentMin": "Review must be at least 10 characters",
+          "imagesMax": "You can upload a maximum of 50 photos",
+          "terms": "You must agree to the Terms and Conditions and Privacy Policy to submit a review"
+        },
+        "success": {
+          "title": "Thank you for your review!",
+          "desc": "Your review has been submitted and is awaiting moderation. Once approved by our team, it will appear on the website.",
+          "close": "Done"
+        }
+      }
     }
   },
   "locations": {
@@ -199,7 +264,8 @@
       "phoneNumber2": "Please enter a valid phone number",
       "peopleCount": "At least 1 person is required.",
       "travelDate": "Please select a travel date",
-      "bookingNotFound": "Invalid booking details. Please check your booking number and email."
+      "bookingNotFound": "Invalid booking details. Please check your booking number and email.",
+      "termsRequired": "You must agree to the Terms and Conditions and Privacy Policy to proceed with your booking"
     },
     "cancelModal": {
       "subtitle": "Cancellation Request",
@@ -260,6 +326,7 @@
       "summary": {
         "tourTitle": "🗺 Tour Booking",
         "locationTitle": "🚐 Location Booking",
+        "transferTitle": "🚐 Transfer Booking",
         "type": "Type",
         "payment": "Payment",
         "total": "Total",
@@ -267,6 +334,7 @@
         "travelers": "Travelers",
         "tour": "Tour",
         "location": "Location",
+        "transfer": "Transfer",
         "cash": "Cash",
         "travelDate": "Travel Date",
         "cancellationStr": "Free cancellation up to 24h before departure. No upfront payment required.",
@@ -275,7 +343,11 @@
         "discountStr": "Discounted rate applied (4+ people)",
         "totalAmount": "Total Amount",
         "duration": "Duration"
-      }
+      },
+      "consentPrefix": "I have read and agree to the",
+      "termsAndConditions": "Terms and Conditions",
+      "and": "and",
+      "privacyPolicy": "Privacy Policy"
     },
     "milestone": "Traking Milestones",
     "steps": {
@@ -355,7 +427,9 @@
     "copyright": "© 2026 ArTours Travel Agency. All rights reserved.",
     "navigation": "Navigation",
     "social": "Social Links",
-    "contactDetails": "Contact Details"
+    "contactDetails": "Contact Details",
+    "terms": "Terms & Conditions",
+    "privacy": "Privacy Policy"
   },
   "about": {
     "hero": {
@@ -510,6 +584,22 @@
       "ogTitle": "Check Booking Status — ArTours",
       "ogDescription": "Enter your booking code to track your itinerary, guide confirmation, and travel details for your upcoming Armenia trip.",
       "siteName": "ArTours Armenia"
+    },
+    "terms": {
+      "title": "Terms and Conditions — ArTours | Official Armenia Travel Agency",
+      "description": "Read the official Terms and Conditions of ArTours (artours.am). Guidelines on tour bookings, cancellations, customer responsibilities, and travel services in Armenia.",
+      "keywords": "Terms and conditions ArTours, Armenia tour booking terms, artours.am terms, travel conditions Armenia",
+      "ogTitle": "Terms and Conditions — ArTours",
+      "ogDescription": "Official Terms and Conditions for booking tours and transfer services in Armenia with ArTours.",
+      "siteName": "ArTours Armenia"
+    },
+    "privacy": {
+      "title": "Privacy Policy — ArTours | Personal Data Protection",
+      "description": "Learn how ArTours (artours.am) collects, uses, protects, and handles your personal data. Comprehensive information about privacy and your data rights.",
+      "keywords": "Privacy policy ArTours, data protection Armenia, artours.am privacy, personal data tour booking",
+      "ogTitle": "Privacy Policy — ArTours",
+      "ogDescription": "ArTours values your privacy. Learn about our personal data collection, usage, third-party services, and user rights.",
+      "siteName": "ArTours Armenia"
     }
   },
   "error404": {
@@ -519,5 +609,296 @@
     "backHome": "Back to Home",
     "exploreTours": "Explore Tours",
     "seoTitle": "404 — ArTours"
+  },
+  "terms": {
+    "badge": "Legal Agreement",
+    "title": "Terms and Conditions",
+    "subtitle": "Official terms and conditions governing the use of the ArTours website and booking of our tour and transfer services.",
+    "lastUpdatedLabel": "Last updated:",
+    "lastUpdatedDate": "October 17, 2026",
+    "tableOfContents": "Table of Contents",
+    "contactCard": {
+      "title": "Need Assistance?",
+      "description": "Have questions regarding our terms or custom travel arrangements? Our team is available 24/7.",
+      "phoneLabel": "Phone / WhatsApp / Telegram",
+      "emailLabel": "Email Support",
+      "addressLabel": "Headquarters",
+      "phone": "+374 55 42 55 95",
+      "email": "artoursarmenia{'@'}gmail.com",
+      "address": "Yerevan, Armenia",
+      "contactButton": "Contact Us"
+    },
+    "sections": [
+      {
+        "id": "general-provisions",
+        "number": "1",
+        "title": "1. General Provisions",
+        "paragraphs": [
+          "These Terms and Conditions govern the use of the ArTours website (artours.am) and the booking of tours and transfer services through the website.",
+          "By accessing the website or making a booking, you agree to these Terms and Conditions. If you do not agree, please do not use the website or its services.",
+          "ArTours provides information about tours, transportation, and related travel services in Armenia. Service descriptions, prices, itineraries, and conditions may vary depending on the selected service."
+        ]
+      },
+      {
+        "id": "bookings-and-confirmations",
+        "number": "2",
+        "title": "2. Bookings and Confirmations",
+        "paragraphs": [
+          "Customers may submit booking requests through the ArTours website by providing accurate and complete information.",
+          "A booking request is considered confirmed only after confirmation from ArTours. Customers are responsible for checking the booking details, including the date, time, number of passengers, pickup location, destination, and selected services.",
+          "ArTours reserves the right to decline or cancel a booking when a service is unavailable, operational limitations arise, safety concerns occur, or incorrect information has been provided."
+        ]
+      },
+      {
+        "id": "prices-and-payments",
+        "number": "3",
+        "title": "3. Prices and Payments",
+        "paragraphs": [
+          "Prices are displayed on the website or communicated to the customer before the booking is confirmed.",
+          "The applicable price and any additional fees are communicated before the customer confirms the booking. Additional services or changes requested by the customer may incur extra charges.",
+          "Payment methods and deadlines are communicated during the booking process or in the booking confirmation. Customers must pay the agreed amount according to the applicable booking conditions."
+        ]
+      },
+      {
+        "id": "cancellations-and-changes",
+        "number": "4",
+        "title": "4. Cancellations and Changes",
+        "paragraphs": [
+          "Customers may request to cancel or modify a booking by contacting ArTours through the available contact channels.",
+          "Cancellation requests should be submitted at least 48 hours before the scheduled service. Later requests are subject to availability and the cancellation conditions communicated for the specific booking.",
+          "Changes to dates, times, itineraries, passenger numbers, or pickup locations are subject to availability and may affect the price.",
+          "If ArTours must cancel a confirmed service, it will inform the customer as soon as reasonably possible and explain the available alternatives or applicable refund arrangements.",
+          "Refunds and cancellation charges are governed by the conditions communicated for the booking and applicable law."
+        ]
+      },
+      {
+        "id": "customer-responsibilities",
+        "number": "5",
+        "title": "5. Customer Responsibilities",
+        "paragraphs": [
+          "Customers agree to observe the following responsibilities throughout their experience:"
+        ],
+        "items": [
+          "Provide accurate contact and booking information.",
+          "Arrive at the agreed pickup location on time.",
+          "Follow reasonable safety instructions provided by guides and drivers.",
+          "Respect local laws, cultural sites, other travelers, and service personnel.",
+          "Inform ArTours in advance of relevant accessibility requirements or special arrangements.",
+          "Ensure that all passengers have the documents required for their planned travel."
+        ],
+        "closingParagraph": "ArTours may refuse service if a customer's behavior creates a safety risk, seriously disrupts the service, or violates applicable law."
+      },
+      {
+        "id": "tours-and-transportation",
+        "number": "6",
+        "title": "6. Tours and Transportation",
+        "paragraphs": [
+          "Tour itineraries, schedules, and travel times may be approximate, as circumstances can affect them.",
+          "Routes, schedules, or activities may change because of weather, road conditions, traffic, government restrictions, site closures, safety concerns, or other circumstances beyond ArTours' reasonable control.",
+          "ArTours will make reasonable efforts to inform customers of significant changes and, where possible, offer a suitable alternative.",
+          "Customers must follow the instructions of guides and drivers and comply with applicable transportation and safety requirements."
+        ]
+      },
+      {
+        "id": "liability-and-unforeseen-circumstances",
+        "number": "7",
+        "title": "7. Liability and Unforeseen Circumstances",
+        "paragraphs": [
+          "ArTours will make reasonable efforts to provide services as described and with appropriate care.",
+          "To the extent permitted by applicable law, ArTours is not responsible for delays, interruptions, or losses caused by circumstances beyond its reasonable control, including severe weather, natural disasters, road closures, strikes, government measures, or other force majeure events.",
+          "Nothing in these Terms and Conditions excludes or limits liability where such exclusion or limitation is prohibited by law."
+        ]
+      },
+      {
+        "id": "website-content-and-intellectual-property",
+        "number": "8",
+        "title": "8. Website Content and Intellectual Property",
+        "paragraphs": [
+          "Website text, photographs, graphics, branding, and other materials are owned by ArTours or used with permission, unless otherwise stated.",
+          "You may not reproduce, distribute, modify, or commercially use website content without appropriate authorization.",
+          "ArTours makes reasonable efforts to keep website information accurate and current but does not guarantee that every description, photograph, price, or schedule will always be complete or error-free."
+        ]
+      },
+      {
+        "id": "personal-data-and-privacy",
+        "number": "9",
+        "title": "9. Personal Data and Privacy",
+        "paragraphs": [
+          "ArTours values the privacy and security of your personal data.",
+          "Personal information you provide through our website is used to manage bookings, provide our services, communicate with you, respond to inquiries, and ensure the proper functioning of the website.",
+          "We do not sell your personal data or share it with third parties for their own marketing purposes or for purposes unrelated to our services.",
+          "To operate the website, analyze visitor statistics, and store and display images, we may use third-party services, including Google Analytics, Cloudinary, and hosting providers. These services may process certain technical or personal data to the extent necessary to perform their respective functions.",
+          "We take reasonable measures to protect your data against unauthorized access, loss, or disclosure. Data transfers and processing are carried out in accordance with applicable law.",
+          "We use your data only for the purposes described above or where required or permitted by law."
+        ]
+      },
+      {
+        "id": "complaints-and-communication",
+        "number": "10",
+        "title": "10. Complaints and Communication",
+        "paragraphs": [
+          "Customers who have questions, concerns, or complaints about a booking should contact ArTours and provide the relevant booking details.",
+          "ArTours will make reasonable efforts to review complaints and resolve them fairly.",
+          "Official Contact Details: Email: artoursarmenia{'@'}gmail.com | Telephone: +374 55 42 55 95"
+        ]
+      },
+      {
+        "id": "amendments",
+        "number": "11",
+        "title": "11. Amendments",
+        "paragraphs": [
+          "ArTours may update these Terms and Conditions when necessary. The latest version will be published on the website with its updated date.",
+          "Changes will apply as permitted by applicable law. The terms applicable to an existing booking will be determined by the booking agreement and relevant legal requirements."
+        ]
+      },
+      {
+        "id": "governing-law",
+        "number": "12",
+        "title": "12. Governing Law",
+        "paragraphs": [
+          "These Terms and Conditions are subject to the applicable laws of the Republic of Armenia.",
+          "Any disputes will be handled by the competent courts or other appropriate dispute-resolution bodies in accordance with applicable law."
+        ]
+      },
+      {
+        "id": "contact",
+        "number": "13",
+        "title": "13. Contact",
+        "paragraphs": [
+          "For questions about these Terms and Conditions, please contact ArTours using the official contact information published on artours.am (Email: artoursarmenia{'@'}gmail.com, Phone: +374 55 42 55 95)."
+        ]
+      }
+    ]
+  },
+  "privacy": {
+    "badge": "Privacy & Data Protection",
+    "title": "Privacy Policy",
+    "subtitle": "Learn how ArTours collects, handles, protects, and stores your personal information when using our services and website.",
+    "lastUpdatedLabel": "Last updated:",
+    "lastUpdatedDate": "October 17, 2026",
+    "tableOfContents": "Table of Contents",
+    "contactCard": {
+      "title": "Data Protection Inquiries",
+      "description": "If you have questions about your personal data or wish to exercise your rights, please reach out directly.",
+      "phoneLabel": "Data Officer Line",
+      "emailLabel": "Privacy Email",
+      "addressLabel": "Headquarters",
+      "phone": "+374 55 42 55 95",
+      "email": "artoursarmenia{'@'}gmail.com",
+      "address": "Yerevan, Armenia",
+      "contactButton": "Contact Us"
+    },
+    "sections": [
+      {
+        "id": "general-provisions-controller",
+        "number": "1",
+        "title": "1. General Provisions & Data Controller",
+        "paragraphs": [
+          "This Privacy Policy outlines how ArTours ('we', 'us', or 'our'), operating via artours.am, processes and safeguards the personal data of customers, website visitors, and service users.",
+          "The Data Controller responsible for the processing of your personal data under applicable legislation of the Republic of Armenia is ArTours, located in Yerevan, Armenia.",
+          "We are dedicated to respecting your privacy, protecting your personal data, and maintaining transparent practices in all data handling operations."
+        ]
+      },
+      {
+        "id": "personal-data-collected",
+        "number": "2",
+        "title": "2. Personal Data We Collect",
+        "paragraphs": [
+          "We collect only the personal information strictly necessary to provide our tourism, transfer, and customer support services. This data includes:"
+        ],
+        "items": [
+          "Contact & Identification Data: First name, last name, phone number, and email address provided during tour booking, contact inquiries, or review submission.",
+          "Booking & Travel Details: Chosen travel dates, pickup/destination locations, number of travelers, special requests, and voucher reference numbers.",
+          "User Feedback & Reviews: Rating score, review testimonial, and optional photographs you upload to share your travel experience on artours.am.",
+          "Technical & Log Data: IP address, device type, browser specifications, operating system, and pages visited, collected automatically via server logs."
+        ],
+        "closingParagraph": "We do not intentionally collect sensitive categories of personal data (such as racial or ethnic origin, political opinions, or religious beliefs)."
+      },
+      {
+        "id": "purposes-of-data-processing",
+        "number": "3",
+        "title": "3. Purposes of Data Processing",
+        "paragraphs": [
+          "Your personal data is collected and processed for the following legitimate purposes:"
+        ],
+        "items": [
+          "Booking Fulfillment: Managing, scheduling, confirming, and executing tour itineraries and chauffeured transfer services.",
+          "Customer Communication: Sending booking confirmations, itinerary updates, responding to questions, and providing urgent trip support.",
+          "Authentic Reviews Display: Publishing traveler feedback and user-submitted photos on artours.am following content moderation.",
+          "Platform Security & Optimization: Monitoring website performance, detecting fraudulent activity, and refining user experience.",
+          "Legal & Regulatory Compliance: Meeting accounting, tax, transportation safety, and dispute resolution requirements under Armenian law."
+        ],
+        "closingParagraph": "We do not sell, rent, or trade your personal data with third parties for their commercial marketing purposes."
+      },
+      {
+        "id": "third-party-services",
+        "number": "4",
+        "title": "4. Third-Party Services & Data Processors",
+        "paragraphs": [
+          "To deliver high-reliability web and travel experiences, we partner with reputable third-party service providers who process data strictly under our instructions and in compliance with security standards:",
+          "• Google Analytics (G-GRN9Q0VFPX): Measures visitor interactions, traffic channels, and usage statistics in aggregated, anonymized form.",
+          "• Cloudinary: Provides secure cloud image hosting, transformation, and fast CDN delivery for traveler photos and website visual assets.",
+          "• Telegram Bot Services: Enables optional automated notifications and trip status alerts when initiated by the customer.",
+          "• Hosting & Cloud Infrastructure: Ensures encrypted data storage, high server availability, and robust web firewall protection.",
+          "All third-party service providers are contractually obligated to maintain data confidentiality and cannot utilize your data for unauthorized purposes."
+        ]
+      },
+      {
+        "id": "data-security",
+        "number": "5",
+        "title": "5. Security of Your Data",
+        "paragraphs": [
+          "We implement industry-standard organizational and technical security measures to safeguard personal information against accidental loss, unauthorized access, alteration, destruction, or disclosure.",
+          "All data transmissions on artours.am are protected using modern TLS/HTTPS encryption protocols. Internal access to customer data is strictly restricted to authorized staff who require it to coordinate services."
+        ]
+      },
+      {
+        "id": "data-retention",
+        "number": "6",
+        "title": "6. Data Retention",
+        "paragraphs": [
+          "Personal data is retained only for as long as needed to fulfill the purposes for which it was gathered, including satisfying customer service requests, maintaining travel booking history, and complying with statutory fiscal retention obligations.",
+          "When personal data is no longer necessary, it is either securely deleted or irreversibly anonymized."
+        ]
+      },
+      {
+        "id": "user-rights",
+        "number": "7",
+        "title": "7. Your Rights",
+        "paragraphs": [
+          "Under applicable Armenian data protection legislation, you are entitled to exercise the following rights regarding your personal data:"
+        ],
+        "items": [
+          "Right of Access: Request confirmation of whether we hold your personal data and obtain a copy of such data.",
+          "Right to Rectification: Request correction of inaccurate, outdated, or incomplete personal records.",
+          "Right to Erasure ('Right to Be Forgotten'): Request deletion of your personal data where there is no longer a legal justification for its retention.",
+          "Right to Restriction of Processing: Request restriction of data processing in specified situations (e.g. while data accuracy is contested).",
+          "Right to Withdraw Consent: Withdraw consent at any time for processing activities founded on consent (such as public review display).",
+          "Right to Object: Object to processing based on legitimate business interests on grounds relating to your particular situation."
+        ],
+        "closingParagraph": "To exercise any of these rights, contact our team at artoursarmenia{'@'}gmail.com. We will respond without undue delay."
+      },
+      {
+        "id": "policy-updates",
+        "number": "8",
+        "title": "8. Policy Updates",
+        "paragraphs": [
+          "We may periodically revise this Privacy Policy to reflect evolving legal standards, technical advancements, or modifications to our services.",
+          "Any revisions will be published directly on this page with an updated 'Last updated' date. We encourage users to review this page periodically."
+        ]
+      },
+      {
+        "id": "contact-information",
+        "number": "9",
+        "title": "9. Contact Information",
+        "paragraphs": [
+          "If you have questions, inquiries, or complaints concerning this Privacy Policy or how your personal information is processed, please contact us:",
+          "• Email: artoursarmenia{'@'}gmail.com",
+          "• Phone: +374 55 42 55 95",
+          "• Address: Yerevan, Armenia",
+          "• Website: artours.am"
+        ]
+      }
+    ]
   }
 }

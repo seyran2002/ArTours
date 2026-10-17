@@ -198,11 +198,16 @@ const localePath = useLocalePath()
 
       </div>
 
-      <!-- Lower Section: Copyright Info -->
+      <!-- Lower Section: Copyright Info & Legal Links -->
       <div class="pt-5 flex flex-col sm:flex-row items-center justify-between gap-4 text-[10px] text-zinc-500 font-bold uppercase tracking-wider">
         <p class="text-center sm:text-left leading-normal">
           &copy; {{ $t('footer.copyright') }}
         </p>
+        <div class="flex items-center gap-3 lowercase tracking-normal font-medium text-xs text-zinc-500">
+          <NuxtLink :to="localePath('/terms')" class="hover:text-primary transition-colors">{{ $t('footer.terms') }}</NuxtLink>
+          <span class="text-zinc-300">•</span>
+          <NuxtLink :to="localePath('/privacy')" class="hover:text-primary transition-colors">{{ $t('footer.privacy') }}</NuxtLink>
+        </div>
         <p class="text-center sm:text-right text-zinc-500 font-semibold lowercase tracking-normal">
           sustainable, immersive travel coordination
         </p>

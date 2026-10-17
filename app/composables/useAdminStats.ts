@@ -6,6 +6,7 @@ export interface DashboardStats {
   locationsCount: number
   toursCount: number
   transfersCount: number
+  pendingCommentsCount: number
 }
 
 export function useAdminStats() {

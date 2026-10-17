@@ -1,4 +1,4 @@
-﻿<script setup lang="ts">
+  <script setup lang="ts">
 import BaseIcon from '~/components/ui/BaseIcon.vue'
 import { useAdminAuthService } from '~/services/admin-auth.service'
 
@@ -19,10 +19,11 @@ const hovered = ref(false)
 const isExpanded = computed(() => hovered.value || props.mobileMenuOpen)
 
 const navLinks = [
-  { label: 'Վահանակ',    to: '/admin',            icon: 'grid'     },
-  { label: 'Վայրեր',     to: '/admin/locations',  icon: 'Location' },
-  { label: 'Տուրեր/Տրանս.', to: '/admin/tours', icon: 'tours' },
-  { label: 'Ամրագրումներ', to: '/admin/bookings', icon: 'booking'  },
+  { label: 'Վահանակ',      to: '/admin',            icon: 'grid'     },
+  { label: 'Վայրեր',       to: '/admin/locations',  icon: 'Location' },
+  { label: 'Տուրեր/Տրանս.', to: '/admin/tours',     icon: 'tours'    },
+  { label: 'Ամրագրումներ', to: '/admin/bookings',  icon: 'booking'  },
+  { label: 'Կարծիքներ',    to: '/admin/comments',  icon: 'comments' },
 ]
 
 function isActive(path: string): boolean {

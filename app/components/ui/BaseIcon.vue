@@ -67,8 +67,8 @@ const styleAttr = computed(() => {
       <circle cx="12" cy="7" r="4" />
     </template>
 
-    <!-- Contact / Message Icon -->
-    <template v-else-if="name === 'contact'">
+    <!-- Contact / Message / Comments Icon -->
+    <template v-else-if="name === 'contact' || name === 'comments' || name === 'comment' || name === 'message-square'">
       <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
     </template>
 
@@ -104,6 +104,21 @@ const styleAttr = computed(() => {
     <!-- Chevron Down Icon -->
     <template v-else-if="name === 'chevron-down'">
       <polyline points="6 9 12 15 18 9" />
+    </template>
+
+    <!-- Chevron Up Icon -->
+    <template v-else-if="name === 'chevron-up'">
+      <polyline points="18 15 12 9 6 15" />
+    </template>
+
+    <!-- Chevron Left Icon -->
+    <template v-else-if="name === 'chevron-left'">
+      <polyline points="15 18 9 12 15 6" />
+    </template>
+
+    <!-- Chevron Right Icon -->
+    <template v-else-if="name === 'chevron-right'">
+      <polyline points="9 18 15 12 9 6" />
     </template>
     
     <!-- Star Icon (Filled) -->

@@ -96,14 +96,15 @@ function processImg(url: string): { src: string; provider: string | undefined } 
           'md:col-span-2 md:row-span-2': allImages.length >= 4,
           'col-span-1': allImages.length < 4
         }"
-        class="relative aspect-[4/3] md:aspect-auto md:h-[400px] overflow-hidden rounded-3xl border border-zinc-200/50 cursor-pointer shadow-sm group"
+        class="relative aspect-[4/3] md:aspect-auto md:h-[400px] overflow-hidden rounded-3xl border border-zinc-200/50 cursor-pointer shadow-sm group bg-zinc-100 flex items-center justify-center"
         @click="openGallery(0)"
       >
         <NuxtImg
-          provider="cloudinary"
+          :provider="processImg(allImages[0]!).provider"
           :src="processImg(allImages[0]!).src"
           alt="Cover Image"
-          class="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500 ease-out"
+          class="w-full h-full object-contain object-center group-hover:scale-[1.02] transition-transform duration-500 ease-out"
+          fit="coverLimit"
           width="800"
           height="600"
           sizes="sm:100vw md:60vw lg:55vw xl:50vw"
@@ -112,7 +113,7 @@ function processImg(url: string): { src: string; provider: string | undefined } 
           loading="eager"
           fetchpriority="high"
         />
-        <div class="absolute inset-0 bg-black/5 group-hover:bg-black/15 transition-colors duration-300" />
+        <div class="absolute inset-0 bg-black/5 group-hover:bg-black/15 transition-colors duration-300 pointer-events-none" />
 
         <!-- Mobile-only +X pill — hidden on md+ via CSS, click bubbles to parent -->
         <div
@@ -129,14 +130,15 @@ function processImg(url: string): { src: string; provider: string | undefined } 
       <div
         v-for="(img, idx) in visibleThumbnails"
         :key="idx"
-        class="hidden md:block relative aspect-[4/3] md:aspect-auto md:h-[194px] overflow-hidden rounded-3xl border border-zinc-200/50 cursor-pointer shadow-sm group"
+        class="hidden md:block relative aspect-[4/3] md:aspect-auto md:h-[194px] overflow-hidden rounded-3xl border border-zinc-200/50 cursor-pointer shadow-sm group bg-zinc-100 flex items-center justify-center"
         @click="openGallery(idx + 1)"
       >
         <NuxtImg
-          provider="cloudinary"
+          :provider="processImg(img).provider"
           :src="processImg(img).src"
           :alt="`Gallery image ${idx + 2}`"
-          class="w-full h-full object-cover group-hover:scale-[1.05] transition-transform duration-500 ease-out"
+          class="w-full h-full object-contain object-center group-hover:scale-[1.05] transition-transform duration-500 ease-out"
+          fit="coverLimit"
           width="400"
           height="300"
           sizes="md:20vw lg:18vw xl:16vw"
@@ -144,12 +146,12 @@ function processImg(url: string): { src: string; provider: string | undefined } 
           quality="50"
           loading="lazy"
         />
-        <div class="absolute inset-0 bg-black/5 group-hover:bg-black/15 transition-colors duration-300" />
+        <div class="absolute inset-0 bg-black/5 group-hover:bg-black/15 transition-colors duration-300 pointer-events-none" />
 
         <!-- +X Counter Overlay — only on the last visible thumbnail when extras exist -->
         <div
           v-if="idx === visibleThumbnails.length - 1 && desktopExtraCount > 0"
-          class="absolute inset-0 bg-zinc-900/60 backdrop-blur-[2px] flex flex-col items-center justify-center text-white"
+          class="absolute inset-0 bg-zinc-900/60 backdrop-blur-[2px] flex flex-col items-center justify-center text-white pointer-events-none"
         >
           <span class="text-2xl font-bold font-sans">+{{ desktopExtraCount }}</span>
           <span class="text-[10px] font-bold uppercase tracking-wider mt-1 opacity-80">More Photos</span>
