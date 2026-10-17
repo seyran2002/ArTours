@@ -351,7 +351,7 @@ onUnmounted(() => {
               </p>
             </div>
             <div class="flex items-center gap-3 shrink-0">
-              <BaseButton class=" shadow-md hover:shadow-primary/25" :to="localePath('/tours')" variant="primary" size="sm">
+              <BaseButton class="shadow-md hover:shadow-primary/25" :to="localePath('/tours')" variant="primary" size="sm">
                 {{ $t('header.tours') }}
               </BaseButton>
               <BaseButton :to="localePath('/contact')" variant="outline" size="sm">

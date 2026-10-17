@@ -730,7 +730,7 @@ onUnmounted(() => {
         <button
           type="button"
           @click="isCommentModalOpen = true"
-          class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-brand-gradient-primary text-white text-sm font-semibold shadow-brand hover:scale-[1.03] active:scale-95 transition-all duration-200"
+          class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-brand-gradient-primary text-white text-sm font-semibold shadow-brand shadow-md hover:shadow-primary/25 hover:scale-[1.03] active:scale-95 transition-all duration-200"
         >
           <BaseIcon name="edit" size="xs" />
           {{ t('home.comments.modal.openButton') }}
