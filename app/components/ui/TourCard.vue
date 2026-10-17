@@ -141,21 +141,20 @@ function getHourWordRu(n: number): string {
     class="bg-white rounded-3xl overflow-hidden  shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_24px_48px_-12px_rgba(18,83,78,0.12)] hover:-translate-y-1 transition-all duration-500 flex flex-col justify-between group h-full relative"
   >
     <!-- Card Image Section -->
-    <div class="relative rounded-t-3xl overflow-hidden aspect-[16/10] sm:aspect-[16/9] md:aspect-[16/10] lg:aspect-[4/3] w-full shrink-0">
+    <div class="relative rounded-t-3xl overflow-hidden aspect-[16/10] sm:aspect-[16/9] md:aspect-[16/10] lg:aspect-[4/3] w-full shrink-0 bg-zinc-100">
       <NuxtImg
         :provider="isCloudinary ? 'cloudinary' : undefined"
         :src="cleanedImage"
         :alt="tour[`${locale}Title` as keyof typeof tour] || ''"
-        class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-        width="400"
-        height="250"
+        class="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+        fit="cover"
         sizes="xs:320px sm:380px md:400px lg:280px xl:330px"
         format="webp"
         quality="40"
         :loading="isPriority ? 'eager' : 'lazy'"
         :fetchpriority="isPriority ? 'high' : undefined"
       />
-      <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-80" />
+      <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-80 pointer-events-none" />
       
       <!-- Premium / Status Badge -->
       <div v-if="badge" class="absolute top-4 left-4 z-10">

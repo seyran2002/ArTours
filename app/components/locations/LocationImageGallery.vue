@@ -96,17 +96,15 @@ function processImg(url: string): { src: string; provider: string | undefined } 
           'md:col-span-2 md:row-span-2': allImages.length >= 4,
           'col-span-1': allImages.length < 4
         }"
-        class="relative aspect-[4/3] md:aspect-auto md:h-[400px] overflow-hidden rounded-3xl border border-zinc-200/50 cursor-pointer shadow-sm group bg-zinc-100 flex items-center justify-center"
+        class="relative aspect-[4/3] md:aspect-auto md:h-[400px] overflow-hidden rounded-3xl border border-zinc-200/50 cursor-pointer shadow-sm group bg-zinc-100"
         @click="openGallery(0)"
       >
         <NuxtImg
           :provider="processImg(allImages[0]!).provider"
           :src="processImg(allImages[0]!).src"
           alt="Cover Image"
-          class="w-full h-full object-contain object-center group-hover:scale-[1.02] transition-transform duration-500 ease-out"
-          fit="coverLimit"
-          width="800"
-          height="600"
+          class="w-full h-full object-cover object-center group-hover:scale-[1.03] transition-transform duration-500 ease-out"
+          fit="cover"
           sizes="sm:100vw md:60vw lg:55vw xl:50vw"
           format="webp"
           quality="50"
@@ -130,17 +128,15 @@ function processImg(url: string): { src: string; provider: string | undefined } 
       <div
         v-for="(img, idx) in visibleThumbnails"
         :key="idx"
-        class="hidden md:block relative aspect-[4/3] md:aspect-auto md:h-[194px] overflow-hidden rounded-3xl border border-zinc-200/50 cursor-pointer shadow-sm group bg-zinc-100 flex items-center justify-center"
+        class="hidden md:block relative aspect-[4/3] md:aspect-auto md:h-[194px] overflow-hidden rounded-3xl border border-zinc-200/50 cursor-pointer shadow-sm group bg-zinc-100"
         @click="openGallery(idx + 1)"
       >
         <NuxtImg
           :provider="processImg(img).provider"
           :src="processImg(img).src"
           :alt="`Gallery image ${idx + 2}`"
-          class="w-full h-full object-contain object-center group-hover:scale-[1.05] transition-transform duration-500 ease-out"
-          fit="coverLimit"
-          width="400"
-          height="300"
+          class="w-full h-full object-cover object-center group-hover:scale-[1.05] transition-transform duration-500 ease-out"
+          fit="cover"
           sizes="md:20vw lg:18vw xl:16vw"
           format="webp"
           quality="50"

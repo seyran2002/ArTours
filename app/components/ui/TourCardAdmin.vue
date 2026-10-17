@@ -1,10 +1,11 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import BaseIcon from '~/components/ui/BaseIcon.vue'
 import BaseButton from '~/components/ui/BaseButton.vue'
 import BaseBadge from '~/components/ui/BaseBadge.vue'
 import type { AdminTour } from '~/types/admin-tour'
 
-withDefaults(
+const props = withDefaults(
   defineProps<{
     tour: AdminTour
     adminMode?: boolean
@@ -17,6 +18,19 @@ withDefaults(
 const emit = defineEmits<{
   edit: [tour: AdminTour]
 }>()
+
+const CLOUDINARY_BASE = 'https://res.cloudinary.com/dl8iqp69h/image/upload/'
+
+const isCloudinary = computed(() => {
+  return typeof props.tour?.mainImage === 'string' && props.tour.mainImage.startsWith(CLOUDINARY_BASE)
+})
+
+const cleanedImage = computed(() => {
+  if (isCloudinary.value && props.tour?.mainImage) {
+    return props.tour.mainImage.replace(CLOUDINARY_BASE, '')
+  }
+  return props.tour?.mainImage || ''
+})
 </script>
 
 <template>
@@ -24,12 +38,14 @@ const emit = defineEmits<{
     class="bg-white rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:shadow-[0_24px_48px_-12px_rgba(18,83,78,0.08)] hover:-translate-y-1 transition-all duration-500 flex flex-col justify-between group h-full relative"
   >
     <!-- Card Image Section -->
-    <div class="relative rounded-t-2xl sm:rounded-t-3xl overflow-hidden aspect-[16/10] sm:aspect-[16/9] md:aspect-[16/10] lg:aspect-[4/3] w-full shrink-0">
+    <div class="relative rounded-t-2xl sm:rounded-t-3xl overflow-hidden aspect-[16/10] sm:aspect-[16/9] md:aspect-[16/10] lg:aspect-[4/3] w-full shrink-0 bg-zinc-100">
       <NuxtImg
-        v-if="tour.mainImage"
-        :src="tour.mainImage"
+        v-if="cleanedImage"
+        :provider="isCloudinary ? 'cloudinary' : undefined"
+        :src="cleanedImage"
         :alt="tour.enTitle"
-        class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+        class="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+        fit="cover"
         sizes="xs:340px sm:400px md:340px lg:380px xl:420px"
         format="webp"
         loading="lazy"
@@ -37,7 +53,7 @@ const emit = defineEmits<{
       <div v-else class="w-full h-full bg-gradient-to-br from-emerald-50 to-zinc-100 flex items-center justify-center">
         <BaseIcon name="image" size="lg" class="text-zinc-300" />
       </div>
-      <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-80" />
+      <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-80 pointer-events-none" />
 
       <!-- Tag Badge -->
       <BaseBadge v-if="tour?.tags?.[0]" class="absolute top-2.5 left-2.5 sm:top-3 sm:left-3 z-10 max-w-[calc(100%-4rem)] truncate" variant="glass" size="xs" pulse pulse-color="secondary">
