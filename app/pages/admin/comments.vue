@@ -6,7 +6,7 @@ definePageMeta({
 })
 
 useHead({
-  title: 'Կարծիքներ | ArTours Admin',
+  title: 'Մեկնաբանություններ | ArTours Admin',
   meta: [
     { name: 'robots', content: 'noindex, nofollow' },
   ],
@@ -20,9 +20,9 @@ const searchParam = computed(() => (route.query.search as string) || '')
     <!-- Header -->
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
       <div>
-        <h1 class="text-3xl font-bold font-serif text-zinc-900 tracking-tight">Կարծիքներ</h1>
+        <h1 class="text-3xl font-bold font-serif text-zinc-900 tracking-tight">Մեկնաբանություններ</h1>
         <p class="text-sm text-zinc-500 mt-1">
-          Կառավարեք հաճախորդների կարծիքները, հաստատեք, խմբագրեք թարգմանությունները և ջնջեք:
+          Կառավարեք հաճախորդների մեկնաբանությունները, հաստատեք, խմբագրեք թարգմանությունները և ջնջեք:
         </p>
       </div>
     </div>

@@ -1,4 +1,4 @@
-  <script setup lang="ts">
+﻿  <script setup lang="ts">
 import BaseIcon from '~/components/ui/BaseIcon.vue'
 import { useAdminAuthService } from '~/services/admin-auth.service'
 
@@ -23,7 +23,7 @@ const navLinks = [
   { label: 'Վայրեր',       to: '/admin/locations',  icon: 'Location' },
   { label: 'Տուրեր/Տրանս.', to: '/admin/tours',     icon: 'tours'    },
   { label: 'Ամրագրումներ', to: '/admin/bookings',  icon: 'booking'  },
-  { label: 'Կարծիքներ',    to: '/admin/comments',  icon: 'comments' },
+  { label: 'Մեկնաբանու․․',    to: '/admin/comments',  icon: 'comments' },
 ]
 
 function isActive(path: string): boolean {
